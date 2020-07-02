@@ -20,14 +20,9 @@ const userSchema = new Schema({
     required: true
   },
   birthDate: {
-    type: Date,
-    required: true
+    type: Date
   },
-  levelStatus: {
-    type: Number,
-    required: true
-  },
-  sex: {
+  sex: {            //1 - boy, 2 - girl
     type: Number,
     required: true
   },
@@ -35,24 +30,19 @@ const userSchema = new Schema({
     ref: 'institutions',
     type: Schema.Types.ObjectId
   },
+  levelStatus: {    // 1 - admin, 2 - модератор, 3 - подопечный, 4 - гость
+    type: Number,
+    required: true
+  },
   photo: {
     type: String,
     default: ''
   },
   setting: [
     {
-      online: {
-        type: Boolean,
-        default: False
-      },
-      text: {
-        type: Boolean,
-        default: False
-      },
-      view: {
-        type: Boolean,
-        default: False
-      }
+      online: Boolean,
+      text: Boolean,
+      view: Boolean
     }
   ],
   onlineStatus: {

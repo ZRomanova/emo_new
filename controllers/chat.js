@@ -1,3 +1,5 @@
+const errorHandler = require('../utils/errorHandler')
+
 module.exports.getAll = function(req, res) {
     
 }

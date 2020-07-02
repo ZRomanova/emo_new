@@ -1,3 +1,5 @@
+const errorHandler = require('../utils/errorHandler')
+
 module.exports.friends = function(req, res) {
     
 }
