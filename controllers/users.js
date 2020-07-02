@@ -6,6 +6,10 @@ module.exports.update = function(req, res) {
     
 }
 
+module.exports.getAll= function(req, res) {
+    
+}
+
 module.exports.getByInstitution = function(req, res) {
     
 }
