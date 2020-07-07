@@ -1,7 +1,16 @@
 const errorHandler = require('../utils/errorHandler')
+const Picture = require('../models/Picture')
 
-module.exports.create = function(req, res) {
-    res.json({message: "Pictures"})
+module.exports.create = async function(req, res) {
+    try {
+        const picture = await new Picture({
+          folderName: req.body.folderName,
+          many: req.body.many
+        }).save()
+        res.status(201).json(picture)
+      } catch (e) {
+        errorHandler(res, e)
+      }
 }
 
 module.exports.update = function(req, res) {

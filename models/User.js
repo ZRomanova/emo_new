@@ -38,17 +38,30 @@ const userSchema = new Schema({
     type: String,
     default: ''
   },
-  setting: [
-    {
-      online: Boolean,
-      text: Boolean,
-      view: Boolean
-    }
-  ],
   onlineStatus: {
       type: String,
       default: '-1'
+  },
+
+  // settings  
+  online: {
+    type: Boolean,
+    default: false
+  },
+  text: {
+    type: Boolean,
+    default: false
+  },
+  view: {
+    type: Boolean,
+    default: false
+  },
+  theme: {
+    type: Number,
+    default: 1
   }
+    
+  
 })
 
 module.exports = mongoose.model('users', userSchema)

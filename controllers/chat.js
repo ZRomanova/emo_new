@@ -1,6 +1,10 @@
 const errorHandler = require('../utils/errorHandler')
 
-module.exports.getAll = function(req, res) {
+module.exports.getAllMessage = function(req, res) {
+    
+}
+
+module.exports.getAllPictures = function(req, res) {
     
 }
 

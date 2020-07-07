@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs')
-
 const User = require('../models/User')
 const errorHandler = require('../utils/errorHandler')
 
@@ -25,8 +24,7 @@ module.exports.create = async function(req, res) {
         sex: req.body.sex,
         institution: req.body.institution,
         levelStatus: req.body.levelStatus,
-        photo: req.body.photo,
-        setting: req.body.setting,
+        photo: req.file ? req.file.path : ''
       })
   
       try {
@@ -39,22 +37,61 @@ module.exports.create = async function(req, res) {
     }
   }
 
-module.exports.update = function(req, res) {
+module.exports.update = async function(req, res) {
+  try {
+    const updated = req.body
+
+    if (req.file) {
+      updated.foto = req.file.path
+    }
     
+    const thisuser = await User.findOneAndUpdate(
+      {_id: req.params.userID},
+      {$set: updated},
+      {new: true}
+    )
+    res.status(200).json(thisuser)
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
 
-module.exports.getAll= function(req, res) {
-    
+module.exports.getAll = async function(req, res) {
+  try {
+    const users = await User.find({}).sort({surname: 1})
+    res.status(200).json(users)
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
 
-module.exports.getByInstitution = function(req, res) {
-    
+module.exports.getByInstitution = async function(req, res) {
+  try {
+    const users = await User
+    .find({institution: req.params.institutionID})
+    .sort({surname: 1})
+    res.status(200).json(users)
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
 
-module.exports.getByUserID = function(req, res) {
-    
+module.exports.getByUserID = async function(req, res) {
+  try {
+    const thisuser = await User.findOne({_id: req.params.userID})
+    res.status(200).json(thisuser)
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
 
-module.exports.remove = function(req, res) {
-    
+module.exports.remove = async function(req, res) {
+  try {
+    await User.remove({_id: req.params.userID})
+    res.status(200).json({
+      message: 'Пользоатель удален.'
+    })
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
