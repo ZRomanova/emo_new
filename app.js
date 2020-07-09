@@ -8,7 +8,7 @@ const chatRoutes = require('./routes/chat')
 const peopleRoutes = require('./routes/people')
 const picturesRoutes = require('./routes/pictures')
 const usersRoutes = require('./routes/users')
-const institutionsRoutes = require('./routes/users')
+const institutionsRoutes = require('./routes/institutions')
 const keys = require('./config/keys')
 
 const app = express()

@@ -2,45 +2,48 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const pictureSchema = new Schema({  
-  folderName: {
+  folder: {             //true - folder, false - picture
+    type: Boolean,
+    default: false
+  },
+  
+    
+  boysGreyPicture: {
     type: String,
     default: ''
   },
-  many: {
-    type: Boolean,
-    require: true
+  girlsGreyPicture: {
+    type: String,
+    default: ''
   },
-  file: [
-    {
-      boysGreyPicture: {
-        type: String,
-        default: ''
-      },
-      girlsGreyPicture: {
-        type: String,
-        default: ''
-      },
-      boysColorPicture: {
-        type: String,
-        default: ''
-      },
-      girlsColorPicture: {
-        type: String,
-        default: ''
-      }
-    }
-  ],
+  boysColorPicture: {
+    type: String,
+    default: ''
+  },
+  girlsColorPicture: {
+    type: String,
+    default: ''
+  },
+    
   answers: {
     ref: 'pictures',
-    type: [Schema.Types.ObjectId]
+    type: [Schema.Types.ObjectId],
+    default: []
   },
   text: {
     type: String,
     default: ''
   },
-  path: {
-    type: String,
-    default: '/'
+  parent: {
+    ref: 'pictures',
+    type: Schema.Types.ObjectId
+  },
+  p_sort: {             
+    type: Number,
+    require: true
+  },
+  invisible: {
+    type: Boolean
   }
 })
 

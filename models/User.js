@@ -28,7 +28,8 @@ const userSchema = new Schema({
   },
   institution: {
     ref: 'institutions',
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    required: true
   },
   levelStatus: {    // 1 - admin, 2 - модератор, 3 - подопечный, 4 - гость
     type: Number,

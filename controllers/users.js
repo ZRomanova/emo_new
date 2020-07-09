@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const User = require('../models/User')
 const errorHandler = require('../utils/errorHandler')
+const { query } = require('express')
 
 module.exports.create = async function(req, res) {
     // login password
@@ -42,7 +43,7 @@ module.exports.update = async function(req, res) {
     const updated = req.body
 
     if (req.file) {
-      updated.foto = req.file.path
+      updated.photo = req.file.path
     }
     
     const thisuser = await User.findOneAndUpdate(
@@ -57,14 +58,39 @@ module.exports.update = async function(req, res) {
 }
 
 module.exports.getAll = async function(req, res) {
+  q = {}
+  
+  if (req.query.institution) {
+    q.institution =  req.query.institution
+  }
+
+  if (req.query.name) {
+    q.name =  req.query.name
+  } 
+
+  if (req.query.surname) {
+    q.surname =  req.query.surname
+  } 
+
+  if (req.query.sex) {
+    q.sex =  req.query.sex
+  } 
+
+  if (req.query.levelStatus) {
+    q.levelStatus =  req.query.levelStatus
+  } 
+
   try {
-    const users = await User.find({}).sort({surname: 1})
+    const users = await User
+      .find(q)
+      .sort({surname: 1})
     res.status(200).json(users)
   } catch (e) {
     errorHandler(res, e)
   }
 }
 
+/*
 module.exports.getByInstitution = async function(req, res) {
   try {
     const users = await User
@@ -75,6 +101,7 @@ module.exports.getByInstitution = async function(req, res) {
     errorHandler(res, e)
   }
 }
+*/
 
 module.exports.getByUserID = async function(req, res) {
   try {

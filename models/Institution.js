@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const institutionSchema = new Schema({
   name: {
     type: String,
-    require: true
+    require: true,
+    unique: true
   }
 })
 

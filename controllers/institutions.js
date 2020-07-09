@@ -4,14 +4,27 @@ const User = require('../models/User')
 
 
 module.exports.create = async function(req, res) {
+  const candidate = await Institution.findOne({name: req.body.name})
+
+  if (candidate) {
+    //  Такое учреждение существует, нужно отправить ошибку
+    res.status(409).json({
+      message: 'Такое учреждение уже существует.'
+    })
+  } else {
+    // Нужно создать учреждение
+    const institution = await new Institution({
+      name: req.body.name
+    })
+
     try {
-        const institution = await new Institution({
-          name: req.body.name
-        }).save()
-        res.status(201).json(institution)
-      } catch (e) {
-        errorHandler(res, e)
-      }
+      await institution.save()
+      res.status(201).json(institution)
+    } catch(e) {
+      errorHandler(res, e)
+    }
+
+  }
 }
 
 module.exports.update = async function(req, res) {
@@ -47,8 +60,10 @@ module.exports.getByInstitutionID = async function(req, res) {
 
 module.exports.remove = async function(req, res) {
     try {
-      const users = await User.find({institution: req.params.institutionID})
-      users.updateMany({}, {$set: {institution: req.params.newID}})
+      await User
+      .updateMany({institution: req.params.institutionID}, 
+        {$set: {institution: req.params.newID}
+      })
       await Institution.remove({_id: req.params.institutionID})
       res.status(200).json({
         message: 'Учреждение удалено.'
