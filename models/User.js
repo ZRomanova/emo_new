@@ -31,7 +31,7 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
-  levelStatus: {    // 1 - admin, 2 - модератор, 3 - подопечный, 4 - гость
+  levelStatus: {    // 1 - админ, 2 - модератор, 3 - подопечный, 4 - гость, 5 - родитель
     type: Number,
     required: true
   },
@@ -45,21 +45,29 @@ const userSchema = new Schema({
   },
 
   // settings  
-  online: {
+  online: {         // показывать ли онлайны других пользователей
     type: Boolean,
     default: false
   },
-  text: {
+  text: {           // показывать ли подписи к пиктограммам
     type: Boolean,
     default: false
   },
-  view: {
+  view: {           // показывать, почитаны сообщения или нет
     type: Boolean,
     default: false
   },
-  theme: {
+  theme: {          // темы: 1 - сине-розовая, 2 - зелёно-фиолетовая, 3 - жёлто-оранжевая
     type: Number,
     default: 1
+  },
+  surnameView: {        // показывать ли фамилии
+    type: Boolean,
+    default: false
+  },
+  setting: {        // разрешить пользователю менять настройки
+    type: Boolean,
+    default: true
   }
     
   

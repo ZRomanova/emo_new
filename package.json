@@ -20,6 +20,7 @@
     "cyrillic-to-translit-js": "^3.1.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mime-types": "^2.1.27",
     "moment": "^2.27.0",
     "mongoose": "^5.9.21",
     "morgan": "^1.10.0",

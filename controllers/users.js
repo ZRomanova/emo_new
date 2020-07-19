@@ -114,7 +114,7 @@ module.exports.getByUserID = async function(req, res) {
 
 module.exports.remove = async function(req, res) {
   try {
-    await User.remove({_id: req.params.userID})
+    await User.deleteOne({_id: req.params.userID})
     res.status(200).json({
       message: 'Пользоатель удален.'
     })

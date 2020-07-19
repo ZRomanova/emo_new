@@ -4,7 +4,8 @@ const User = require('../models/User')
 
 
 module.exports.create = async function(req, res) {
-  const candidate = await Institution.findOne({name: req.body.name})
+  try {
+    const candidate = await Institution.findOne({name: req.body.name})
 
   if (candidate) {
     //  Такое учреждение существует, нужно отправить ошибку
@@ -15,15 +16,11 @@ module.exports.create = async function(req, res) {
     // Нужно создать учреждение
     const institution = await new Institution({
       name: req.body.name
-    })
+    }).save()
+    res.status(201).json(institution)
 
-    try {
-      await institution.save()
-      res.status(201).json(institution)
-    } catch(e) {
-      errorHandler(res, e)
-    }
-
+  }} catch(e) {
+    errorHandler(res, e)
   }
 }
 

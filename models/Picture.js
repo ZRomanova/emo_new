@@ -4,9 +4,9 @@ const Schema = mongoose.Schema
 const pictureSchema = new Schema({  
   folder: {             //true - folder, false - picture
     type: Boolean,
-    default: false
+    default: false,
+    required: true
   },
-  
     
   boysGreyPicture: {
     type: String,
@@ -36,14 +36,25 @@ const pictureSchema = new Schema({
   },
   parent: {
     ref: 'pictures',
-    type: Schema.Types.ObjectId
+    type: Schema.Types.ObjectId,
+    required: true
   },
   p_sort: {             
     type: Number,
-    require: true
+    required: true
   },
-  invisible: {
-    type: Boolean
+  invisible: {        //true - картинка невидима
+    type: Boolean,
+    default: false
+  },
+  system: {           //true - картинку нельзя удалить
+    type: Boolean,
+    default: false
+  },
+  user: {
+    ref: 'users',
+    type: Schema.Types.ObjectId,
+    required: true
   }
 })
 

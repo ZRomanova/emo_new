@@ -3,7 +3,9 @@ const passport = require('passport')
 const controller = require('../controllers/people')
 const router = express.Router()
 
-router.get('/friends/:userID', passport.authenticate('jwt', {session: false}), controller.friends)
-router.get('/search/:institutionID', passport.authenticate('jwt', {session: false}), controller.search)
+router.get('/friends', passport.authenticate('jwt', {session: false}), controller.friends)
+router.get('/search', passport.authenticate('jwt', {session: false}), controller.search)
+router.delete('/', passport.authenticate('jwt', {session: false}), controller.exitDelete)
+
 
 module.exports = router
