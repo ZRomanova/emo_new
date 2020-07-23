@@ -13,14 +13,20 @@ module.exports.getAllMessage = async function(req, res) {
         {$set: {read: true}},
         {new: true})
 
-      const messages = await Message
+      const messagesRead = await Message
         .find({ $or: [
             {sender: me, recipient: friend},
-            {sender: friend, recipient: me}
+            {sender: friend, recipient: me, read: true}
           ]
         })
         .sort({time: 1})
-      res.status(200).json(messages)
+        
+        const messagesNotRead = await Message
+        .find(
+          {sender: friend, recipient: me, read: false}
+        )
+        .sort({time: 1})
+      res.status(200).json(messagesRead, messagesNotRead)
     } catch (e) {
       errorHandler(res, e)
     }
@@ -33,8 +39,16 @@ module.exports.getAllPictures = async function(req, res) {
         {$set: {onlineStatus: req.query.friend}},
         {new: true})
 
+      const f = {parent: req.params.parentID, invisible: {$ne: true}}
+      if (
+        req.params.parentID == '5f1309e3962c2f062467f854' || 
+        req.params.parentID == '5f1309f1962c2f062467f855' || 
+        req.params.parentID == '5f130a00962c2f062467f856' || 
+        req.params.parentID == '5f130a0d962c2f062467f857') {
+          f.user = req.user.id
+        }
       const pictures = await Picture
-      .find({parent: req.params.parentID, invisible: {$ne: true}}, {answers: 0, system: 0})
+      .find(f, {answers: 0, system: 0})
       .sort({p_sort: 1})
       res.status(200).json(pictures)
     } catch (e) {
@@ -113,10 +127,10 @@ module.exports.create = async function(req, res) {
             p_sort: maxSort + 1,
             user: req.user.id
           }).save()
-          res.status(201).json(pictures)
+          //res.status(201).json(pictures)
         }
 
-        if (file.mimetype === 'video/mp4' 
+        else if (file.mimetype === 'video/mp4' 
         || file.mimetype === 'video/x-msvideo' 
         || file.mimetype === 'video/mpeg'
         || file.mimetype === 'video/ogg'
@@ -137,10 +151,10 @@ module.exports.create = async function(req, res) {
             p_sort: maxSort + 1,
             user: req.user.id
           }).save()
-          res.status(201).json(pictures)
+          //res.status(201).json(pictures)
         }
 
-        if (file.mimetype === 'audio/mpeg3' 
+        else if (file.mimetype === 'audio/mpeg3' 
         || file.mimetype === 'audio/mpeg3' 
         || file.mimetype === 'audio/mod'
         || file.mimetype === '	audio/x-mod') 
@@ -156,9 +170,10 @@ module.exports.create = async function(req, res) {
             boysGreyPicture: file.path,
             parent: '5f130a00962c2f062467f856',
             p_sort: maxSort + 1,
-            user: req.user.id
+            user: req.user.id,
+            text: req.file.originalname
           }).save()
-          res.status(201).json(pictures)
+          //res.status(201).json(pictures)
         }
 
         else {
@@ -173,9 +188,10 @@ module.exports.create = async function(req, res) {
             boysGreyPicture: file.path,
             parent: '5f130a0d962c2f062467f857',
             p_sort: maxSort + 1,
-            user: req.user.id
+            user: req.user.id,
+            text: req.file.originalname
           }).save()
-          res.status(201).json(pictures)
+          //res.status(201).json(pictures)
         }
       }
     }

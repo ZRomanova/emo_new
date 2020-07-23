@@ -40,18 +40,42 @@ module.exports.create = async function(req, res) {
 
 module.exports.update = async function(req, res) {
   try {
-    const updated = req.body
+    if (req.body.login) {
+      const candidate = await User.findOne({login: req.body.login})
+  
+      if (candidate) {
+        // Пользователь существует, нужно отправить ошибку
+        res.status(409).json({
+          message: 'Такой логин уже занят. Попробуйте другой.'
+        })
+      }
+    } else {
+      const updated = {
+        login: req.body.login,
+        name: req.body.name,
+        surname: req.body.surname,
+        birthDate: req.body.birthDate,
+        sex: req.body.sex,
+        institution: req.body.institution,
+        levelStatus: req.body.levelStatus,
+      }
+      if (req.body.password) {
+        const salt = bcrypt.genSaltSync(10)
+        const password = req.body.password
+        updated.password = bcrypt.hashSync(password, salt)
+      }
 
-    if (req.file) {
-      updated.photo = req.file.path
+      if (req.file) {
+        updated.photo = req.file.path
+      }
+      
+      const thisuser = await User.findOneAndUpdate(
+        {_id: req.params.userID},
+        {$set: updated},
+        {new: true}
+      )
+      res.status(200).json(thisuser)
     }
-    
-    const thisuser = await User.findOneAndUpdate(
-      {_id: req.params.userID},
-      {$set: updated},
-      {new: true}
-    )
-    res.status(200).json(thisuser)
   } catch (e) {
     errorHandler(res, e)
   }

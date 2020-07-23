@@ -22,7 +22,8 @@ module.exports.create = async function(req, res) {
           girlsColorPicture: req.files ? (req.files['girlsColorPicture'] ? req.files['girlsColorPicture'][0].path : '') : '',
           invisible: req.body.invisible,
           system: req.body.system,
-          user: req.user.id
+          user: req.user.id,
+          many: req.body.many
         }).save()
         res.status(201).json(picture)
       } catch (e) {
@@ -33,21 +34,19 @@ module.exports.create = async function(req, res) {
 module.exports.update = async function(req, res) {
   try {
     const updated = req.body
-
-    if (req.files['boysGreyPicture']) {
-      updated.boysGreyPicture = req.files['boysGreyPicture'][0].path
-    }
-
-    if (req.files['girlsGreyPicture']) {
-      updated.girlsGreyPicture = req.files['girlsGreyPicture'][0].path
-    }
-
-    if (req.files['boysColorPicture']) {
-      updated.boysColorPicture = req.files['boysColorPicture'][0].path
-    }
-
-    if (req.files['girlsColorPicture']) {
-      updated.girlsColorPicture = req.files['girlsColorPicture'][0].path
+    if (req.file) {
+      if (req.files['boysGreyPicture']) {
+        updated.boysGreyPicture = req.files['boysGreyPicture'][0].path
+      }
+      if (req.files['girlsGreyPicture']) {
+        updated.girlsGreyPicture = req.files['girlsGreyPicture'][0].path
+      }
+      if (req.files['boysColorPicture']) {
+        updated.boysColorPicture = req.files['boysColorPicture'][0].path
+      }
+      if (req.files['girlsColorPicture']) {
+        updated.girlsColorPicture = req.files['girlsColorPicture'][0].path
+      }
     }
     
     const picture = await Picture.findOneAndUpdate(
@@ -63,7 +62,7 @@ module.exports.update = async function(req, res) {
 
 module.exports.getAll = async function(req, res) {
   try {
-    const pictures = await Picture.find({parent: req.query.parent})
+    const pictures = await Picture.find({parent: req.params.folderID})
     res.status(200).json(pictures)
   } catch (e) {
     errorHandler(res, e)
@@ -72,7 +71,7 @@ module.exports.getAll = async function(req, res) {
 
 module.exports.getByPictureID = async function(req, res) {
   try {
-    const picture = await Picture.findOne({_id: req.params.pictureID})
+    const picture = await Picture.findOne({_id: req.query.pictureID})
     res.status(200).json(picture)
   } catch (e) {
     errorHandler(res, e)

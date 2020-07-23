@@ -55,6 +55,9 @@ const pictureSchema = new Schema({
     ref: 'users',
     type: Schema.Types.ObjectId,
     required: true
+  },
+  many: {             // для папок: true - в папке есть смена ч/б и цветных пиктограмм
+    type: Boolean
   }
 })
 

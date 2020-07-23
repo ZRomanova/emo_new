@@ -10,13 +10,35 @@ module.exports.friends = async function(req, res) {
       {$set: {onlineStatus: '0'}},
       {new: true}) 
 
-      const withMessageUsers = await User.find({
-        
-      })
+      const NotRead = await Message.distinct("sender", {recipient: req.user.id, read: false})
 
-      const withoutMessageUsers = await User.find({
-        
-      })
+      const withMessageUsers = await User.find(
+        {_id: {$in: NotRead}, _id: {$ne: req.user.id}}
+      )
+
+      const readSenders = await Message.distinct("sender", {recipient: req.user.id, read: true})
+      const readRecipients = await Message.distinct("recipient", {sender: req.user.id})
+
+      function union_arr(arr1, arr2) {
+        // объединяем массивы
+        arr3 = arr1.concat(arr2);
+        // сортируем полученный массив
+        arr3.sort();
+        // формируем новый массив без повторяющихся элементов
+        var arr = [arr3[0]]; 
+        for (var i = 1; i < arr3.length; i++) {
+            if (arr3[i] != arr3[i-1]) {
+                arr.push(arr3[i]);
+            }
+        }
+        return arr;
+      }
+
+      const read = union_arr(readSenders, readRecipients)
+
+      const withoutMessageUsers = await User.find(
+        {_id: {$in: read}, _id: {$ne: req.user.id}, _id: {$ne: {$in: NotRead}}}
+      )
 
       res.status(200).json(withMessageUsers, withoutMessageUsers)
     } catch(e) {
@@ -71,6 +93,9 @@ module.exports.search = async function(req, res) {
           {sender: req.user.id},
           {recipient: req.user.id}
           ]
+        })
+        await Picture.deleteMany({ 
+          user: req.user.id
         })
       }
       res.status(200).json({message: 'Данные гостя удалены, статус пользователя обновлён.'})

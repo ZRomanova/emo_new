@@ -11,10 +11,18 @@ fields = [
   { name: 'girlsColorPicture', maxCount: 1 }
 ]
 
-router.post('/:parentID', passport.authenticate('jwt', {session: false}), upload.fields(fields), controller.create)
-router.patch('/:pictureID', passport.authenticate('jwt', {session: false}), upload.fields(fields), controller.update)
-router.get('/', passport.authenticate('jwt', {session: false}), controller.getAll)
-router.get('/:pictureID', passport.authenticate('jwt', {session: false}), controller.getByPictureID)
-router.delete('/:pictureID', passport.authenticate('jwt', {session: false}), controller.remove)
+const stop = (req, res, next) =>  {
+  if(req.user && !req.user.levelStatus == 1) {
+    next(new Error('У вас нет прав доступа к данной странице.'));
+  } else {
+    next();
+  }
+}
+
+router.post('/:parentID', passport.authenticate('jwt', {session: false}), stop, upload.fields(fields), controller.create)
+router.patch('/:pictureID', passport.authenticate('jwt', {session: false}), stop, upload.fields(fields), controller.update)
+router.get('/:folderID', passport.authenticate('jwt', {session: false}), stop, controller.getAll)
+router.get('/', passport.authenticate('jwt', {session: false}), stop, controller.getByPictureID)
+router.delete('/:pictureID', passport.authenticate('jwt', {session: false}), stop, controller.remove)
 
 module.exports = router
