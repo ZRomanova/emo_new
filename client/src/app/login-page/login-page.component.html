@@ -1,0 +1,35 @@
+<div class="form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+         <h1>
+              <p class="entrance tc">Введите логин:</p>
+              <input 
+              formControlName="login"
+              class="entrance" 
+              value=""
+              placeholder="ЛОГИН">
+
+              <p class="entrance tc entrance_password">Введите пароль:</p>
+              <input 
+              formControlName="password"
+              class="entrance" 
+              value=""
+              placeholder="ПАРОЛЬ"><br>
+              
+              <button 
+              class="entrance" 
+              id="bottom_entrance_hidden" 
+              type="submit"
+              [disabled]="form.invalid || form.disabled" 
+               hidden> </button>
+
+              <label 
+              for="bottom_entrance_hidden"
+              id="bottom_entrance" 
+              class="tc">
+                    ВХОД
+               </label>            
+         </h1>
+    </form>
+</div>
+<img id="emoPicture" src="uploads/images/emo.png">
+<h1 class="tc" id="emoText">ЭМО</h1>

@@ -1,0 +1,125 @@
+body { 
+    margin: 0;
+    background: WHITE;
+}
+
+.form {
+    left: 10%;
+    width: 40%;
+    top: 50px;
+    bottom: 50px;   
+    display: inline-block; 
+    position: relative;
+    margin-top: 1%;
+ }
+
+ p {font-size: 0.8cm;}
+ 
+.entrance {
+	height: 1.4cm;
+	font-size: 1.2cm; 
+    margin-left: 20px;
+    resize: none;
+    overflow: hidden;   
+}
+
+.entrance_password {
+    margin-top: 45px;
+}
+
+#bottom_entrance {
+    text-align: center;
+    margin-top: 25px; 
+    width: 60%;
+    padding: 5px;
+    display: block;
+    border: 4px solid red;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+#textarea_entrance {
+    margin-top: -10px; 
+    width: 70%;    
+}
+
+#error_bottom {
+     text-align: center;
+     border: 2px solid black;
+     margin-left: 35%;
+     margin-right: 35%;
+}
+
+#error_text {
+     text-align: center;
+     margin-top: 15%;
+}
+
+.red {color: red;} 
+
+.tc {
+    background: white; 
+    color: black;
+    font-family: Arial, sans-serif;
+}
+
+.white {
+      background: white; 
+}
+
+a {
+    text-decoration: none;
+    border-width: 0;
+}
+
+p, img, a:visited, a:active, a:hover {
+    border-color: grey;
+    text-decoration: none;
+}
+
+html, body, div, a {
+     cursor: url('/uploads/images/cursorBlack.cur'), default;
+     font-family: Arial, sans-serif;
+}
+
+#bottom_entrance, #tick_msg, #cross_msg,  #tick_pict, #cross_pict, 
+#tick, #cross, #cross_uv, #deleteChatMusorka,
+.delete, .delete_pict, .libraryName, .folder, .exit,
+#footer_letter, .pict, .friendAvatar,
+.friendName, #letter, .menuIMG, .img, #error_bottom,
+.picture, .menuMyPortait, .online, .pictatext, .downloads_form
+{
+     cursor: url('/uploads/images/cursor.cur'), pointer;
+}
+
+.text {cursor: text;}
+
+#emoPicture {
+     z-index: 2;
+     position: fixed;
+     width: 30%;
+     max-width: 50%;
+     height: auto;
+     top: 10%;
+     right: 100px;
+}
+
+
+#emoText {
+    position: fixed;
+    bottom: 10%;
+    width: 30%;
+    right: 100px;
+    display: block;
+    text-align: center;
+    font-size: 2cm;
+    z-index: 3;
+}
+
+.body {
+     position: absolute;
+     height: 100cm;
+     width: 100%;
+     z-index: 2;
+     background: white;
+}

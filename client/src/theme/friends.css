@@ -1,0 +1,187 @@
+body {
+    position:  absolute;
+    width: 100%; 
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  
+  .friends {
+      width: 80%;
+      height: 100%;
+      background: #C5FFF1;
+      overflow: auto;
+      display: block;
+      border-spacing: 50px;
+      display: inline-block;
+  }
+  
+  .box {
+      display: inline-block;
+      width: 33%;
+      margin-bottom: 5%;
+      margin-top: 5%;
+  }
+  
+  .menu {
+      background: #FEBDD3;
+      width: 19.5%;
+      height: 100%;
+      overflow: auto;
+      display: inline-block;
+  }
+  
+  .friendAvatar {
+      margin-top: 5%;
+      margin: auto;
+      width: 70%;
+      height: auto;
+      border-style: ridge;
+      display: block;
+  }
+  
+  .friendName {
+      display: block;
+      margin: auto;
+      margin-top: 5%;
+      border-style: ridge;
+      width: 70%;
+      height: 1cm;
+      font-size: 0.85cm;
+      text-align: center;
+      padding-top: 0.2cm;
+      padding-bottom: 0.2cm;
+  }
+  
+  .friendID {
+      display: none;
+  }
+  
+  #meID {
+      display: none; 
+  }
+  
+  .menuIMG {
+      margin-top: 20%;
+      margin-left: 5%;
+      width: 80%;
+      height: auto;
+      border-style: ridge;
+      border-color: grey;
+  }
+  
+  .menuName {
+      border-style: ridge;
+      margin-top: 5%;
+      margin-left: 5%;
+      width: 80%;
+      height: 1cm;
+      font-size: 0.85cm;
+      text-align: center;
+      padding-top: 0.2cm;
+      padding-bottom: 0.2cm;
+  }
+  
+  .exit { 
+      border-style: ridge;
+      margin-top: 20%;
+      margin-left: 5%;
+      margin-bottom: 5%;
+      width: 80%;
+      height: 1cm;
+      font-size: 0.85cm;
+      text-align: center;
+      padding-top: 0.2cm;
+      padding-bottom: 0.2cm;
+  }
+  
+  .img {
+      border-color: grey; 
+  }  
+  
+  .button {
+      height: 2cm;      
+  }
+  
+  #seach {
+      background: url('/images/lupa.png'); 
+      background-size: 100% 100%;
+  } 
+  
+  #letter {
+      position: relative;
+      height: 1.5cm;
+      width: 3cm;
+      background: url('/images/letter.png'); 
+      background-size: 100% 100%;
+      display: block;
+      bottom: 4cm;
+      left: 10%;
+      border: 3px solid red;
+      border-radius: 7.5px;
+  }
+  
+  #online_msg {
+      position: relative;
+      height: 50px;
+      width: 100px;
+      background: url('/images/computer.png'); 
+      background-size: 100% 100%;
+      display: block;
+      bottom: 5.35cm;
+      left: 65%;
+      margin-bottom: -5.35cm;
+  }
+  
+  #online {
+      position: relative;
+      height: 50px;
+      width: 100px;
+      background: url('/images/computer.png'); 
+      background-size: 100% 100%;
+      display: block;
+      bottom: 3.7cm;
+      left: 65%;
+      margin-bottom: -3.7cm;
+  }
+  
+  #online_me {
+      position: relative;
+      height: 1.3cm;
+      width: 2.6cm;
+      background: url('/images/computer.png'); 
+      background-size: 100% 100%;
+      display: block;
+      bottom: 4cm;
+      left: 60%;
+      margin-bottom: -2cm;
+  }
+  
+  #inmychat {
+      position: relative;
+      height: 50px;
+      width: 100px;
+      background: url('/images/eye.png'); 
+      background-size: 100% 100%;
+      display: block;
+      bottom: 3.7cm;
+      left: 65%;
+      margin-bottom: -3.7cm;
+  }
+  
+  #inmychat_msg {
+      position: relative;
+      height: 50px;
+      width: 100px;
+      background: url('/images/eye.png'); 
+      background-size: 100% 100%;
+      display: block;
+      bottom: 5.35cm;
+      left: 65%;
+      margin-bottom: -5.35cm;
+  }
+  
+  .letterandnoonline{
+       margin-bottom: -1.5cm;
+  }
