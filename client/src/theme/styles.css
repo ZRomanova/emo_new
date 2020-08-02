@@ -10,19 +10,25 @@
     padding-right: 3px;
     z-index: 2;
 }
-.right {
+.manage-active {
+    color: #A53D60;
+    background: #fff; 
+}
+.nav-admin-li-right {
     float: right;
+    margin-right:3px; /*Добавляем отступ у пунктов меню*/  
+    margin-left:3px;
 }
 .content {
     padding-bottom: 20px;
 }
-ul {
+#nav-mobile {
     list-style: none; /*убираем маркеры списка*/
     margin: 0; /*убираем отступы*/
     padding-left: 0; /*убираем отступы*/
     margin-top:25px; /*делаем отступ сверху*/
   }
-a, #submit, .new_user_button, .inst-edit {
+.nav-admin, #submit, .new_user_button, .inst-edit {
     text-decoration: none; /*убираем подчеркивание текста ссылок*/
     background:#D26F90; /*добавляем фон к пункту меню*/
     color:#fff; /*меняем цвет ссылок*/
@@ -31,14 +37,14 @@ a, #submit, .new_user_button, .inst-edit {
     border-radius:4px; /*добавляем скругление*/
     transition: all 0.3s 0.01s ease; /*делаем плавный переход*/
 }
-a:hover, #submit:hover, .new_user_button:hover, 
+.nav-admin:hover, #submit:hover, .new_user_button:hover, 
 .inst-edit:hover {
     background:#A53D60;/*добавляем эффект при наведении*/
 }
 .purple {
     color:#A53D60;
 }
-li {
+.nav-admin-li {
     float:left; /*Размещаем список горизонтально для реализации меню*/
     margin-right:3px; /*Добавляем отступ у пунктов меню*/  
     margin-left:3px;
@@ -143,6 +149,7 @@ p {
     height: 100%;
     width: 700px;
     margin: auto;
+    overflow: auto;
 }
 .picture {
     border: 3px solid #A53D60;
@@ -153,7 +160,7 @@ p {
     margin: 10px;
     display: inline-block;
 }
-.picta {
+.picta-pictures {
     max-height: 128px;
     max-width: 128px; 
     display: block;   

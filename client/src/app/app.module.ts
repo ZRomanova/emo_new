@@ -10,6 +10,13 @@ import { LoginLayoutComponent } from './shared/layouts/login-layout/login-layout
 import { PeopleLayoutComponent } from './shared/layouts/people-layout/people-layout.component';
 import { ChatLayoutComponent } from './shared/layouts/chat-layout/chat-layout.component';
 import { AdminLayoutComponent } from './shared/layouts/admin-layout/admin-layout.component';
+import {TokenInterceptor} from './shared/classes/token.interceptor';
+import { FriendsPageComponent } from './friends-page/friends-page.component';
+import { SearchPageComponent } from './search-page/search-page.component';
+import { ChatPageComponent } from './chat-page/chat-page.component';
+import { UsersPageComponent } from './users-page/users-page.component';
+import { PicturesPageComponent } from './pictures-page/pictures-page.component';
+import { InstitutionsPageComponent } from './institutions-page/institutions-page.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +25,13 @@ import { AdminLayoutComponent } from './shared/layouts/admin-layout/admin-layout
     LoginLayoutComponent,
     PeopleLayoutComponent,
     ChatLayoutComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    FriendsPageComponent,
+    SearchPageComponent,
+    ChatPageComponent,
+    UsersPageComponent,
+    PicturesPageComponent,
+    InstitutionsPageComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +40,13 @@ import { AdminLayoutComponent } from './shared/layouts/admin-layout/admin-layout
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: TokenInterceptor
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

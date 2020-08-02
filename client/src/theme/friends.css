@@ -1,13 +1,4 @@
-body {
-    position:  absolute;
-    width: 100%; 
-    height: 100%; 
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  
-  .friends {
+.friends {
       width: 80%;
       height: 100%;
       background: #C5FFF1;
@@ -83,9 +74,9 @@ body {
       padding-bottom: 0.2cm;
   }
   
-  .exit { 
+  .exit-friends { 
       border-style: ridge;
-      margin-top: 20%;
+      margin-top: 5%;
       margin-left: 5%;
       margin-bottom: 5%;
       width: 80%;
@@ -96,11 +87,11 @@ body {
       padding-bottom: 0.2cm;
   }
   
-  .img {
+  .img-friends {
       border-color: grey; 
   }  
   
-  .button {
+  .button-friends {
       height: 2cm;      
   }
   

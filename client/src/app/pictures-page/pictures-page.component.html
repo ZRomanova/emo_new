@@ -1,0 +1,58 @@
+<div 
+class="pictures"
+*ngIf="pictures$ | async as pictures">
+    <div 
+    class="picture" 
+    *ngFor="let picture of pictures"
+    >
+        <div 
+        class="p_text purple">
+            {{picture.folder === true ? 'Папка' : 'Картинка'}}
+        </div>
+        <div class="p_border">
+            <img class="picta-pictures" [src]="picture.boysGreyPicture">
+        </div>
+        <div class="p_border">
+            <img class="picta-pictures" [src]="picture.girlsGreyPicture">
+        </div>
+        <div class="p_border">
+            <img class="picta-pictures" [src]="picture.boysColorPicture">
+        </div>
+        <div class="p_border">
+            <img class="picta-pictures" [src]="picture.girlsColorPicture">
+        </div>
+
+        <div class="p_text">{{picture.text}}</div>
+
+        <div class="button edit-picture">
+            <a class="nav-admin">
+                Редактировать
+            </a>
+        </div>
+        <div 
+        class="button edit-picture"
+        *ngIf="picture.folder">
+            <a 
+            class="nav-admin"
+            [routerLink]="['/manage/pictures', picture._id]">
+                Перейти
+            </a>
+        </div>
+    </div>
+
+  <div class="picture">
+      <div class="p_text purple">Папка</div>
+      <div class="p_border_one"><img class="picta_one" src="cat.jpg"></div>
+      <div class="p_text">Picture</div>
+      <div class="button edit-picture"><a class="nav-admin">Редактировать</a></div>
+      <div class="button edit-picture"><a class="nav-admin">Перейти</a></div>
+  </div>
+</div>
+<button id="add_picture_bottom" hidden></button>
+<label for="add_picture_bottom" id="add_picture"><a class="nav-admin">Добавить каринку</a></label>
+
+<button id="folder_picture_bottom" hidden></button>
+<label for="folder_picture_bottom" id="add_folder"><a class="nav-admin">Добавить папку</a></label>
+
+<button id="back_picture_bottom" hidden></button>
+<label for="back_picture_bottom" id="back_picture"><a class="nav-admin">Назад</a></label>

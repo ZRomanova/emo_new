@@ -1,1 +1,18 @@
-<p>admin-layout works!</p>
+<div class="nav">
+    <ul id="nav-mobile" class="">
+        <li
+        class="nav-admin-li"
+        *ngFor="let link of links"
+        routerLinkActive="manage-active"
+        >
+        <a [routerLink]="[link.url]" class="nav-admin">
+            {{link.name}}
+        </a>
+        </li> 
+        <li class="nav-admin-li-right"><a class="nav-admin"  href="#" (click)="logout($event)">Выход</a></li>
+        <li class="nav-admin-li-right"><a class="nav-admin" href="/people/friends">Вернуться</a></li>              
+    </ul>
+</div>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>
