@@ -12,6 +12,7 @@ import { ChatPageComponent } from './chat-page/chat-page.component';
 import { AdminLayoutComponent } from './shared/layouts/admin-layout/admin-layout.component';
 import { UsersPageComponent } from './users-page/users-page.component';
 import { PicturesPageComponent } from './pictures-page/pictures-page.component';
+import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-form.component';
 import { InstitutionsPageComponent } from './institutions-page/institutions-page.component';
 
 const routes: Routes = [
@@ -39,6 +40,7 @@ const routes: Routes = [
       {path: 'manage/users', component: UsersPageComponent},
       {path: 'manage/pictures', redirectTo: '/manage/pictures/5f12ff8cc06cd105437d84e3', pathMatch: 'full'},
       {path: 'manage/pictures/:_id', component: PicturesPageComponent},
+      {path: 'manage/pictures/:do/:many/:_id', component: PicturesFormComponent},
       {path: 'manage/institutions', component: InstitutionsPageComponent}
     ]
   }

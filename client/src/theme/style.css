@@ -14,7 +14,7 @@ body {
     margin-top: 1%;
  }
 
- p {font-size: 0.8cm;}
+ .pNotAdmin {font-size: 0.8cm;}
  
 .entrance {
 	height: 1.4cm;

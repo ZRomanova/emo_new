@@ -17,6 +17,7 @@ import { ChatPageComponent } from './chat-page/chat-page.component';
 import { UsersPageComponent } from './users-page/users-page.component';
 import { PicturesPageComponent } from './pictures-page/pictures-page.component';
 import { InstitutionsPageComponent } from './institutions-page/institutions-page.component';
+import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-form.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { InstitutionsPageComponent } from './institutions-page/institutions-page
     ChatPageComponent,
     UsersPageComponent,
     PicturesPageComponent,
-    InstitutionsPageComponent
+    InstitutionsPageComponent,
+    PicturesFormComponent
   ],
   imports: [
     BrowserModule,

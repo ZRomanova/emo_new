@@ -1,1 +1,19 @@
-<p>institutions-page works!</p>
+
+<div *ngIf="institutions$ | async as institution"
+    class="institution">
+    <div 
+    class="institution"
+    *ngFor="let institution of institutions">
+        <button id="submit_button" hidden></button>
+        <label for="submit_button" class="inst-edit inst-right">Редактировать</label>
+
+        <button id="submit_button" hidden></button>
+        <label for="submit_button" class="inst-edit inst-right">Удалить</label>
+            
+        <span class="inst-span">{{institution.name}}</span>                
+    </div>
+</div>
+
+<button id="add_institution_bottom" hidden></button>
+<label for="add_institution_bottom" id="add_institution"><a class="nav-admin">Добавить учреждение</a></label>
+

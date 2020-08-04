@@ -11,32 +11,8 @@ export interface User {
   onlineStatus: string
   online?: boolean
   text?: boolean
-  view?: boolean
-  theme?: number
+  read?: boolean
   surnameView?: boolean
-  setting?: boolean
-  _id?: string
-}
-
-export interface Picture {
-  folder: boolean
-  boysGreyPicture?: string
-  girlsGreyPicture?: string
-  boysColorPicture?: string
-  girlsColorPicture?: string
-  answers: Picture[]
-  text?: string
-  parent?: Picture
-  p_sort: number
-  invisible: boolean
-  system: boolean
-  user?: User
-  many?: boolean
-  _id?: string
-}
-
-export interface Institution {
-  name: string
   _id?: string
 }
 
@@ -49,9 +25,36 @@ export interface Message {
   read: boolean
   _id?: string
 }
-/*
+
+export interface Institution {
+  name: string
+  _id?: string
+}
+
+export interface Picture {
+  readonly folder: boolean
+  boysGreyPicture?: string
+  girlsGreyPicture?: string
+  boysColorPicture?: string
+  girlsColorPicture?: string
+  answers: Picture[]
+  text?: string
+  parent?: Picture
+  p_sort: number
+  invisible?: boolean
+  readonly system: boolean
+  user?: User
+  many?: boolean
+  readonly _id?: string
+}
+
 export interface Folder {
   many: boolean
-  parent: string
+  parent?: string
+  _id?: string
 }
-*/
+
+export interface PictureAndFolder {
+  pictures: Picture[]
+  folder: Folder
+}

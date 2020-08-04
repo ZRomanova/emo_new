@@ -63,8 +63,9 @@ module.exports.update = async function(req, res) {
 module.exports.getAll = async function(req, res) {
   try {
     const pictures = await Picture.find({parent: req.params.folderID})
-    //const picturesFolder = await Picture.findOne({_id: req.params.folderID}, {many: 1, parent: 1, _id: 0})
-    res.status(200).json(pictures)
+    const folder = await Picture.findOne({_id: req.params.folderID}, {many: 1, parent:1})
+    const picturesAndFolder = {"pictures": pictures, "folder": folder}
+    res.status(200).json(picturesAndFolder)
   } catch (e) {
     errorHandler(res, e)
   }

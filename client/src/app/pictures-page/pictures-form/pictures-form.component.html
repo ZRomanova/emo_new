@@ -1,0 +1,80 @@
+<form id="edit_picture_or_folder" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div *ngIf="whatDo === 'newfolder'">
+        <p class="purple">
+            Папка содержит пиктограммы, которые имеют несколько вариантов?
+        </p>
+        <input name="many" type="radio" formControlName="many"> Да <br>
+        <input name="many" type="radio" formControlName="many"> Нет, у всех картинок будет один вариант <br>
+    </div>
+
+    <div *ngIf="many === 'true'">
+        <p class="in_new_user purple">Чёрно-белая пиктограмма для мальчиков:</p>
+        <img class="now_img" src="">
+        <input type="file"  formControlName="boysGreyPicture"><br>
+        <span  *ngIf="whatDo === 'edit'"><input name="clean" type="checkbox"> Удалить картинку <br></span>
+
+        <p class="in_new_user purple">Чёрно-белая пиктограмма для девочек:</p>
+        <input type="file" formControlName="girlsGreyPicture"><br>
+        <span  *ngIf="whatDo === 'edit'"><input name="clean" type="checkbox"> Удалить картинку <br></span>
+
+        <p class="in_new_user purple">Цветная пиктограмма для мальчиков:</p>
+        <input type="file" formControlName="boysColorPicture"><br>
+        <span  *ngIf="whatDo === 'edit'"><input name="clean" type="checkbox"> Удалить картинку <br></span>
+
+        <p class="in_new_user purple">Цветная пиктограмма для мальчиков:</p>
+        <input type="file" formControlName="girlsColorPicture"><br>
+        <span  *ngIf="whatDo === 'edit'"><input name="clean" type="checkbox"> Удалить картинку <br></span>
+    </div>
+
+    <div *ngIf="many === 'false'">
+        <p class="in_new_user purple">Картинка:</p>
+        <img class="now_img" src="">
+        <input type="file" formControlName="picture"><br>
+        <input name="clean" type="checkbox" *ngIf="whatDo === 'edit'">
+    </div>
+
+    <p  class="in_new_user purple">Текст:</p>
+    <input type="text"  formControlName="text"> 
+
+    <p class="in_new_user purple">Ответы:</p>
+    <select size="10" id="new_picture_select" multiple>
+        <option>Ответ</option>
+        <option>Ответ</option>
+        <option>Ответ</option>
+        <option>Ответ</option>
+    </select>
+
+    <p class="in_new_user purple">Сделать картинку невидимой?</p>
+    <input name="invisible" type="radio"  formControlName="invisible"> Да <br>
+    <input name="invisible" type="radio" formControlName="invisible" checked> Нет <br>
+
+    <br><br>
+    <button id="back_button" type="button" hidden></button>
+    <label 
+    for="back_button" 
+    class="new_user_button form_picture_button" [routerLink]="['/manage/pictures']">
+        Назад
+    </label>
+
+    <button id="submit_button" type="reset" hidden></button>
+    <label 
+    for="submit_button" 
+    class="new_user_button form_picture_button">
+        Сброс
+    </label>
+
+    <button id="submit_button" type="submit" hidden></button>
+    <label 
+    for="submit_button" 
+    class="new_user_button form_picture_button">
+        Сохранить
+    </label>
+
+    <button id="submit_button" type="button" hidden></button>
+    <label 
+    *ngIf="whatDo === 'edit'"
+    for="submit_button" 
+    class="new_user_button form_picture_button">
+        Удалить
+    </label>
+</form>

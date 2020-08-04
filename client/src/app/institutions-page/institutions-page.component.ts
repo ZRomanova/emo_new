@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Institution } from '../shared/interfaces';
+import { Observable } from 'rxjs';
+import {InstitutionsService} from '../shared/services/institutions.service'
 
 @Component({
   selector: 'app-institutions-page',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InstitutionsPageComponent implements OnInit {
 
-  constructor() { }
+  institutions$: Observable<Institution[]>
+
+  constructor(private institutionsService: InstitutionsService) {}
 
   ngOnInit(): void {
+    this.institutions$ = this.institutionsService.fetch()
   }
 
 }

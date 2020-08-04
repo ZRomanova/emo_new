@@ -53,11 +53,15 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  view: {           // показывать, почитаны сообщения или нет
+  read: {           // показывать, почитаны сообщения или нет
     type: Boolean,
     default: false
   },
-  theme: {          // темы: 1 - сине-розовая, 2 - зелёно-фиолетовая, 3 - жёлто-оранжевая
+  firstColor: {          // первый цвет: 1 - розовый, 2 - оранжевый, 3 - жёлтый, 4 - зелёный, 5 - голубой, 6 - фиолетовый, 7 - коричневый
+    type: Number,
+    default: 5
+  },
+  secondColor: {          // второй цвет
     type: Number,
     default: 1
   },
@@ -65,9 +69,9 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  setting: {        // разрешить пользователю менять настройки
-    type: Boolean,
-    default: true
+  setting: {        // 0 - не разрешать менять настройки, 1 - разрешать менять только цвета, 2 - разрешать менять все настройки
+    type: Number,
+    default: 1
   }
     
   

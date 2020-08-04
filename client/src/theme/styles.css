@@ -36,6 +36,7 @@
     font-family: arial; /*меняем шрифт*/
     border-radius:4px; /*добавляем скругление*/
     transition: all 0.3s 0.01s ease; /*делаем плавный переход*/
+    text-align: center;
 }
 .nav-admin:hover, #submit:hover, .new_user_button:hover, 
 .inst-edit:hover {
@@ -64,7 +65,7 @@
     margin: auto;
     margin-bottom: 10px;
 }
-.avatar {
+.avatarAdmin {
     width: 200px;
     height: auto;
     display: inline-block;
@@ -205,4 +206,10 @@ p {
 .now_img {
     width: 200px;
     height: auto;
+}
+.inst-right {
+    float: right
+}
+.form_picture_button {
+    margin-right: 5px;
 }

@@ -1,1 +1,50 @@
-<p>users-page works!</p>
+
+<form class="user_filtr">
+    <p class="in_user_filtr purple">Имя:</p>
+    <input type="text"> 
+
+    <p class="in_user_filtr purple">Фамилия:</p>
+    <input type="text">
+
+    <p class="in_user_filtr purple">Учреждение:</p>
+    <select>
+        <option>Все</option>
+        <option>Учреждение 1</option>
+    </select>
+
+    <p class="in_user_filtr purple">Пол:</p>
+    <input name="sex" type="checkbox"> Мужской <br>
+    <input name="sex" type="checkbox"> Женский <br>
+
+    <p class="in_user_filtr purple">Статус:</p>
+    <input name="status" type="checkbox"> Администратор <br>
+    <input name="status" type="checkbox"> Модератор <br>
+    <input name="status" type="checkbox"> Подопечный <br>
+    <input name="status" type="checkbox"> Родственник <br>
+    <input name="status" type="checkbox"> Гость <br>
+
+    <button id="submit_button" type="submit" hidden></button>
+    <label for="submit_button" id="submit">Применить фильтр</label>
+</form>
+
+<div class="user" *ngIf="users$">
+    <div 
+    class="user"
+    *ngFor="let user of users">
+        <p class="user_title">{{user.surname}} {{user.name}}</p><br>
+        <img 
+        class="avatarAdmin" 
+        *ngIf="user.photo"
+        [src]="user.photo">
+        <div class="div_user_info">
+            <p class="user_info">Логин: {{user.login}}</p><br>
+            <p class="user_info">Пол: женский</p><br>
+            <p class="user_info">Учреждение: "{{user.institution}}"</p><br>
+            <p class="user_info">Статус: админ</p><br>
+            <div class="button"  class="nav-admin"><a>Редактировать</a></div>
+        </div>
+    </div>
+</div>
+
+<button id="add_user_bottom" hidden></button>
+<label for="add_user_bottom" id="add_user"><a  class="nav-admin">Добавить пользователя</a></label>
