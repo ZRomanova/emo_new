@@ -63,7 +63,7 @@ module.exports.update = async function(req, res) {
 module.exports.getAll = async function(req, res) {
   try {
     const pictures = await Picture.find({parent: req.params.folderID})
-    const folder = await Picture.findOne({_id: req.params.folderID}, {many: 1, parent:1})
+    const folder = await Picture.findOne({_id: req.params.folderID}, {many: 1, parent:1, text: 1})
     const picturesAndFolder = {"pictures": pictures, "folder": folder}
     res.status(200).json(picturesAndFolder)
   } catch (e) {
@@ -73,7 +73,7 @@ module.exports.getAll = async function(req, res) {
 
 module.exports.getByPictureID = async function(req, res) {
   try {
-    const picture = await Picture.findOne({_id: req.query.pictureID})
+    const picture = await Picture.findOne({_id: req.params.pictureID})
     res.status(200).json(picture)
   } catch (e) {
     errorHandler(res, e)

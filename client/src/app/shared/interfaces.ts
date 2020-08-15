@@ -5,7 +5,7 @@ export interface User {
   surname: string
   birthDate?: Date
   sex: number
-  institution: Institution
+  institution: string
   levelStatus: number
   photo?: string
   onlineStatus: string
@@ -39,16 +39,17 @@ export interface Picture {
   girlsColorPicture?: string
   answers: Picture[]
   text?: string
-  parent?: Picture
+  parent?: string
   p_sort: number
   invisible?: boolean
   readonly system: boolean
   user?: User
   many?: boolean
-  readonly _id?: string
+  _id?: string
 }
 
 export interface Folder {
+  text: string
   many: boolean
   parent?: string
   _id?: string
@@ -57,4 +58,8 @@ export interface Folder {
 export interface PictureAndFolder {
   pictures: Picture[]
   folder: Folder
+}
+
+export interface MessageFromServer {
+  message: string
 }

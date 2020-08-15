@@ -18,6 +18,8 @@ import { UsersPageComponent } from './users-page/users-page.component';
 import { PicturesPageComponent } from './pictures-page/pictures-page.component';
 import { InstitutionsPageComponent } from './institutions-page/institutions-page.component';
 import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-form.component';
+import { LoaderComponent } from './shared/components/loader/loader.component';
+import { EasyLangPipe } from './shared/pipes/easy-lang.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-fo
     UsersPageComponent,
     PicturesPageComponent,
     InstitutionsPageComponent,
-    PicturesFormComponent
+    PicturesFormComponent,
+    LoaderComponent,
+    EasyLangPipe
   ],
   imports: [
     BrowserModule,

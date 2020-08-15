@@ -22,7 +22,7 @@ const stop = (req, res, next) =>  {
 router.post('/:parentID', passport.authenticate('jwt', {session: false}), stop, upload.fields(fields), controller.create)
 router.patch('/:pictureID', passport.authenticate('jwt', {session: false}), stop, upload.fields(fields), controller.update)
 router.get('/:folderID', passport.authenticate('jwt', {session: false}), stop, controller.getAll)
-router.get('/', passport.authenticate('jwt', {session: false}), stop, controller.getByPictureID)
+router.get('/one/:pictureID', passport.authenticate('jwt', {session: false}), stop, controller.getByPictureID)
 router.delete('/:pictureID', passport.authenticate('jwt', {session: false}), stop, controller.remove)
 
 module.exports = router

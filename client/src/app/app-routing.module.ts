@@ -40,7 +40,7 @@ const routes: Routes = [
       {path: 'manage/users', component: UsersPageComponent},
       {path: 'manage/pictures', redirectTo: '/manage/pictures/5f12ff8cc06cd105437d84e3', pathMatch: 'full'},
       {path: 'manage/pictures/:_id', component: PicturesPageComponent},
-      {path: 'manage/pictures/:do/:many/:_id', component: PicturesFormComponent},
+      {path: 'manage/pictures/:do/:many/:folder/:_id', component: PicturesFormComponent},
       {path: 'manage/institutions', component: InstitutionsPageComponent}
     ]
   }

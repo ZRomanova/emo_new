@@ -1,12 +1,15 @@
 <div 
 class="pictures"
-*ngIf="picturesAndFolder$ | async as pictureAndFolder">
-    <div>
+*ngIf="picturesAndFolder$ | async as pictureAndFolder; else loader">
+    <div *ngIf="pictureAndFolder.pictures.length !== 0; else empty">
+        <div class="folderTitle" *ngIf="pictureAndFolder.folder.text !== ''">
+            {{pictureAndFolder.folder.text}}
+        </div> 
         <div class="picture" 
             *ngFor="let picture of pictureAndFolder.pictures">
             <div 
             class="p_text purple">
-                {{picture.folder? 'Папка' : 'Картинка'}}
+                {{picture.invisible ? 'СКРЫТАЯ ' : ''}}{{picture.folder ? 'ПАПКА' : 'КАРТИНКА'}}
             </div>
             <div *ngIf="pictureAndFolder.folder.many">
                 <div class="p_border">
@@ -30,7 +33,7 @@ class="pictures"
             <div class="p_text">{{picture.text}}</div>
 
             <div class="button edit-picture">
-                <a class="nav-admin" [routerLink]="['/manage/pictures', 'edit', pictureAndFolder.folder.many, picture._id]">
+                <a class="nav-admin" [routerLink]="['/manage/pictures', 'edit', pictureAndFolder.folder.many, pictureAndFolder.folder._id, picture._id]">
                     Редактировать
                 </a>
             </div>
@@ -44,37 +47,47 @@ class="pictures"
                 </a>
             </div>
         </div>
+    
+    </div>
+    <ng-template #empty>
+        Эта папка пуста
+    </ng-template>
 
-        <button id="back_picture_bottom" hidden></button>
+    <button id="add_picture_botton" hidden></button>
         <label 
-            for="back_picture_bottom" 
-            id="back_picture"
-            *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'">
-                <a class="nav-admin" [routerLink]="['/manage/pictures', pictureAndFolder.folder.parent]">Назад</a>
-        </label>
-
-        <button id="add_picture_bottom" hidden></button>
-        <label 
-        for="add_picture_bottom" 
+        for="add_picture_botton" 
         id="add_picture" 
         >
-            <a class="nav-admin" [routerLink]="['/manage/pictures', 'newpicture', pictureAndFolder.folder.many, pictureAndFolder.folder._id]">
+            <a class="nav-admin" [routerLink]="['/manage/pictures', 'newpicture', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']">
                 Добавить каринку
             </a>
         </label>
     
-        <button id="folder_picture_bottom" hidden></button>
+        <button id="folder_picture_botton" hidden></button>
         <label 
-        for="folder_picture_bottom" 
+        for="folder_picture_botton" 
         id="add_folder">
-            <a class="nav-admin" [routerLink]="['/manage/pictures', 'newfolder', pictureAndFolder.folder.many, pictureAndFolder.folder._id]">
+            <a class="nav-admin" [routerLink]="['/manage/pictures', 'newfolder', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']">
                 Добавить папку
             </a>
         </label>
 
-    </div>
+        <button id="back_picture_botton" hidden></button>
+        <label 
+            for="back_picture_botton" 
+            id="back_picture"
+            *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'">
+                <a class="nav-admin" [routerLink]="['/manage/pictures', pictureAndFolder.folder.parent]">
+                    Назад
+                </a>
+        </label>
+    
 
 </div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
 
 
 

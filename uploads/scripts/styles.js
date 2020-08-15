@@ -1,4 +1,4 @@
-window.onload = textColor
+//window.onload = textColor
 
 
 function textColor() {
