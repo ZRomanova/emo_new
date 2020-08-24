@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {Observable} from 'rxjs'
-import {User} from '../interfaces'
+import {User, MessageFromServer} from '../interfaces'
 import {tap} from 'rxjs/operators'
 
 @Injectable({
@@ -25,6 +25,10 @@ import {tap} from 'rxjs/operators'
           )
         )
     }
+
+    getUser(): Observable<User> {
+      return this.http.get<User>('/api/people')
+    }
   
     setToken(token: string) {
       this.token = token
@@ -41,5 +45,9 @@ import {tap} from 'rxjs/operators'
     logout() {
       this.setToken(null)
       localStorage.clear()
+    }
+
+    exit(): Observable<MessageFromServer> {
+      return this.http.delete<MessageFromServer>('/api/people')
     }
   }

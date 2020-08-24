@@ -1,18 +1,25 @@
-<div class="nav">
-    <ul id="nav-mobile" class="">
-        <li
-        class="nav-admin-li"
-        *ngFor="let link of links"
-        routerLinkActive="manage-active"
-        >
-        <a [routerLink]="[link.url]" class="nav-admin">
-            {{link.name}}
-        </a>
-        </li> 
-        <li class="nav-admin-li-right"><a class="nav-admin"  href="#" (click)="logout($event)">Выход</a></li>
-        <li class="nav-admin-li-right"><a class="nav-admin" routerLink="/people/friends">Вернуться</a></li>              
-    </ul>
+<div *ngIf="!reloading; else reloader">
+    <div class="nav light-{{color}}-bg">
+        <ul id="nav-mobile" class="">
+            <li
+            class="nav-admin-li"
+            *ngFor="let link of links"
+            >
+            <a 
+            [routerLink]="[link.url]" 
+            class="nav-admin middle-{{color}}-bg-hover"
+            routerLinkActive="manage-active">
+                {{link.name}}
+            </a>
+            </li> 
+            <li class="nav-admin-li-right"><a class="nav-admin middle-{{color}}-bg-hover"  href="#" (click)="logout($event)">Выход</a></li>
+            <li class="nav-admin-li-right"><a class="nav-admin middle-{{color}}-bg-hover" routerLink="/people/friends">Вернуться</a></li>              
+        </ul>
+    </div>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
 </div>
-<div class="content">
-    <router-outlet></router-outlet>
-</div>
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>

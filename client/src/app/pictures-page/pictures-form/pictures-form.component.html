@@ -1,6 +1,11 @@
-<form id="edit_picture_or_folder" [formGroup]="form" (ngSubmit)="onSubmit()">
+<form 
+id="edit_picture_or_folder" 
+[formGroup]="form" 
+(ngSubmit)="onSubmit()"
+class="dark-{{session.firstColor}}-border"
+*ngIf="session$ | async as session; else loader">
     <div *ngIf="whatDo == 'newfolder'">
-        <p class="purple">
+        <p class="dark-{{session.firstColor}}-color">
             Папка содержит пиктограммы, которые имеют несколько вариантов?
         </p>
         <input name="many" type="radio" formControlName="many" value="true"> Да <br>
@@ -8,45 +13,53 @@
     </div>
 
     <div *ngIf="many == 'true'">
-        <p class="in_new_user purple">Чёрно-белая пиктограмма для мальчиков:</p>
+        <p class="in_new_user dark-{{session.firstColor}}-color">Чёрно-белая пиктограмма для мальчиков:</p>
         <input type="file"  formControlName="boysGreyPicture"  (change)="onFile1Upload($event)"><br>
         <img 
         class="now_img" 
         [src]="image1Preview"
         *ngIf="image1Preview"
         >
-        <span  *ngIf="whatDo == 'edit' && image1Preview !== ''"><br><input name="clean" type="checkbox"> Удалить картинку <br></span>
+        <span  *ngIf="image1Preview !== ''">
+            <br><input formControlName="clean1" type="checkbox"> Удалить картинку <br>
+        </span>
 
-        <p class="in_new_user purple">Чёрно-белая пиктограмма для девочек:</p>
+        <p class="in_new_user dark-{{session.firstColor}}-color">Чёрно-белая пиктограмма для девочек:</p>
         <input type="file" formControlName="girlsGreyPicture"  (change)="onFile2Upload($event)"><br>
         <img 
         class="now_img" 
         [src]="image2Preview"
         *ngIf="image2Preview"
         >
-        <span  *ngIf="whatDo == 'edit' && image2Preview !== ''"><br><input name="clean" type="checkbox"> Удалить картинку <br></span>
+        <span  *ngIf="image2Preview !== ''">
+            <br><input formControlName="clean2" type="checkbox"> Удалить картинку <br>
+        </span>
 
-        <p class="in_new_user purple">Цветная пиктограмма для мальчиков:</p>
+        <p class="in_new_user dark-{{session.firstColor}}-color">Цветная пиктограмма для мальчиков:</p>
         <input type="file" formControlName="boysColorPicture"  (change)="onFile3Upload($event)"><br>
         <img 
         class="now_img" 
         [src]="image3Preview"
         *ngIf="image3Preview"
         >
-        <span  *ngIf="whatDo == 'edit' && image3Preview !== ''"><br><input name="clean" type="checkbox"> Удалить картинку <br></span>
+        <span  *ngIf="image3Preview !== ''">
+            <br><input formControlName="clean3" type="checkbox"> Удалить картинку <br>
+        </span>
 
-        <p class="in_new_user purple">Цветная пиктограмма для мальчиков:</p>
+        <p class="in_new_user dark-{{session.firstColor}}-color">Цветная пиктограмма для девочек:</p>
         <input type="file" formControlName="girlsColorPicture"  (change)="onFile4Upload($event)"><br>
         <img 
         class="now_img" 
         [src]="image4Preview"
         *ngIf="image4Preview"
         >
-        <span  *ngIf="whatDo == 'edit' && image4Preview !== ''"><br><input name="clean" type="checkbox"> Удалить картинку <br></span>
+        <span  *ngIf="image4Preview !== ''">
+            <br><input formControlName="clean4" type="checkbox"> Удалить картинку <br>
+        </span>
     </div>
 
     <div *ngIf="many == 'false'">
-        <p class="in_new_user purple">Картинка:</p>
+        <p class="in_new_user dark-{{session.firstColor}}-color">Картинка:</p>
         
         <input type="file" formControlName="boysGreyPicture" (change)="onFile1Upload($event)"><br>
         <img 
@@ -54,58 +67,61 @@
         [src]="image1Preview"
         *ngIf="image1Preview"
         > 
-        <span  *ngIf="whatDo == 'edit' && image1Preview !== ''"><br><input name="clean" type="checkbox"> Удалить картинку <br></span>
+        <span  *ngIf="image1Preview !== ''">
+            <br><input formControlName="clean1" type="checkbox"> Удалить картинку <br>
+        </span>
     </div>
 
-    <p  class="in_new_user purple">Текст:</p>
-    <input type="text"  formControlName="text"> 
+    <p  class="in_new_user dark-{{session.firstColor}}-color">Текст:</p>
+    <input type="text" formControlName="text"> 
 
-    <p class="in_new_user purple">Ответы:</p>
-    <select size="10" id="new_picture_select" multiple>
-        <option>Ответ</option>
-        <option>Ответ</option>
-        <option>Ответ</option>
-        <option>Ответ</option>
-    </select>
+    <div *ngIf="whatDo === 'editfalse' || whatDo === 'newpicture'">
+        <p class="in_new_user dark-{{session.firstColor}}-color">Ответы:</p>
+        <div class="answers_box dark-{{session.firstColor}}-border" *ngIf="picturesAndFolder$ | async as pictureAndFolder">
+            <button 
+            *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'"
+            (click)="answerChange(true, pictureAndFolder.folder.parent)">
+                Назад
+            </button>
+            <br>
+            <div 
+            class="answer dark-{{session.firstColor}}-border"
+            *ngFor="let picture of pictureAndFolder.pictures">
+                <div class="answer_div dark-{{session.firstColor}}-border" (click)="answerChange(picture.folder, picture._id)">
+                    <img class="picta_answer" [src]="picture.boysGreyPicture">
+                </div>
+                <div class="p_text">{{picture.text}}</div>
+                <button (click)="checkAnswer(picture._id)" type="button">{{answers.includes(picture._id) ? 'Отменить' : 'Выбрать'}}</button>
+            </div> 
+        </div>
+    </div>
 
-    <p class="in_new_user purple">Сделать картинку/папку невидимой?</p>
+    <p class="in_new_user dark-{{session.firstColor}}-color">Сделать {{whatDo === 'editfalse' || whatDo === 'newpicture' ? 'картинку' : 'папку'}} скрытой?</p>
     <input name="invisible" type="radio"  formControlName="invisible" value="true"> Да <br>
     <input name="invisible" type="radio" formControlName="invisible" value="false"> Нет <br>
 
-    <br><br>
+    <br>
 
-    <a class="nav-admin form_picture_button" [routerLink]="['/manage/pictures', folder]">Назад</a>
-
-    <!--
-    <button id="reset_button" 
-    type="button" 
-    (click)="form.reset()"
-    (click)="image1Preview=''"
-    (click)="image2Preview=''"
-    (click)="image3Preview=''"
-    (click)="image4Preview=''"
-    hidden 
-    ></button>
-    <label 
-        for="reset_button" 
-        class="new_user_button form_picture_button">
-            Сброс
-    </label>
-    -->
+    <a 
+    class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
+    [routerLink]="['/manage/pictures', folder]">Назад</a>
 
     <button id="submit_button" type="submit" hidden></button>
     <label 
     for="submit_button" 
-    class="new_user_button form_picture_button">
+    class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover">
         Сохранить
     </label>
 
     <button id="delete_button" type="button" hidden></button>
     <label 
-    *ngIf="whatDo === 'edit' && !system"
+    *ngIf="(whatDo === 'edittrue' || whatDo === 'editfalse') && !system"
     for="delete_button" 
-    class="new_user_button form_picture_button"
+    class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover"
     (click)="deletePicture()">
         Удалить
     </label>
 </form>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

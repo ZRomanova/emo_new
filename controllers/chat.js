@@ -5,12 +5,12 @@ const Picture = require('../models/Picture')
 
 module.exports.getAllMessage = async function(req, res) {   
     try {
-      const friend = req.query.friend
+      const friend = req.params.userID
       const me = req.user.id
 
-      await Message.updateMany(
-        {sender: friend, recipient: me}, 
-        {$set: {read: true}},
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {onlineStatus: friend}},
         {new: true})
 
       const messagesRead = await Message
@@ -26,7 +26,15 @@ module.exports.getAllMessage = async function(req, res) {
           {sender: friend, recipient: me, read: false}
         )
         .sort({time: 1})
-      res.status(200).json(messagesRead, messagesNotRead)
+
+      const message = {"messagesRead": messagesRead, "messagesNotRead": messagesNotRead}
+
+      await Message.updateMany(
+        {sender: friend, recipient: me}, 
+        {$set: {read: true}},
+        {new: true})
+
+      res.status(200).json(message)
     } catch (e) {
       errorHandler(res, e)
     }
@@ -34,10 +42,6 @@ module.exports.getAllMessage = async function(req, res) {
 
 module.exports.getAllPictures = async function(req, res) {
     try {
-      await User.updateOne(
-        {_id: req.user.id}, 
-        {$set: {onlineStatus: req.query.friend}},
-        {new: true})
 
       const f = {parent: req.params.parentID, invisible: {$ne: true}}
       if (

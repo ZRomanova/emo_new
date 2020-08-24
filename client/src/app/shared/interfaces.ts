@@ -1,6 +1,6 @@
 export interface User {
   login: string
-  password: string
+  password?: string
   name: string
   surname: string
   birthDate?: Date
@@ -14,15 +14,24 @@ export interface User {
   read?: boolean
   surnameView?: boolean
   _id?: string
+  setting?: number
+  vote?: boolean
+  sentence?: boolean
+  answers?: boolean
+  change?: boolean
+  defaultColor?: string
+  birthdays?: boolean
+  firstColor: string
+  secondColor: string
 }
 
 export interface Message {
-  sender: User
-  recipient: User
+  sender?: string
+  recipient: string
   time: Date
   type: number[]
   message: string[]
-  read: boolean
+  read?: boolean
   _id?: string
 }
 
@@ -37,13 +46,13 @@ export interface Picture {
   girlsGreyPicture?: string
   boysColorPicture?: string
   girlsColorPicture?: string
-  answers: Picture[]
+  answers: string[]
   text?: string
   parent?: string
   p_sort: number
   invisible?: boolean
   readonly system: boolean
-  user?: User
+  user?: string
   many?: boolean
   _id?: string
 }
@@ -62,4 +71,13 @@ export interface PictureAndFolder {
 
 export interface MessageFromServer {
   message: string
+}
+
+export interface Filter {
+  login?: string
+  name?: string
+  surname?: string
+  institution?: string
+  sex?: string
+  levelStatus?: string
 }

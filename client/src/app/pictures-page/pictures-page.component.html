@@ -1,90 +1,98 @@
-<div 
-class="pictures"
-*ngIf="picturesAndFolder$ | async as pictureAndFolder; else loader">
-    <div *ngIf="pictureAndFolder.pictures.length !== 0; else empty">
-        <div class="folderTitle" *ngIf="pictureAndFolder.folder.text !== ''">
-            {{pictureAndFolder.folder.text}}
-        </div> 
-        <div class="picture" 
-            *ngFor="let picture of pictureAndFolder.pictures">
-            <div 
-            class="p_text purple">
-                {{picture.invisible ? 'СКРЫТАЯ ' : ''}}{{picture.folder ? 'ПАПКА' : 'КАРТИНКА'}}
-            </div>
-            <div *ngIf="pictureAndFolder.folder.many">
-                <div class="p_border">
-                    <img class="picta-pictures" [src]="picture.boysGreyPicture">
+<div *ngIf="session$ | async as session; else loader">
+    <div 
+    class="pictures"
+    *ngIf="picturesAndFolder$ | async as pictureAndFolder; else loader">
+        <div *ngIf="pictureAndFolder.pictures.length !== 0; else empty">
+            <div class="folderTitle dark-{{session.firstColor}}-color" *ngIf="pictureAndFolder.folder.text !== ''">
+                {{pictureAndFolder.folder.text}}
+            </div> 
+            <div class="picture dark-{{session.firstColor}}-border" 
+                *ngFor="let picture of pictureAndFolder.pictures">
+                <div 
+                class="p_text dark-{{session.firstColor}}-color">
+                    {{picture.invisible ? 'СКРЫТАЯ ' : ''}}{{picture.folder ? 'ПАПКА' : 'КАРТИНКА'}}
                 </div>
-                <div class="p_border">
-                    <img class="picta-pictures" [src]="picture.girlsGreyPicture">
+                <div *ngIf="pictureAndFolder.folder.many">
+                    <div class="p_border dark-{{session.firstColor}}-border">
+                        <img class="picta-pictures" [src]="picture.boysGreyPicture">
+                    </div>
+                    <div class="p_border dark-{{session.firstColor}}-border">
+                        <img class="picta-pictures" [src]="picture.girlsGreyPicture">
+                    </div>
+                    <div class="p_border dark-{{session.firstColor}}-border">
+                        <img class="picta-pictures" [src]="picture.boysColorPicture">
+                    </div>
+                    <div class="p_border dark-{{session.firstColor}}-border">
+                        <img class="picta-pictures" [src]="picture.girlsColorPicture">
+                    </div>
                 </div>
-                <div class="p_border">
-                    <img class="picta-pictures" [src]="picture.boysColorPicture">
-                </div>
-                <div class="p_border">
-                    <img class="picta-pictures" [src]="picture.girlsColorPicture">
-                </div>
-            </div>
 
-            <div *ngIf="!pictureAndFolder.folder.many">
-                <div class="p_border_one"><img class="picta_one" [src]="picture.boysGreyPicture"></div>
-            </div>
+                <div *ngIf="!pictureAndFolder.folder.many">
+                    <div class="p_border_one dark-{{session.firstColor}}-border"><img class="picta_one" [src]="picture.boysGreyPicture"></div>
+                </div>
 
-            <div class="p_text">{{picture.text}}</div>
+                <div class="p_text">{{picture.p_sort}}. {{picture.text ? picture.text : '[без текста]'}}</div>
 
-            <div class="button edit-picture">
-                <a class="nav-admin" [routerLink]="['/manage/pictures', 'edit', pictureAndFolder.folder.many, pictureAndFolder.folder._id, picture._id]">
-                    Редактировать
-                </a>
+                <div class="button edit-picture">
+                    <a 
+                    class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                    [routerLink]="['/manage/pictures', 'edit' + picture.folder, pictureAndFolder.folder.many, pictureAndFolder.folder._id, picture._id]"
+                    [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3'}">
+                        Редактировать
+                    </a>
+                </div>
+                <div 
+                class="button edit-picture"
+                *ngIf="picture.folder && pictureAndFolder.folder._id !== '5f130939962c2f062467f853'">
+                    <a 
+                    class="nav-admin middle-{{session.firstColor}}-bg-hover"
+                    [routerLink]="['/manage/pictures', picture._id]">
+                        Перейти
+                    </a>
+                </div>
             </div>
-            <div 
-            class="button edit-picture"
-            *ngIf="picture.folder && pictureAndFolder.folder._id !== '5f130939962c2f062467f853'">
-                <a 
-                class="nav-admin"
-                [routerLink]="['/manage/pictures', picture._id]">
-                    Перейти
-                </a>
-            </div>
+        
         </div>
-    
-    </div>
-    <ng-template #empty>
-        Эта папка пуста
-    </ng-template>
+        <ng-template #empty>
+            Эта папка пуста
+        </ng-template>
 
-    <button id="add_picture_botton" hidden></button>
-        <label 
-        for="add_picture_botton" 
-        id="add_picture" 
-        >
-            <a class="nav-admin" [routerLink]="['/manage/pictures', 'newpicture', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']">
-                Добавить каринку
-            </a>
-        </label>
-    
-        <button id="folder_picture_botton" hidden></button>
-        <label 
-        for="folder_picture_botton" 
-        id="add_folder">
-            <a class="nav-admin" [routerLink]="['/manage/pictures', 'newfolder', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']">
-                Добавить папку
-            </a>
-        </label>
-
-        <button id="back_picture_botton" hidden></button>
-        <label 
-            for="back_picture_botton" 
-            id="back_picture"
-            *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'">
-                <a class="nav-admin" [routerLink]="['/manage/pictures', pictureAndFolder.folder.parent]">
-                    Назад
+        <button id="add_picture_botton" hidden></button>
+            <label 
+            for="add_picture_botton" 
+            id="add_picture" 
+            >
+                <a 
+                class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                [routerLink]="['/manage/pictures', 'newpicture', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']"
+                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3'}">
+                    Добавить каринку
                 </a>
-        </label>
-    
+            </label>
+        
+            <button id="folder_picture_botton" hidden></button>
+            <label 
+            for="folder_picture_botton" 
+            id="add_folder">
+                <a class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                [routerLink]="['/manage/pictures', 'newfolder', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']"
+                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3'}">
+                    Добавить папку
+                </a>
+            </label>
 
+            <button id="back_picture_botton" hidden></button>
+            <label 
+                for="back_picture_botton" 
+                id="back_picture"
+                *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'">
+                    <a class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                    [routerLink]="['/manage/pictures', pictureAndFolder.folder.parent]">
+                        Назад
+                    </a>
+            </label>
+    </div>
 </div>
-
 <ng-template #loader>
     <app-loader></app-loader>
 </ng-template>

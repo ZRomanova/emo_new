@@ -1,0 +1,11 @@
+.inline-block {
+    display: inline-block;
+}
+.w40 {
+    width: 40px;
+}
+.color-div {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+}

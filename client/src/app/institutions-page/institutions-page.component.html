@@ -1,19 +1,31 @@
-
-<div *ngIf="institutions$ | async as institution"
-    class="institution">
-    <div 
-    class="institution"
-    *ngFor="let institution of institutions">
-        <button id="submit_button" hidden></button>
-        <label for="submit_button" class="inst-edit inst-right">Редактировать</label>
-
-        <button id="submit_button" hidden></button>
-        <label for="submit_button" class="inst-edit inst-right">Удалить</label>
+<div *ngIf="session$ | async as session; else loader">
+    <div *ngIf="institutions$ | async as institutions; else loader">
+        <div 
+        class="institution dark-{{session.firstColor}}-border"
+        *ngFor="let institution of institutions">
             
-        <span class="inst-span">{{institution.name}}</span>                
+            <a 
+            class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover" 
+            [routerLink]="['/manage/institutions', institution._id]">
+                Редактировать
+            </a>
+            <a 
+            class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover" 
+            [routerLink]="['/manage/institutions/delete', institution._id]">
+                Удалить
+            </a>
+                
+            <span class="inst-span">{{institution.name}}</span>                
+        </div>
     </div>
+
+    <a 
+    class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+    id="add_institution" 
+    [routerLink]="['/manage/institutions', 'new']">
+        Добавить учреждение
+    </a>
 </div>
-
-<button id="add_institution_bottom" hidden></button>
-<label for="add_institution_bottom" id="add_institution"><a class="nav-admin">Добавить учреждение</a></label>
-
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

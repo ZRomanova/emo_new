@@ -72,6 +72,30 @@ const userSchema = new Schema({
   setting: {        // 0 - не разрешать менять настройки, 1 - разрешать менять только цвета, 2 - разрешать менять все настройки
     type: Number,
     default: 1
+  },
+  vote: {               // разрешить записывать голосовые сообщения
+    type: Boolean,
+    default: false
+  },
+  sentence: {           // может ли отправлять предложения
+    type: Boolean,
+    default: false
+  },
+  answers: {            // видны ли подсказки к ответам
+    type: Boolean,
+    default: false
+  },
+  change: {             // доступна ли смена картинок цветные/чб
+    type: Boolean,
+    default: true
+  },
+  defaultColor: {       // цветные/чб по умолчанию ('grey', 'color')
+    type: String,
+    default: 'grey'
+  },
+  birthdays: {          // отображаются ли именинники
+    type: Boolean,
+    default: false
   }
     
   

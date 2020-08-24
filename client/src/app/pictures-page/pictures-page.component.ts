@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {PicturesService} from '../shared/services/pictures.service'
-import {PictureAndFolder} from '../shared/interfaces';
+import {PictureAndFolder, User} from '../shared/interfaces';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
+import { LoginService } from '../shared/services/login.service';
 
 @Component({
   selector: 'app-pictures-page',
@@ -13,12 +14,16 @@ export class PicturesPageComponent implements OnInit {
 
   pictureAndFolder: PictureAndFolder
   picturesAndFolder$: Observable<PictureAndFolder>
+  session$: Observable<User>
 
   constructor(
     private picturesService: PicturesService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private loginService: LoginService) { }
 
   ngOnInit(): void {
+    this.session$ = this.loginService.getUser()
+    
     this.route.params.subscribe((params: Params) => {
       this.picturesAndFolder$ = this.picturesService.fetch(params._id)
     })   

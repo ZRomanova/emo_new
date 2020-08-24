@@ -1,0 +1,141 @@
+<form id="edit_user" class="dark-{{session.firstColor}}-border" [formGroup]="form" *ngIf="!reloading; else reloader">
+    <img 
+    class="edit-avatar right dark-{{session.firstColor}}-border"
+    [src]="imagePreview"
+    *ngIf="imagePreview"
+    >
+    <h3 class="dark-{{session.firstColor}}-color">Основные данные:</h3>
+    <p class="dark-{{session.firstColor}}-color">Логин:</p>
+    <input type="text" formControlName="login"> 
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Пароль{{whatDo !== 'new' ? ' (заполните, если хотите сменить пароль)' : ''}}:</p>
+    <input type="text" formControlName="password">
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Имя:</p>
+    <input type="text" formControlName="name">
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Фамилия:</p>
+    <input type="text" formControlName="surname">
+    
+    <div *ngIf="session.levelStatus == 1">
+        <p class="in_new_user dark-{{session.firstColor}}-color">Учреждение:</p>
+        <select *ngIf="institutions$ | async as institutions" formControlName="institution">
+            <option 
+            *ngFor="let institution of institutions" 
+            value="{{institution._id}}" 
+            [selected]="(institution._id === userInstitution && whatDo !== 'new') || (whatDo == 'new' && institution._id == session.institution)">
+                {{institution.name}}
+            </option>
+        </select>
+    </div>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Дата рождения:</p>
+    День:
+    <select class="inline-blok" formControlName="day">
+        <option value="0">Выберите</option>
+        <option *ngFor="let day of days" value="{{day}}">{{day}}</option>
+    </select>
+    Месяц:
+    <select class="inline-blok" formControlName="month">
+        <option value="0">Выберите</option>
+        <option *ngFor="let month of months" value="{{month.num}}">{{month.name}}</option>
+    </select>
+    Год: <input class="inline-blok w40" type="text" formControlName="year">
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Пол:</p>
+    <input name="sex" type="radio" value="1" formControlName="sex" (change)="changeSex()"> Мужской <br>
+    <input name="sex" type="radio" value="2" formControlName="sex" (change)="changeSex()"> Женский <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Роль:</p>
+    <div *ngIf="session.levelStatus == 1">
+        <input name="status" type="radio" value="1" formControlName="status"> Администратор <br>
+    </div>
+    <input name="status" type="radio" value="2" formControlName="status"> Модератор <br>
+    <input name="status" type="radio" value="3" formControlName="status"> Подопечный <br>
+    <input name="status" type="radio" value="5" formControlName="status"> Взрослый <br>
+    <input name="status" type="radio" value="4" formControlName="status"> Гость <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Фото (пожалуйста, загружайте только квадратные фотографии):</p>
+    <input type="file" formControlName="photo" (change)="onFileUpload($event)"><br>
+
+    <h3 class="dark-{{session.firstColor}}-color">Настройки:</h3>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Показываются онлайны:</p>
+    <input name="online" type="radio" value="true" formControlName="online"> Да <br>
+    <input name="online" type="radio" value="false" formControlName="online"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Показываются отправляемые подписи под пиктограммами:</p>
+    <input name="Text" type="radio" value="true" formControlName="Text"> Да <br>
+    <input name="Text" type="radio" value="false" formControlName="Text"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Показывается, прочитано ли сообщение:</p>
+    <input name="read" type="radio" value="true" formControlName="read"> Да <br>
+    <input name="read" type="radio" value="false" formControlName="read"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Показываются фамилии (также добавляет поиск по фамилии):</p>
+    <input name="surnameView" type="radio" value="true" formControlName="surnameView"> Да <br>
+    <input name="surnameView" type="radio" value="false" formControlName="surnameView"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Доступна отправка голосовых сообщений:</p>
+    <input name="vote" type="radio" value="true" formControlName="vote"> Да <br>
+    <input name="vote" type="radio" value="false" formControlName="vote"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Доступна отправка предложений:</p>
+    <input name="sentence" type="radio" value="true" formControlName="sentence"> Да <br>
+    <input name="sentence" type="radio" value="false" formControlName="sentence"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Видны подсказки к ответам:</p>
+    <input name="answers" type="radio" value="true" formControlName="answers"> Да <br>
+    <input name="answers" type="radio" value="false" formControlName="answers"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Доступна смена цветный и чёрно-белых пиктограмм:</p>
+    <input name="change" type="radio" value="true" formControlName="change"> Да <br>
+    <input name="change" type="radio" value="false" formControlName="change"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Пиктограммы по умолчанию:</p>
+    <input name="defaultColor" type="radio" value="grey" formControlName="defaultColor"> Чёрно-белые <br>
+    <input name="defaultColor" type="radio" value="color" formControlName="defaultColor"> Цветные <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Выделяются именинники:</p>
+    <input name="birthdays" type="radio" value="true" formControlName="birthdays"> Да <br>
+    <input name="birthdays" type="radio" value="false" formControlName="birthdays"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Может ли пользователь менять настройки:</p>
+    <input name="setting" type="radio" value="2" formControlName="setting"> Может полностью <br>
+    <input name="setting" type="radio" value="1" formControlName="setting"> Может только цвета <br>
+    <input name="setting" type="radio" value="0" formControlName="setting"> Нет <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Первый цвет:</p>
+    <table>
+        <tr>
+            <td *ngFor="let color of colors">
+                <input id="f{{color}}" class="inline-blok" name="first" type="radio" value="{{color}}" formControlName="first">
+                <label for="f{{color}}">
+                    <div class="color-div light-{{color}}-bg"></div>
+                </label>
+            </td>
+        </tr> 
+    </table>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Второй цвет:</p>
+    <table>
+        <tr>
+            <td *ngFor="let color of colors">
+                <input id="s{{color}}" class="inline-blok" name="second" type="radio" value="{{color}}" formControlName="second"> 
+                <label for="s{{color}}">
+                    <div class="color-div light-{{color}}-bg"></div>
+                </label>
+            </td>
+        </tr> 
+    </table>
+
+    <br>
+    <a class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" [routerLink]="['/manage/users']">Назад</a>
+
+    <button id="submit_button" type="submit" (click)="onSubmit()" hidden></button>
+    <label for="submit_button" class="new_user_button middle-{{session.firstColor}}-bg-hover">Сохранить</label>
+</form>
+
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>

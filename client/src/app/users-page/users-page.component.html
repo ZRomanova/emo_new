@@ -1,50 +1,113 @@
+<div *ngIf="session$ | async as session; else reloader">
+    <div class="user_filtr">
+        <p class="in_user_filtr dark-{{session.firstColor}}-color">Логин:</p>
+        <input type="text" [(ngModel)]="login" name="login">
 
-<form class="user_filtr">
-    <p class="in_user_filtr purple">Имя:</p>
-    <input type="text"> 
+        <p class="in_user_filtr dark-{{session.firstColor}}-color">Имя:</p>
+        <input type="text" [(ngModel)]="name"  name="name"> 
 
-    <p class="in_user_filtr purple">Фамилия:</p>
-    <input type="text">
+        <p class="in_user_filtr dark-{{session.firstColor}}-color">Фамилия:</p>
+        <input type="text" [(ngModel)]="surname"  name="surname">
 
-    <p class="in_user_filtr purple">Учреждение:</p>
-    <select>
-        <option>Все</option>
-        <option>Учреждение 1</option>
-    </select>
-
-    <p class="in_user_filtr purple">Пол:</p>
-    <input name="sex" type="checkbox"> Мужской <br>
-    <input name="sex" type="checkbox"> Женский <br>
-
-    <p class="in_user_filtr purple">Статус:</p>
-    <input name="status" type="checkbox"> Администратор <br>
-    <input name="status" type="checkbox"> Модератор <br>
-    <input name="status" type="checkbox"> Подопечный <br>
-    <input name="status" type="checkbox"> Родственник <br>
-    <input name="status" type="checkbox"> Гость <br>
-
-    <button id="submit_button" type="submit" hidden></button>
-    <label for="submit_button" id="submit">Применить фильтр</label>
-</form>
-
-<div class="user" *ngIf="users$">
-    <div 
-    class="user"
-    *ngFor="let user of users">
-        <p class="user_title">{{user.surname}} {{user.name}}</p><br>
-        <img 
-        class="avatarAdmin" 
-        *ngIf="user.photo"
-        [src]="user.photo">
-        <div class="div_user_info">
-            <p class="user_info">Логин: {{user.login}}</p><br>
-            <p class="user_info">Пол: женский</p><br>
-            <p class="user_info">Учреждение: "{{user.institution}}"</p><br>
-            <p class="user_info">Статус: админ</p><br>
-            <div class="button"  class="nav-admin"><a>Редактировать</a></div>
+        <div *ngIf="session.levelStatus == 1">
+            <p class="in_user_filtr dark-{{session.firstColor}}-color">Учреждение:</p>
+            <select *ngIf="institutions$ | async as institutions" [(ngModel)]="institution">
+                <option value="all">Любое</option>
+                <option *ngFor="let institution of institutions" value="{{institution._id}}">{{institution.name}}</option>
+            </select>
         </div>
+
+        <p class="in_user_filtr dark-{{session.firstColor}}-color">Пол:</p>
+        <input name="sex" type="radio" value="0" [(ngModel)]="sex"> Любой <br>
+        <input name="sex" type="radio" value="1" [(ngModel)]="sex"> Мужской <br>
+        <input name="sex" type="radio" value="2" [(ngModel)]="sex"> Женский <br>
+
+        <p class="in_user_filtr dark-{{session.firstColor}}-color">Роль:</p>
+        <input name="status" type="checkbox" [(ngModel)]="role1"> Администратор <br>
+        <input name="status" type="checkbox" [(ngModel)]="role2"> Модератор <br>
+        <input name="status" type="checkbox" [(ngModel)]="role3"> Подопечный <br>
+        <input name="status" type="checkbox" [(ngModel)]="role5"> Взрослый <br>
+        <input name="status" type="checkbox" [(ngModel)]="role4"> Гость <br><br>
+
+        <button id="submit_button" type="submit" hidden></button>
+        <label for="submit_button" id="submit" class="middle-{{session.firstColor}}-bg-hover" (click)="onFilter($event)">Применить фильтр</label>
     </div>
+
+    <div *ngIf="!reloading; else reloader">
+        <div *ngIf="users.length > 0; else empty">
+            <div 
+            class="user dark-{{session.firstColor}}-border"
+            *ngFor="let user of users"
+            id="{{user._id}}">
+                <p class="user_title">{{user.surname}} {{user.name}}</p><br>
+                <img 
+                class="avatarAdmin" 
+                *ngIf="user.photo"
+                [src]="user.photo">
+                <div class="div_user_info">
+                    <p class="user_info">
+                        <span class="dark-{{session.firstColor}}-color">Логин:</span> {{user.login}}
+                    </p><br>
+                    <p class="user_info">
+                        <span class="dark-{{session.firstColor}}-color">Пол: </span> <span>{{user.sex === 1 ? 'Мужской' : 'Женский'}}</span>
+                    </p><br>
+                    <p class="user_info">
+                        <span class="dark-{{session.firstColor}}-color">Учреждение:</span> "{{user.institutionName}}"
+                    </p><br>
+                    <p class="user_info">
+                        <span class="dark-{{session.firstColor}}-color">Роль:</span> {{status[user.levelStatus]}}
+                    </p><br>
+                    <p class="user_info" *ngIf="user.birthDate">
+                        <span class="dark-{{session.firstColor}}-color">Дата рождения:</span> {{user.birthDate | date:"dd.MM.yyyy"}}
+                    </p>
+                    <p class="user_info" *ngIf="!user.birthDate">
+                        <span class="dark-{{session.firstColor}}-color">Дата рождения:</span> не указана
+                    </p><br><br>
+
+                    <div *ngIf="session.levelStatus == 1 || user.levelStatus != 1">
+                        <a 
+                        class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
+                        [routerLink]="['/manage/users', user._id]">
+                            Редактировать
+                        </a>
+                        <button id="delete_button" type="button" hidden></button>
+                        <label
+                        for="delete_button" 
+                        class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover"
+                        (click)="deleteUser(user.login, user._id)"
+                        *ngIf="session._id != user._id">
+                            Удалить
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button id="more_button" type="button" hidden></button>
+        <div *ngIf="!noMore">
+            <label 
+            *ngIf="!loading; loader"
+            for="more_button" 
+            class="new_user_button center middle-{{session.firstColor}}-bg-hover"
+            (click)="loadMore()">
+                Загрузить ещё
+            </label>
+        </div>
+        <ng-template #loader>
+            <app-loader></app-loader>
+        </ng-template>
+    </div>
+    <a id="add_user" 
+    [routerLink]="['/manage/users', 'new']" 
+    class="nav-admin middle-{{session.firstColor}}-bg-hover">
+        Добавить пользователя
+    </a>
 </div>
 
-<button id="add_user_bottom" hidden></button>
-<label for="add_user_bottom" id="add_user"><a  class="nav-admin">Добавить пользователя</a></label>
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>
+
+<ng-template #empty>
+    <div class="empty">Пользователи не найдены. Попробуйте применить другие фильтры.</div>
+</ng-template>

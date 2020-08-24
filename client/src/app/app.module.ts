@@ -20,6 +20,9 @@ import { InstitutionsPageComponent } from './institutions-page/institutions-page
 import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-form.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { EasyLangPipe } from './shared/pipes/easy-lang.pipe';
+import { UsersFormComponent } from './users-page/users-form/users-form.component';
+import { InstitutionsFormComponent } from './institutions-page/institutions-form/institutions-form.component';
+import { InstitutionsDeleteComponent } from './institutions-page/institutions-delete/institutions-delete.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,10 @@ import { EasyLangPipe } from './shared/pipes/easy-lang.pipe';
     InstitutionsPageComponent,
     PicturesFormComponent,
     LoaderComponent,
-    EasyLangPipe
+    EasyLangPipe,
+    UsersFormComponent,
+    InstitutionsFormComponent,
+    InstitutionsDeleteComponent
   ],
   imports: [
     BrowserModule,

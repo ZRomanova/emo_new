@@ -4,15 +4,13 @@
     left: 0; 
     right: 0;
     height: 55px;
-    background: #FEBDD3;
     padding-bottom: 10px;
     padding-left: 3px;
     padding-right: 3px;
     z-index: 2;
 }
 .manage-active {
-    color: #A53D60;
-    background: #fff; 
+    border: 3px solid #fff;
 }
 .nav-admin-li-right {
     float: right;
@@ -30,20 +28,12 @@
   }
 .nav-admin, #submit, .new_user_button, .inst-edit {
     text-decoration: none; /*убираем подчеркивание текста ссылок*/
-    background:#D26F90; /*добавляем фон к пункту меню*/
-    color:#fff; /*меняем цвет ссылок*/
+    color: #fff; /*меняем цвет ссылок*/
     padding:10px; /*добавляем отступ*/
     font-family: arial; /*меняем шрифт*/
     border-radius:4px; /*добавляем скругление*/
     transition: all 0.3s 0.01s ease; /*делаем плавный переход*/
     text-align: center;
-}
-.nav-admin:hover, #submit:hover, .new_user_button:hover, 
-.inst-edit:hover {
-    background:#A53D60;/*добавляем эффект при наведении*/
-}
-.purple {
-    color:#A53D60;
 }
 .nav-admin-li {
     float:left; /*Размещаем список горизонтально для реализации меню*/
@@ -58,12 +48,14 @@
 }
 .user {
     position: relative;
-    border: 3px solid #A53D60;
+    border-width: 3px;
+    border-style: solid;
     border-radius: 3px;
     height: auto;
     width: 600px;
     margin: auto;
     margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 .avatarAdmin {
     width: 200px;
@@ -113,20 +105,24 @@ p {
     position: relative;
     bottom: 15px;
 }
-#new_user, #add_new_picture, #edit_picture_or_folder {
-    border: 3px solid #A53D60;
+#new_user, #add_new_picture, #edit_picture_or_folder, #edit_user {
+    border-width: 3px;
+    border-style: solid;
     border-radius: 3px;
     margin: auto;
     width: 700px;
     height: auto;
     padding: 15px;
+    padding-right: 25px;
 }
 .edit-avatar {
-    width: 180px;
-    height: auto;
-    border: 2px solid #A53D60;
+    border-width: 2px;
+    border-style: solid;
+    width: 280px;
+    height: 280px;
     border-radius: 3px;
     display: inline-block;
+    float: right;
 }
 .inst-edit {
     display: inline-block;
@@ -134,16 +130,17 @@ p {
     margin-left: 5px;
 }
 .institution {
-    width: 600px;
+    width: 550px;
     margin: auto;
-    border: 3px solid #A53D60;
+    border-width: 3px;
+    border-style: solid;
     border-radius: 3px;
     padding: 20px;
     margin-bottom: 10px;
 }
 .inst-span {
-    max-width: 350px;
-    height: auto;
+    width: 300px;
+    height: 20px;
 }
 .pictures {
     position: relative;
@@ -153,7 +150,8 @@ p {
     overflow: auto;
 }
 .picture {
-    border: 3px solid #A53D60;
+    border-width: 3px;
+    border-style: solid;
     border-radius: 3px; 
     height: auto;
     width: 300px;
@@ -164,12 +162,14 @@ p {
 .picta-pictures {
     max-height: 128px;
     max-width: 128px; 
-    display: block;   
+    display: block;  
+    margin: auto; 
 }
 .picta_one {
     max-height: 258px;
     max-width: 258px; 
     display: block; 
+    margin: auto;
 }
 .p_text {
     margin-top: 8px;
@@ -177,7 +177,8 @@ p {
     width: 100%;
 }
 .p_border {
-    border: 1px solid #A53D60;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 3px;
     display: inline-block;
     height: 130px;
@@ -186,7 +187,8 @@ p {
     margin-top: 10px;
 }
 .p_border_one {
-    border: 1px solid #A53D60;
+    border-width: 1px;
+    border-style: solid;
     border-radius: 3px;
     display: block;
     height: 260px;

@@ -12,7 +12,7 @@ fields = [
 ]
 
 const stop = (req, res, next) =>  {
-  if(req.user && !req.user.levelStatus == 1) {
+  if(req.user && req.user.levelStatus !== 1 && req.user.levelStatus !== 2) {
     next(new Error('У вас нет прав доступа к данной странице.'));
   } else {
     next();

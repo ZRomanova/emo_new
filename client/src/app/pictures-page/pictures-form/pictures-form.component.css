@@ -1,0 +1,48 @@
+.answers_box {
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 3px;
+    position: relative;
+    width: 96%;
+    margin: auto;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 2.5%;
+    padding-right: 2.5%;
+    height: auto;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.answer {
+    display: inline-block;
+    width: 18.5%;
+    margin: 2%;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    padding: 5px;
+    height: 150px;
+    overflow: auto;
+}
+
+.answer_div {
+    position: relative;
+    width: 96%;
+    height: 100px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 3px;
+    margin: auto;
+}
+
+.picta_answer {
+    display: block;
+    position: relative;
+    max-height: 96px;
+    max-width: 96%;
+    width: auto;
+    height: auto;
+    margin: auto;
+}

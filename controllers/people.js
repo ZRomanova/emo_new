@@ -40,7 +40,9 @@ module.exports.friends = async function(req, res) {
         {_id: {$in: read}, _id: {$ne: req.user.id}, _id: {$ne: {$in: NotRead}}}
       )
 
-      res.status(200).json(withMessageUsers, withoutMessageUsers)
+      const users = {"withMessageUsers": withMessageUsers, "withoutMessageUsers": withoutMessageUsers}
+
+      res.status(200).json(users)
     } catch(e) {
       errorHandler(res, e)
     }
@@ -88,7 +90,7 @@ module.exports.search = async function(req, res) {
         {$set: {onlineStatus: '-1'}},
         {new: true}) 
 
-      if (req.user.levelStatus === 4) {
+      if (req.user.levelStatus == 4) {
         await Message.deleteMany({ $or: [
           {sender: req.user.id},
           {recipient: req.user.id}
@@ -100,6 +102,15 @@ module.exports.search = async function(req, res) {
       }
       res.status(200).json({message: 'Данные гостя удалены, статус пользователя обновлён.'})
     } catch(e) {
+      errorHandler(res, e)
+    }
+  }
+
+  module.exports.getUser = async function(req, res) {
+    try {
+      const user = await User.findOne({login: req.user.login}, {password: 0})
+      res.status(200).json(user)
+    } catch {
       errorHandler(res, e)
     }
   }

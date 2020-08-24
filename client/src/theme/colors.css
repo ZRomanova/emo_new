@@ -1,0 +1,111 @@
+.light-1-bg {
+    background-color: #FEBDD3;
+}
+.middle-1-bg, .middle-1-bg-hover {
+    background-color: #D26F90;
+}
+.middle-1-bg-hover:hover {
+    background-color: #A53D60;
+}
+.dark-1-color {
+    color: #A53D60;
+}
+.dark-1-border {
+    border-color: #A53D60;
+}
+
+.light-2-bg {
+    background-color: #FDB666;
+}
+.middle-2-bg, .middle-2-bg-hover {
+    background-color: #D29754;
+}
+.middle-2-bg-hover:hover {
+    background-color: #A46721;
+}
+.dark-2-color {
+    color: #A46721;
+}
+.dark-2-border {
+    border-color: #A46721;
+}
+
+.light-3-bg {
+    background-color: #FFFF66;
+}
+.middle-3-bg, .middle-3-bg-hover {
+    background-color: #D3D354;
+}
+.middle-3-bg-hover:hover {
+    background-color: #A6A621;
+}
+.dark-3-color {
+    color: #A6A621;
+}
+.dark-3-border {
+    border-color: #A6A621;
+}
+
+.light-4-bg {
+    background-color: #A3FD5A;
+}
+.middle-4-bg, .middle-4-bg-hover {
+    background-color: #8BD250;
+}
+.middle-4-bg-hover:hover {
+    background-color: #5BA41D;
+}
+.dark-4-color {
+    color: #5BA41D;
+}
+.dark-4-border {
+    border-color: #5BA41D;
+}
+
+.light-5-bg {
+    background-color: #57E3F7;
+}
+.middle-5-bg, .middle-5-bg-hover {
+    background-color: #4FC0D0;
+}
+.middle-5-bg-hover:hover {
+    background-color: #1C90A1;
+}
+.dark-5-color {
+    color: #1C90A1;
+}
+.dark-5-border {
+    border-color: #1C90A1;
+}
+
+.light-6-bg {
+    background-color: #B59DD7;
+}
+.middle-6-bg, .middle-6-bg-hover {
+    background-color: #8F67C6;
+}
+.middle-6-bg-hover:hover {
+    background-color: #58338C;
+}
+.dark-6-color {
+    color: #58338C;
+}
+.dark-6-border {
+    border-color: #58338C;
+}
+
+.light-7-bg {
+    background-color: #CCCCCC;
+}
+.middle-7-bg, .middle-7-bg-hover {
+    background-color: #999999;
+}
+.middle-7-bg-hover:hover {
+    background-color: #737373;
+}
+.dark-7-color {
+    color: #737373;
+}
+.dark-7-border {
+    border-color: #737373;
+}

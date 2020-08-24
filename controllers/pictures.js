@@ -1,4 +1,3 @@
-//const cyrillicToTranslit = require('cyrillic-to-translit-js')
 const errorHandler = require('../utils/errorHandler')
 const Picture = require('../models/Picture')
 
@@ -12,7 +11,8 @@ module.exports.create = async function(req, res) {
 
         const picture = await new Picture({
           folder: req.body.folder,
-          answers: req.body.answers,
+          answers: req.body.answers != '' ? req.body.answers.split(',') : [],
+          //exceptions: req.body.exceptions.split(','),
           text: req.body.text,
           parent: req.params.parentID,
           p_sort: maxSort + 1,
@@ -34,7 +34,9 @@ module.exports.create = async function(req, res) {
 module.exports.update = async function(req, res) {
   try {
     const updated = req.body
-    if (req.file) {
+    updated.answers = req.body.answers != '' ? req.body.answers.split(',') : []
+    //updated.exceptions = req.body.exceptions.split(',')
+    if (req.files) {
       if (req.files['boysGreyPicture']) {
         updated.boysGreyPicture = req.files['boysGreyPicture'][0].path
       }
@@ -62,7 +64,7 @@ module.exports.update = async function(req, res) {
 
 module.exports.getAll = async function(req, res) {
   try {
-    const pictures = await Picture.find({parent: req.params.folderID})
+    const pictures = await Picture.find({parent: req.params.folderID}).sort({p_sort: 1})
     const folder = await Picture.findOne({_id: req.params.folderID}, {many: 1, parent:1, text: 1})
     const picturesAndFolder = {"pictures": pictures, "folder": folder}
     res.status(200).json(picturesAndFolder)
@@ -81,18 +83,19 @@ module.exports.getByPictureID = async function(req, res) {
 }
 
 module.exports.remove = async function(req, res) {
-  deletePicture = await Picture.findOne({_id: req.params.pictureID})
-  
   try {
-    /*
-    pictures = await Picture.find({
+    const deletePicture = await Picture.findOne({_id: req.params.pictureID})
+  
+    const pictures = await Picture.find({
       parent: deletePicture.parent,
       p_sort: {$gt: deletePicture.p_sort}
     })
-    console.log(pictures)
 
-    await Picture.updateMany(pictures, {$set: {p_sort: p_sort - 1}})
-    */
+    for (let picture of pictures) {
+      await Picture.updateOne({_id: picture._id}, {$set: {p_sort: picture.p_sort - 1}}, {new: true})
+    }
+    //await Picture.updateMany(pictures, {$set: {p_sort: p_sort - 1}})
+    
     if (deletePicture.system === true) {
       res.status(200).json({
         message: 'Этот объект нельзя удалить.'
@@ -106,9 +109,7 @@ module.exports.remove = async function(req, res) {
         message = 'Картинка удалена.'
       }
         await Picture.deleteOne(deletePicture)
-        res.status(200).json({
-          message: message
-    })
+        res.status(200).json({message})
   }
   } catch (e) {
     errorHandler(res, e)

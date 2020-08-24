@@ -1,0 +1,19 @@
+.inline-block {
+    display: inline-block;
+}
+
+.div_user_info {
+    margin-bottom: 8px;
+}
+
+.center {
+    margin-left: 45%;
+}
+
+.user {
+    background-color: white;
+}
+
+.empty {
+    margin-left: 30%; 
+}
