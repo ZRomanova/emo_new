@@ -49,34 +49,18 @@ module.exports.friends = async function(req, res) {
   }
 
 module.exports.search = async function(req, res) {
-  
-    q = {}
-    
-    if (req.query.institution) {
-      q.institution = req.query.institution
-    }
-  
-    if (req.query.name) {
-      q.name = req.query.name
-    } 
-  
-    if (req.query.surname) {
-      q.surname = req.query.surname
-    } 
-  
-    if (req.query.sex) {
-      q.sex = req.query.sex
-    }  
-  
     try {
-      await User.updateOne(
-        {_id: req.user.id}, 
-        {$set: {onlineStatus: '0'}},
-        {new: true})
-
       const users = await User
-        .find(q, {name: 1, surname: 1, birthDate: 1, onlineStatus: 1})
-        .sort({name: 1, surname: 1})
+        .find({institution: req.params.instID}, {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, login: 1, photo: 1})
+        .sort({name: 1, surname: 1}).lean()
+      
+      for (let user of users) {
+        const message = await Message
+          .findOne({sender: user._id, recipient: req.user.id, read: false})
+        if (message) user.letter = true
+        else user.letter = false
+      }
+
       res.status(200).json(users)
     } catch (e) {
       errorHandler(res, e)
@@ -109,6 +93,18 @@ module.exports.search = async function(req, res) {
   module.exports.getUser = async function(req, res) {
     try {
       const user = await User.findOne({login: req.user.login}, {password: 0})
+      res.status(200).json(user)
+    } catch(e) {
+      errorHandler(res, e)
+    }
+  }
+
+  module.exports.update = async function(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        {_id: req.user.id},
+        {$set: req.body},
+        {new: true})
       res.status(200).json(user)
     } catch {
       errorHandler(res, e)

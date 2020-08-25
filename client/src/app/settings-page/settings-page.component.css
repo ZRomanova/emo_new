@@ -1,0 +1,64 @@
+#setting_form {
+    width: 80%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.color-div {
+    width: 90%;
+    height: 60px;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+.checkedColor {
+    border: 3px solid black;
+}
+table {
+    width: 100%;
+}
+td {
+    width: 14%;
+    vertical-align: middle;
+}
+.pNotAdmin {
+    margin-top: 1cm;
+    margin-bottom: 0.3cm;
+}
+.yes {
+    height: 70px;
+    width: 70px;
+    background: url('/uploads/images/tick.png');
+    background-size: 100% 100%;
+}
+.no {
+    height: 70px;
+    width: 70px;
+    background: url('/uploads/images/cross.png');
+    background-size: 100% 100%;
+}
+.grey {
+    height: 70px;
+    width: 70px;
+    background: url('/uploads/images/bw.png');
+    background-size: 100% 100%;
+}
+.color {
+    height: 70px;
+    width: 70px;
+    background: url('/uploads/images/color.png');
+    background-size: 100% 100%;
+}
+label.radio {
+    display: inline-block;
+}
+.radio_yes {
+    width: 60px;
+    display: inline-block;
+}
+.checked{
+    outline: 3px black solid;
+}
+.btn {
+    margin-top: 1cm;
+    margin-right: 20px;
+}

@@ -14,7 +14,10 @@ body {
     margin-top: 1%;
  }
 
- .pNotAdmin {font-size: 0.8cm;}
+ .pNotAdmin {
+     font-size: 0.8cm;
+     font-family: Arial, sans-serif;
+    }
  
 .entrance {
 	height: 1.4cm;
@@ -109,4 +112,9 @@ p, img, a:visited, a:active, a:hover {
     text-align: center;
     font-size: 2cm;
     z-index: 3;
+}
+button,
+button:active,
+button:focus {
+    outline: none !important;
 }

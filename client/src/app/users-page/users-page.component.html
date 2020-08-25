@@ -52,7 +52,7 @@
                         <span class="dark-{{session.firstColor}}-color">Пол: </span> <span>{{user.sex === 1 ? 'Мужской' : 'Женский'}}</span>
                     </p><br>
                     <p class="user_info">
-                        <span class="dark-{{session.firstColor}}-color">Учреждение:</span> "{{user.institutionName}}"
+                        <span class="dark-{{session.firstColor}}-color">Учреждение:</span> {{user.institutionName}}
                     </p><br>
                     <p class="user_info">
                         <span class="dark-{{session.firstColor}}-color">Роль:</span> {{status[user.levelStatus]}}

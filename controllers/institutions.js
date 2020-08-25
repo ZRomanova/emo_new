@@ -5,8 +5,9 @@ const User = require('../models/User')
 
 module.exports.create = async function(req, res) {
   try {
+    
     const candidate = await Institution.findOne({name: req.body.name})
-
+    
     if (candidate) {
       //  Такое учреждение существует, нужно отправить ошибку
       res.status(409).json({
@@ -27,7 +28,6 @@ module.exports.create = async function(req, res) {
 
 module.exports.update = async function(req, res) {
     try {
-      console.log(req.body)
       const institution = await Institution.findOneAndUpdate(
         {_id: req.params.institutionID},
         {$set: req.body},

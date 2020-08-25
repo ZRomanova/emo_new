@@ -12,7 +12,7 @@
                 class="p_text dark-{{session.firstColor}}-color">
                     {{picture.invisible ? 'СКРЫТАЯ ' : ''}}{{picture.folder ? 'ПАПКА' : 'КАРТИНКА'}}
                 </div>
-                <div *ngIf="pictureAndFolder.folder.many">
+                <div *ngIf="pictureAndFolder.folder.many !== 0">
                     <div class="p_border dark-{{session.firstColor}}-border">
                         <img class="picta-pictures" [src]="picture.boysGreyPicture">
                     </div>
@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                <div *ngIf="!pictureAndFolder.folder.many">
+                <div *ngIf="pictureAndFolder.folder.many === 0">
                     <div class="p_border_one dark-{{session.firstColor}}-border"><img class="picta_one" [src]="picture.boysGreyPicture"></div>
                 </div>
 
@@ -37,7 +37,7 @@
                     <a 
                     class="nav-admin middle-{{session.firstColor}}-bg-hover" 
                     [routerLink]="['/manage/pictures', 'edit' + picture.folder, pictureAndFolder.folder.many, pictureAndFolder.folder._id, picture._id]"
-                    [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3'}">
+                    [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3', 'institution': session.institution}">
                         Редактировать
                     </a>
                 </div>
@@ -59,24 +59,29 @@
 
         <button id="add_picture_botton" hidden></button>
             <label 
+            *ngIf="session.levelStatus == 1"
             for="add_picture_botton" 
             id="add_picture" 
             >
                 <a 
+                *ngIf="session.levelStatus == 1"
                 class="nav-admin middle-{{session.firstColor}}-bg-hover" 
                 [routerLink]="['/manage/pictures', 'newpicture', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']"
-                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3'}">
+                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3', 'institution': session.institution}">
                     Добавить каринку
                 </a>
             </label>
         
             <button id="folder_picture_botton" hidden></button>
             <label 
+            *ngIf="session.levelStatus == 1"
             for="folder_picture_botton" 
             id="add_folder">
-                <a class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                <a 
+                *ngIf="session.levelStatus == 1"
+                class="nav-admin middle-{{session.firstColor}}-bg-hover" 
                 [routerLink]="['/manage/pictures', 'newfolder', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']"
-                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3'}">
+                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3', 'institution': session.institution}">
                     Добавить папку
                 </a>
             </label>

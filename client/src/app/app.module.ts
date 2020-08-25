@@ -23,6 +23,8 @@ import { EasyLangPipe } from './shared/pipes/easy-lang.pipe';
 import { UsersFormComponent } from './users-page/users-form/users-form.component';
 import { InstitutionsFormComponent } from './institutions-page/institutions-form/institutions-form.component';
 import { InstitutionsDeleteComponent } from './institutions-page/institutions-delete/institutions-delete.component';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
+import { FilterPipe } from './shared/pipes/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { InstitutionsDeleteComponent } from './institutions-page/institutions-de
     EasyLangPipe,
     UsersFormComponent,
     InstitutionsFormComponent,
-    InstitutionsDeleteComponent
+    InstitutionsDeleteComponent,
+    SettingsPageComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

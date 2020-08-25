@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { NavService } from '../../services/nav.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
-import { User } from '../../interfaces';
+import { Router} from '@angular/router';
+import {Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin-layout',
@@ -25,7 +24,6 @@ export class AdminLayoutComponent implements OnInit {
   constructor(
     private auth: LoginService,
     private router: Router,
-    private route: ActivatedRoute,
     private navService: NavService) {
       this.navService.newColor.subscribe(color => this.color = color)
     }

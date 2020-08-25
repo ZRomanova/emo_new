@@ -46,3 +46,11 @@
     height: auto;
     margin: auto;
 }
+
+.text-input {
+    width: 500px;
+}
+
+.info-text {
+    text-align: justify;
+}

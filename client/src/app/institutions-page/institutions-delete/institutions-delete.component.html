@@ -1,1 +1,25 @@
-<p>institutions-delete works!</p>
+<form
+class="institution dark-{{session.firstColor}}-border" 
+[formGroup]="form" 
+(ngSubmit)="onSubmit()"
+*ngIf="session$ | async as session; else loader">
+    <button id="submit_button" type="submit" hidden></button>
+    <label for="submit_button" class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover">Удалить</label>
+
+    <a class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover" routerLink="/manage/institutions">Назад</a>
+
+    <span class="inst-span">Вы удаляете {{name}}</span> <br>
+    <br><span class="inst-span dark-{{session.firstColor}}-color">Выберите, куда перевести людей из данного учреждения?</span> <br>
+    <select *ngIf="institutions$ | async as institutions" formControlName="newID">
+        <option 
+        *ngFor="let institution of institutions" 
+        value="{{institution._id}}" 
+        [disabled]="institution._id == thisID">
+            {{institution.name}}
+        </option>
+    </select>
+</form>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

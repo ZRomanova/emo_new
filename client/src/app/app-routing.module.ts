@@ -9,6 +9,7 @@ import {ModeratorGuard} from './shared/classes/moderator.guard'
 import { PeopleLayoutComponent } from './shared/layouts/people-layout/people-layout.component';
 import { FriendsPageComponent } from './friends-page/friends-page.component';
 import { SearchPageComponent } from './search-page/search-page.component';
+import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { ChatLayoutComponent } from './shared/layouts/chat-layout/chat-layout.component';
 import { ChatPageComponent } from './chat-page/chat-page.component';
 import { AdminLayoutComponent } from './shared/layouts/admin-layout/admin-layout.component';
@@ -31,7 +32,8 @@ const routes: Routes = [
     path: '', component: PeopleLayoutComponent, canActivate: [AuthGuard], children: [
       {path: 'people', redirectTo: '/people/friends', pathMatch: 'full'},
       {path: 'people/friends', component: FriendsPageComponent},
-      {path: 'people/search', component: SearchPageComponent}
+      {path: 'people/search', component: SearchPageComponent},
+      {path: 'people/settings', component: SettingsPageComponent}
     ]
   },
   {

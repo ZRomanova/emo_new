@@ -271,14 +271,6 @@ export class UsersFormComponent implements OnInit, OnDestroy {
         if (this.endL == this.startL) changeL = false
         else changeL = true
 
-        /*
-        if ((this.imagePreview == '/uploads/images/boy.png') && (this.form.value.sex == '2')) {
-          this.imageText ='/uploads/images/girl.png'
-        }
-        if ((this.imagePreview == '/uploads/images/girl.png') && (this.form.value.sex == '1')) {
-          this.imageText = '/uploads/images/boy.png'
-        }
-        */
         if (this.image) this.imageText = ''
 
         obs$ = this.usersService.update(

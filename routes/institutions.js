@@ -13,7 +13,7 @@ const stop = (req, res, next) =>  {
 
 router.post('/', passport.authenticate('jwt', {session: false}), stop, controller.create)
 router.patch('/:institutionID', passport.authenticate('jwt', {session: false}),  stop, controller.update)
-router.get('/', passport.authenticate('jwt', {session: false}),  stop, controller.getAll)
+router.get('/', passport.authenticate('jwt', {session: false}), controller.getAll)
 router.get('/:institutionID', passport.authenticate('jwt', {session: false}), stop, controller.getByInstitutionID)
 router.delete('/:institutionID/:newID', passport.authenticate('jwt', {session: false}), stop, controller.remove)
 

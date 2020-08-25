@@ -47,13 +47,15 @@ export interface Picture {
   boysColorPicture?: string
   girlsColorPicture?: string
   answers: string[]
+  exceptions?: string[]
   text?: string
+  textForGirls?: string
   parent?: string
   p_sort: number
   invisible?: boolean
   readonly system: boolean
   user?: string
-  many?: boolean
+  many?: number
   _id?: string
 }
 

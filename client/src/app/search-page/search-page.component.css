@@ -1,0 +1,26 @@
+.header {
+    width: 79%;
+    height: 0.9cm;
+    top: 0;
+    position: fixed;
+    padding: 0.2cm;
+    z-index: 2;
+    overflow: hidden;
+}
+.search {
+    margin-top: 1.1cm;
+}
+.inheader {
+    width: 18%;
+    margin-right: 2%;
+    height: 0.8cm;
+    font-size: 0.7cm;
+    margin-bottom: 1cm;
+}
+select.inheader {
+    font-size: 0.5cm;
+    width: 25%;
+}
+.loader {
+    height: 1.5cm;
+}

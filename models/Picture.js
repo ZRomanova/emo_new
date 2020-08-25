@@ -4,7 +4,6 @@ const Schema = mongoose.Schema
 const pictureSchema = new Schema({  
   folder: {             //true - folder, false - picture
     type: Boolean,
-    default: false,
     required: true
   },
     
@@ -34,6 +33,10 @@ const pictureSchema = new Schema({
     type: String,
     default: ''
   },
+  textForGirls: {
+    type: String,
+    default: ''
+  },
   parent: {
     ref: 'pictures',
     type: Schema.Types.ObjectId,
@@ -56,8 +59,8 @@ const pictureSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
-  many: {             // для папок: true - в папке есть смена ч/б и цветных пиктограмм
-    type: Boolean
+  many: {             // для папок: 0 - в папке нет смены ч/б и цветных пиктограмм, 1 - есть, пол определяется по пользователю, 2 - есть, пол определяется по собеседнику
+    type: Number
   },
   exceptions: {
     ref: 'users',

@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { User, Institution, Filter } from '../shared/interfaces';
 import {UsersService} from '../shared/services/users.service'
-import { ActivatedRoute } from '@angular/router';
 import { LoginService } from '../shared/services/login.service';
 
 const STEP = 25
@@ -47,17 +46,14 @@ export class UsersPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private usersService: UsersService,
-    private loginService: LoginService,
-    private route: ActivatedRoute) { }
+    private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.reloading = true
 
     this.session$ = this.loginService.getUser()
     
-    this.route.params.subscribe(() => {
-      this.institutions$ = this.usersService.getInstitutions()
-    })
+    this.institutions$ = this.usersService.getInstitutions()
 
     this.fetch()
   }
@@ -96,8 +92,7 @@ export class UsersPageComponent implements OnInit, OnDestroy {
             let box = document.getElementById(id)
             box.remove()
           },
-          error => {console.log(error.error.message)},
-          () => {}
+          error => {console.log(error.error.message)}
         )
     }
   }

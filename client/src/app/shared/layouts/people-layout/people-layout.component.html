@@ -1,12 +1,35 @@
-<div class="friends">
+<div class="body" *ngIf="!reloading; else loader">
+    <div class="friends light-{{color1}}-bg">
+        <router-outlet></router-outlet>
+    </div>
 
+    <div class="menu light-{{color2}}-bg">
+        <a routerLink="/manage" *ngIf="levelStatus == 1 || levelStatus == 2">
+            <div class="exit-friends tc dark-{{color2}}-border">Управлять</div>
+        </a>
+        <a>
+            <div class="myPhoto">
+                <img class="myPhotoIMG dark-{{color2}}-border" src="{{photo}}">
+                <div *ngIf="online" id="online_me"></div>
+            </div>           
+            <p class="exit-friends tc dark-{{color2}}-border myName">{{name}}</p>              
+        </a>
+        <a routerLink="/people/search" routerLinkActive="people-active">
+            <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/lupa.png">
+        </a>
+        <a routerLink="/people/friends" routerLinkActive="people-active">
+            <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/dialog.png">
+        </a>
+        <a routerLink="/people/settings" routerLinkActive="people-active" *ngIf="levelStatus == 4 || setting != 0">
+            <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/settings.jpg">
+        </a>
+        <a href="#" (click)="logout($event)">
+            <div class="exit-friends tc dark-{{color2}}-border">Выход</div>
+        </a>
+        <br>
+    </div>
 </div>
 
-<div class="menu">
-    <a routerLink="/manage">
-        <div class="exit-friends tc">Управлять</div>
-   </a>
-   <a href="#" (click)="logout($event)">
-    <div class="exit-friends tc">Выход</div>
-</a>
-</div>
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

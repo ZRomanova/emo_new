@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PicturesService } from 'src/app/shared/services/pictures.service';
 import { switchMap } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
-import { Picture, PictureAndFolder, User } from 'src/app/shared/interfaces';
+import { of, Observable, Subscription } from 'rxjs';
+import { Picture, PictureAndFolder, User, Institution } from 'src/app/shared/interfaces';
 import { LoginService } from 'src/app/shared/services/login.service';
+import { UsersService } from 'src/app/shared/services/users.service';
 
 @Component({
   selector: 'app-pictures-form',
   templateUrl: './pictures-form.component.html',
   styleUrls: ['./pictures-form.component.css']
 })
-export class PicturesFormComponent implements OnInit {
+export class PicturesFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup
   whatDo = ''
@@ -30,34 +31,58 @@ export class PicturesFormComponent implements OnInit {
   image4Preview = ''
   picture: Picture
   picturesAndFolder$: Observable<PictureAndFolder>
-  session$: Observable<User>
+  session: User
+  users$: Observable<User[]>
+  institutions$: Observable<Institution[]>
+  institution: string
   pictureAndFolder: PictureAndFolder
   answers = []
+  exceptions = []
+  queryF = ''
+  queryI = ''
+  invisible: boolean
+
+  oSub: Subscription
+  reloading = false
 
   constructor(private route: ActivatedRoute,
               private picturesService: PicturesService,
+              private usersService: UsersService,
               private router: Router,
               private loginService: LoginService) {}
 
   ngOnInit(): void {
-    this.session$ = this.loginService.getUser() 
+    this.reloading = true
+    this.oSub = this.loginService.getUser().subscribe(user => {
+      this.session = user
+      this.reloading = false
+      this.route.queryParams.subscribe((queryParam: any) => {
+        this.users$ = this.picturesService.users(queryParam.institution)
+        this.queryI = queryParam.institution
+      }) 
+    })
+
+    this.institutions$ = this.usersService.getInstitutions()
     
     this.route.queryParams.subscribe((queryParam: any) => {
       this.picturesAndFolder$ = this.picturesService.fetch(queryParam.folder)
+      this.queryF = queryParam.folder
     }) 
 
     this.form = new FormGroup({
-      many: new FormControl('true', [Validators.required]),
+      many: new FormControl('0', [Validators.required]),
       boysGreyPicture: new FormControl(null),
       girlsGreyPicture: new FormControl(null),
       boysColorPicture: new FormControl(null),
       girlsColorPicture: new FormControl(null),
       text: new FormControl(null),
+      textForGirls: new FormControl(null),
       invisible: new FormControl('false'),
       clean1: new FormControl(false), 
       clean2: new FormControl(false), 
       clean3: new FormControl(false), 
-      clean4: new FormControl(false)
+      clean4: new FormControl(false),
+      institution: new FormControl(null)
     })
 
     this.form.disable()
@@ -84,13 +109,17 @@ export class PicturesFormComponent implements OnInit {
             this.picture = picture
             this.form.patchValue({
               text: picture.text,
+              textForGirls: picture.textForGirls,
               invisible: picture.invisible === true ? 'true' : 'false',
             })
+            if (picture.many) this.form.patchValue({many: picture.many.toString()})
             this.image1Preview = picture.boysGreyPicture
             this.image2Preview = picture.girlsGreyPicture
             this.image3Preview = picture.boysColorPicture
             this.image4Preview = picture.girlsColorPicture
             this.answers = picture.answers
+            this.exceptions = picture.exceptions
+            this.invisible = picture.invisible
             if (picture.system === true) this.system = true
             
           }
@@ -101,13 +130,18 @@ export class PicturesFormComponent implements OnInit {
       )
   }
 
+  ngOnDestroy() {
+    this.oSub.unsubscribe()
+  }
+
   answerChange(folder, id) {
     if (folder && 
       id !== '5f1309e3962c2f062467f854' && 
       id !== '5f1309f1962c2f062467f855' && 
       id !== '5f130a00962c2f062467f856' && 
       id !== '5f130a0d962c2f062467f857' ) {
-      this.router.navigate([], {queryParams: { 'folder': id }})
+      this.router.navigate([], {queryParams: { 'folder': id, 'institution': this.queryI }})
+      this.queryF = id
     }
   }
 
@@ -118,6 +152,22 @@ export class PicturesFormComponent implements OnInit {
     }
     else {
       this.answers.push(id)
+    }
+  }
+
+  changeInstitution() {
+    let id = this.form.value.institution
+    this.router.navigate([], {queryParams: { 'folder': this.queryF, 'institution': id }})
+    this.queryI = id
+  }
+
+  checkUser(id) {
+    if (this.exceptions.includes(id)) {
+      let index = this.exceptions.indexOf(id, 0)
+      this.exceptions.splice(index, 1)
+    }
+    else {
+      this.exceptions.push(id)
     }
   }
 
@@ -185,7 +235,10 @@ export class PicturesFormComponent implements OnInit {
       obs$ = this.picturesService.update(
         this.picture._id, 
         this.form.value.invisible,
+        this.whatDo === 'edittrue' ? true : false, 
         this.form.value.text,
+        this.form.value.many,
+        this.form.value.textForGirls,
         this.form.value.clean1,
         this.form.value.clean2,
         this.form.value.clean3,
@@ -194,7 +247,8 @@ export class PicturesFormComponent implements OnInit {
         this.image2,
         this.image3,
         this.image4,
-        this.answers
+        this.answers,
+        this.exceptions
         )
     } else {
       obs$ = this.picturesService.create(
@@ -203,6 +257,7 @@ export class PicturesFormComponent implements OnInit {
         this.whatDo === 'newfolder' ? true : false, 
         false, 
         this.form.value.many,
+        this.form.value.textForGirls,
         this.form.value.clean1,
         this.form.value.clean2,
         this.form.value.clean3,
@@ -212,7 +267,8 @@ export class PicturesFormComponent implements OnInit {
         this.image2,
         this.image3,
         this.image4,
-        this.answers
+        this.answers,
+        this.exceptions
         )
     }
 

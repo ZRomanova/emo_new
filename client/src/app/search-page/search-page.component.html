@@ -1,1 +1,37 @@
-<p>search-page works!</p>
+<div *ngIf="!reloading; else reloader">
+    <div class="header light-{{session.secondColor}}-bg">
+        <select 
+        class="inheader" 
+        *ngIf="institutions$ | async as institutions" 
+        (change)="newInstitution()"
+        [(ngModel)]="institution">
+            <option *ngFor="let institution of institutions" value="{{institution._id}}">{{institution.name}}</option>
+        </select>
+        <span class="pNotAdmin">ИМЯ: <input type="text" class="inheader" [(ngModel)]="name"></span>
+        <span class="pNotAdmin" *ngIf="session.surnameView">ФАМИЛИЯ: <input type="text" class="inheader" [(ngModel)]="surname"></span>
+    </div>
+
+    <div class="search" *ngIf="users$ | async as users; else loader">
+        <div class="box-friend" *ngFor="let user of users | filter:name:'name' | filter:surname:'surname'">
+            <img class="friendAvatar gochat dark-{{session.firstColor}}-border" [src]="user.photo">
+            <div class="gochat letter"
+            *ngIf="user.letter"> </div>  
+            <div class="online gochat" 
+            *ngIf="user.onlineStatus != '-1' && session.online"
+            [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"> </div>
+            <div class="friendName tc gochat dark-{{session.firstColor}}-border">
+                <span>{{user.name}}</span><br>
+                <span *ngIf="session.surnameView">{{user.surname}}</span>
+            </div>                                             	 
+       </div>
+    </div>
+
+    <ng-template #loader>
+        <div class="loader"></div>
+        <app-loader></app-loader>
+    </ng-template>
+</div>
+
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>

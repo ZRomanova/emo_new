@@ -3,7 +3,8 @@ const Picture = require('../models/Picture')
 
 module.exports.create = async function(req, res) {
     try {
-         const lastPicture = await Picture
+      if (req.user.levelStatus == 1) {
+        const lastPicture = await Picture
         .findOne({parent: req.params.parentID})
         .sort({p_sort: -1})
 
@@ -12,7 +13,7 @@ module.exports.create = async function(req, res) {
         const picture = await new Picture({
           folder: req.body.folder,
           answers: req.body.answers != '' ? req.body.answers.split(',') : [],
-          //exceptions: req.body.exceptions.split(','),
+          exceptions: req.body.exceptions != '' ? req.body.exceptions.split(',') : [],
           text: req.body.text,
           parent: req.params.parentID,
           p_sort: maxSort + 1,
@@ -26,6 +27,9 @@ module.exports.create = async function(req, res) {
           many: req.body.many
         }).save()
         res.status(201).json(picture)
+      } else {
+        res.status(403).json({message: "У вас недостаточно прав для выполнения операции."})
+      }
       } catch (e) {
         errorHandler(res, e)
       }
@@ -35,7 +39,7 @@ module.exports.update = async function(req, res) {
   try {
     const updated = req.body
     updated.answers = req.body.answers != '' ? req.body.answers.split(',') : []
-    //updated.exceptions = req.body.exceptions.split(',')
+    updated.exceptions = req.body.exceptions != '' ? req.body.exceptions.split(',') : []
     if (req.files) {
       if (req.files['boysGreyPicture']) {
         updated.boysGreyPicture = req.files['boysGreyPicture'][0].path
@@ -90,11 +94,6 @@ module.exports.remove = async function(req, res) {
       parent: deletePicture.parent,
       p_sort: {$gt: deletePicture.p_sort}
     })
-
-    for (let picture of pictures) {
-      await Picture.updateOne({_id: picture._id}, {$set: {p_sort: picture.p_sort - 1}}, {new: true})
-    }
-    //await Picture.updateMany(pictures, {$set: {p_sort: p_sort - 1}})
     
     if (deletePicture.system === true) {
       res.status(200).json({
@@ -102,6 +101,9 @@ module.exports.remove = async function(req, res) {
       })  
     }
     else {
+      for (let picture of pictures) {
+        await Picture.updateOne({_id: picture._id}, {$set: {p_sort: picture.p_sort - 1}}, {new: true})
+      }
       if (deletePicture.folder === true) {
         message = 'Папка удалена.'
       } 

@@ -1,0 +1,169 @@
+<form id="setting_form" [formGroup]="form" *ngIf="!reloading; else reloader" (submit)="onSubmit()">
+
+    <div *ngIf="session.setting > 0">
+        <p class="pNotAdmin">Первый цвет:</p>
+        <table>
+            <tr>
+                <td *ngFor="let color of colors">
+                    <input 
+                    id="f{{color}}" 
+                    class="inline-blok" 
+                    name="first" 
+                    type="radio" 
+                    value="{{color}}" 
+                    formControlName="first" hidden>
+                    <label for="f{{color}}">
+                        <div class="color-div light-{{color}}-bg" [ngClass]="{checkedColor: form.value.first == color}"></div>
+                    </label>
+                </td>
+            </tr> 
+        </table>
+
+        <p class="pNotAdmin">Второй цвет:</p>
+        <table>
+            <tr>
+                <td *ngFor="let color of colors">
+                    <input 
+                    id="s{{color}}" 
+                    class="inline-blok" 
+                    name="second" 
+                    type="radio" 
+                    value="{{color}}" 
+                    formControlName="second" hidden> 
+                    <label for="s{{color}}">
+                        <div class="color-div light-{{color}}-bg" [ngClass]="{checkedColor: form.value.second == color}"></div>
+                    </label>
+                </td>
+            </tr> 
+        </table>
+    </div>
+
+    <div *ngIf="session.setting == 2">
+        <p class="pNotAdmin">Онлайны:</p>
+        
+        <label class="radio" [ngClass]="{checked: form.value.online == 'true'}">
+            <input name="online" type="radio" value="true" formControlName="online" hidden> 
+            <div class="yes"></div>
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.online == 'false'}">
+            <input name="online" type="radio" value="false" formControlName="online" hidden> 
+            <div class="no"></div> 
+        </label>
+
+        <p class="pNotAdmin">Отправляемые подписи:</p>
+
+        <label class="radio"  [ngClass]="{checked: form.value.Text == 'true'}">
+            <input name="Text" type="radio" value="true" formControlName="Text" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.Text == 'false'}">
+            <input name="Text" type="radio" value="false" formControlName="Text" hidden>
+            <div class="no"></div>
+        </label>
+
+        <p class="pNotAdmin">Прочитано ли сообщение:</p>
+        <label class="radio" [ngClass]="{checked: form.value.read == 'true'}">
+            <input name="read" type="radio" value="true" formControlName="read" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.read == 'false'}">
+            <input name="read" type="radio" value="false" formControlName="read" hidden>
+            <div class="no"></div> 
+        </label>
+
+        <p class="pNotAdmin">Фамилии:</p>
+        <label class="radio" [ngClass]="{checked: form.value.surnameView == 'true'}">
+            <input name="surnameView" type="radio" value="true" formControlName="surnameView" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.surnameView == 'false'}">
+            <input name="surnameView" type="radio" value="false" formControlName="surnameView" hidden>
+            <div class="no"></div>
+        </label>
+
+        <p class="pNotAdmin">Голосовые сообщения:</p>
+        <label class="radio" [ngClass]="{checked: form.value.vote == 'true'}">
+            <input name="vote" type="radio" value="true" formControlName="vote" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.vote == 'false'}">
+            <input name="vote" type="radio" value="false" formControlName="vote" hidden>
+            <div class="no"></div>
+        </label>
+
+        <p class="pNotAdmin">Предложения:</p>
+        <label class="radio" [ngClass]="{checked: form.value.sentence == 'true'}">
+            <input name="sentence" type="radio" value="true" formControlName="sentence" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.sentence == 'false'}">
+            <input name="sentence" type="radio" value="false" formControlName="sentence" hidden>
+            <div class="no"></div>
+        </label>
+
+        <p class="pNotAdmin">Подсказки к ответам:</p>
+        <label class="radio" [ngClass]="{checked: form.value.answers == 'true'}">
+            <input name="answers" type="radio" value="true" formControlName="answers" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.answers == 'false'}">
+            <input name="answers" type="radio" value="false" formControlName="answers" hidden>
+            <div class="no"></div>
+        </label>
+
+        <p class="pNotAdmin">Смена цветных и чёрно-белых пиктограмм:</p>
+        <label class="radio" [ngClass]="{checked: form.value.change == 'true'}">
+            <input name="change" type="radio" value="true" formControlName="change" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.change == 'false'}">
+            <input name="change" type="radio" value="false" formControlName="change" hidden>
+            <div class="no"></div>
+        </label>
+
+        <p class="pNotAdmin">Пиктограммы по умолчанию:</p>
+        <label class="radio" [ngClass]="{checked: form.value.defaultColor == 'grey'}">
+            <input name="defaultColor" type="radio" value="grey" formControlName="defaultColor" hidden>
+            <div class="grey"></div>
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.defaultColor == 'color'}">
+            <input name="defaultColor" type="radio" value="color" formControlName="defaultColor" hidden>
+            <div class="color"></div>
+        </label>
+
+        <p class="pNotAdmin">Именинники:</p>
+        <label class="radio" [ngClass]="{checked: form.value.birthdays == 'true'}">
+            <input name="birthdays" type="radio" value="true" formControlName="birthdays" hidden> 
+            <div class="yes"></div> 
+        </label>
+        <div class="radio_yes"></div>
+        <label class="radio" [ngClass]="{checked: form.value.birthdays == 'false'}">
+            <input name="birthdays" type="radio" value="false" formControlName="birthdays" hidden>
+            <div class="no"></div>
+        </label>
+    </div>
+    <button class="btn tc dark-{{session.firstColor}}-border" type="submit" *ngIf="session.setting != 0">
+        Сохранить
+    </button>
+    <div *ngIf="session.levelStatus == 4">
+        <button class="btn tc dark-{{session.firstColor}}-border" type="button" (click)="newRole('3')">
+            Стать подопечным
+        </button>
+        <button class="btn tc dark-{{session.firstColor}}-border" type="button" (click)="newRole('5')">
+            Стать взрослым
+        </button>
+    </div> 
+
+</form>
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>

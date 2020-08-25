@@ -10,6 +10,7 @@
                 Редактировать
             </a>
             <a 
+            *ngIf="institutions.length > 1"
             class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover" 
             [routerLink]="['/manage/institutions/delete', institution._id]">
                 Удалить
@@ -22,7 +23,8 @@
     <a 
     class="nav-admin middle-{{session.firstColor}}-bg-hover" 
     id="add_institution" 
-    [routerLink]="['/manage/institutions', 'new']">
+    [routerLink]="['/manage/institutions', 'new']"
+    *ngIf="session.levelStatus == 1">
         Добавить учреждение
     </a>
 </div>
