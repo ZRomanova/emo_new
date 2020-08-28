@@ -43,18 +43,24 @@ module.exports.getAllMessage = async function(req, res) {
 module.exports.getAllPictures = async function(req, res) {
     try {
 
-      const f = {parent: req.params.parentID, invisible: {$ne: true}}
+      const f = {parent: req.params.parentID}
+      let sort = 1
       if (
         req.params.parentID == '5f1309e3962c2f062467f854' || 
         req.params.parentID == '5f1309f1962c2f062467f855' || 
         req.params.parentID == '5f130a00962c2f062467f856' || 
         req.params.parentID == '5f130a0d962c2f062467f857') {
           f.user = req.user.id
+          sort = -1
         }
       const pictures = await Picture
-      .find(f, {answers: 0, system: 0})
-      .sort({p_sort: 1})
-      res.status(200).json(pictures)
+      .find(f, {system: 0})
+      .sort({p_sort: sort})
+
+      const folder = await Picture.findOne({_id: req.params.parentID}, {many: 1, parent: 1})
+      const picturesAndFolder = {pictures, folder}
+
+      res.status(200).json(picturesAndFolder)
     } catch (e) {
       errorHandler(res, e)
     }
@@ -107,6 +113,13 @@ module.exports.removeAll = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
+  console.log('Here')
+  function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  }
+
   try {
     if (req.files) {
       const files = req.files
@@ -131,7 +144,6 @@ module.exports.create = async function(req, res) {
             p_sort: maxSort + 1,
             user: req.user.id
           }).save()
-          //res.status(201).json(pictures)
         }
 
         else if (file.mimetype === 'video/mp4' 
@@ -155,13 +167,14 @@ module.exports.create = async function(req, res) {
             p_sort: maxSort + 1,
             user: req.user.id
           }).save()
-          //res.status(201).json(pictures)
         }
 
         else if (file.mimetype === 'audio/mpeg3' 
-        || file.mimetype === 'audio/mpeg3' 
+        || file.mimetype === 'audio/x-mpeg3' 
         || file.mimetype === 'audio/mod'
-        || file.mimetype === '	audio/x-mod') 
+        || file.mimetype === 'audio/x-mod'
+        || file.mimetype === 'audio/mpeg'
+        || file.mimetype === 'audio/x-mpeg') 
         {
           const lastPicture = await Picture
             .findOne({parent: '5f130a00962c2f062467f856'})
@@ -175,9 +188,9 @@ module.exports.create = async function(req, res) {
             parent: '5f130a00962c2f062467f856',
             p_sort: maxSort + 1,
             user: req.user.id,
-            text: req.file.originalname
+            text: file.originalname,
+            color: randomInteger(1, 12)
           }).save()
-          //res.status(201).json(pictures)
         }
 
         else {
@@ -193,9 +206,9 @@ module.exports.create = async function(req, res) {
             parent: '5f130a0d962c2f062467f857',
             p_sort: maxSort + 1,
             user: req.user.id,
-            text: req.file.originalname
+            text: file.originalname,
+            color: randomInteger(1, 12)
           }).save()
-          //res.status(201).json(pictures)
         }
       }
     }
@@ -203,4 +216,13 @@ module.exports.create = async function(req, res) {
   } catch (e) {
     errorHandler(res, e)
   }
+}
+
+module.exports.getFriend = async function (req, res) {
+  try {
+      const user = await User.findOne({_id: req.params.id}, {photo: 1, sex: 1})
+      res.status(200).json(user)
+  } catch (e) {
+      errorHandler(res, e)
+  } 
 }

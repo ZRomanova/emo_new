@@ -15,6 +15,7 @@ module.exports.create = async function(req, res) {
           answers: req.body.answers != '' ? req.body.answers.split(',') : [],
           exceptions: req.body.exceptions != '' ? req.body.exceptions.split(',') : [],
           text: req.body.text,
+          textForGirls: req.body.textForGirls,
           parent: req.params.parentID,
           p_sort: maxSort + 1,
           boysGreyPicture: req.files ? (req.files['boysGreyPicture'] ? req.files['boysGreyPicture'][0].path : '') : '',

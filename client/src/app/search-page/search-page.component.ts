@@ -4,6 +4,7 @@ import { User, Institution } from '../shared/interfaces';
 import { LoginService } from '../shared/services/login.service';
 import { UsersService } from '../shared/services/users.service';
 import { PeopleService } from '../shared/services/people.service';
+import { ChatService } from '../shared/services/chat.service';
 
 @Component({
   selector: 'app-search-page',
@@ -21,7 +22,8 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   constructor(private usersService: UsersService,
               private loginService: LoginService,
-              private peopleService: PeopleService) { }
+              private peopleService: PeopleService,
+              private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.reloading = true
@@ -36,6 +38,10 @@ export class SearchPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.obs$.unsubscribe()
+  }
+
+  goToChat(id: string, color: string) {
+    this.chatService.goToChat(id, color)
   }
 
   newInstitution() {

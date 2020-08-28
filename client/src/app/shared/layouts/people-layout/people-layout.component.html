@@ -3,17 +3,17 @@
         <router-outlet></router-outlet>
     </div>
 
-    <div class="menu light-{{color2}}-bg">
+    <div class="menu light-{{color2}}-bg dark-{{color2}}-border">
         <a routerLink="/manage" *ngIf="levelStatus == 1 || levelStatus == 2">
             <div class="exit-friends tc dark-{{color2}}-border">Управлять</div>
         </a>
-        <a>
-            <div class="myPhoto">
-                <img class="myPhotoIMG dark-{{color2}}-border" src="{{photo}}">
-                <div *ngIf="online" id="online_me"></div>
-            </div>           
-            <p class="exit-friends tc dark-{{color2}}-border myName">{{name}}</p>              
-        </a>
+
+        <div class="myPhoto" (click)="goToChat(id, color)">
+            <img class="myPhotoIMG dark-{{color2}}-border" src="{{photo}}">
+            <div *ngIf="online" id="online_me"></div>
+        </div>           
+        <p class="exit-friends tc dark-{{color2}}-border myName"  (click)="goToChat(id, color)">{{name}}</p>              
+
         <a routerLink="/people/search" routerLinkActive="people-active">
             <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/lupa.png">
         </a>

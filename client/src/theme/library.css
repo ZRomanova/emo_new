@@ -1,62 +1,64 @@
-  .chat {
-    float: left; 
+  .chat { 
     width: 33%; 
     height: 100%;    
     display: inline-block;
-    background: #C5FFF1;
     overflow: auto;
+    position: relative;
   }
   
   .library {
-    float: left; 
+    position: relative;
     width: 67%; 
     height: 100%;    
-    display:inline-block;
-    background: #FEBDD3;
+    display: inline-block;
     overflow: auto;
+  }
+
+  .all {
+    border-left-width: 3px;
+    border-left-style: solid;
+    min-height: 100%;
   }
   
   .picta {
-    width: 70%; 
-    
-    margin-left: 12%;
+    width: 100%;
     border-style: ridge;
   }
   
   .pict{ 
-      width: 100%;
+    width: 100%;
   }
   
   .pictaandtext {
-      width: 29%;     
-      height: auto;
-      display: inline-block;
-      margin-left: 10%;
-      margin-right: 10%;
-      margin-top: 5%;
-      margin-bottom: 5%;
-   
-      vertical-align: top;
+    width: 27%;     
+    height: auto;
+    display: inline-block;
+    margin-left: 10%;
+    margin-top: 3%;
+    margin-bottom: 3%;   
+    vertical-align: top;
   }
   
   .pictatext {
       display: block;
-      border-style: ridge;
+      border-style: solid;
+      border-radius: 10px;
+      border-width: 3px;
       width: 100%;
       min-height: 1cm;
-       height: auto;
-      font-size: 0.85cm;
+      height: auto;
+      font-size: 0.8cm;
       text-align: center;
       position: relative;
-      margin-top: 5%;
+      margin-top: 1%;
       padding-top: 0.2cm;
-      padding-bottom: 0.2cm;
+      padding-bottom: 0.1cm;
   }
   
   img.pict {
-      border-width: 2px; 
-      border-color: black;
-      border-style: solid;
+    border-width: 3px; 
+    border-style: solid;
+    border-radius: 10px;
   }
   
   .exit { 
@@ -65,18 +67,33 @@
     right: 2%;
     bottom: 2%;
     position: fixed;
-    background: url('/images/cross.png'); 
+    background-image: url('/uploads/images/cross.png'); 
     background-size: 100% 100%;
+  }
+
+  .chat-menu {
+    width: 2cm;
+    right: 2%;
+    position: fixed;
+    float: right;
+    height: auto;
+  }
+
+  .menu-icon {
+    height: 2cm;
+    width: 2cm;
+    margin-top: 15px;
   }
   
   #header {
-      width: 33%;
-      height: 100px;
-      margin: 0; 
-      position: absolute;
-      top: 0;
-      background: #FEBDD3;
-      z-index: 2;
+    width: 100%;
+    height: 70px;
+    margin: 0; 
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    border-bottom-width: 3px;
+    border-bottom-style: solid;
   }
   
   #middle {
@@ -91,8 +108,8 @@
   } 
   
   .avatar {
-      width: 96px;
-      height: 96px;
+      width: 66px;
+      height: 66px;
       position: absolute;
       top: 2px;
       z-index: 4;
@@ -105,18 +122,6 @@
   #friend {left: 2px;}
   #me {right: 2px;}
   
-  #online, #inthischat { 
-      width: 60px;
-      height: 30px;
-      position: absolute;
-      bottom: 10px;
-      left: 100px;
-  }
-  #online {
-      background: url('/images/computer.png'); 
-      background-size: 100% 100%;
-  }
-  
   #chat {
       width: 33%;
       height: 60px;
@@ -124,7 +129,6 @@
       margin: 0; 
       position: fixed;
       bottom: 0;
-      background: #C5FFF1;
   }
   
   .text {
@@ -142,54 +146,46 @@
       height: 53px;
       width: 23%;
       right: 2px;
-      background: url('/images/letter.png'); 
+      background-image: url('/uploads/images/letter.png'); 
       background-size: 100% 100%;
       display: inline-block;
   }
   
   .folder { 
-    background: url('/images/folder.png');
+    background-image: url('/uploads/images/folder.png');
     background-size: 100% 100%; 
     border: 0;  
     display: block;
-    height: 90%;
+    height: 100%;
   }
   
   .downloads {
        margin-left: 20%;
-       margin-bottom: 15%;
-       margin-top: 25%;
+       margin-bottom: 8%;
+       margin-top: 32%;
        width: 60%;
        position: relative;
-       border-style: ridge;
+  }
+
+  .downloads-picture {
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
   }
   
   .libraryName {
       display: block;
-      margin-left: 10%;
-      border-style: ridge;
-      width: 70%;
-      height: 1cm;
-      font-size: 0.85cm;
+      border-style: solid;
+      border-radius: 10px;
+      border-width: 3px;
+      width: 100%;
+      min-height: 1cm;
+      height: auto;
+      font-size: 0.8cm;
       text-align: center;
       position: relative;
-      margin-top: -5%;
       padding-top: 0.2cm;
-      padding-bottom: 0.2cm;
-  }
-  
-  #last_id{
-       background: #FEBDD3;
-       text-align: right;
-       float:right;
-       width: 10%;
-  }
-  
-  #last_scan{
-       background: #FEBDD3;
-       text-align: right;
-       float:right;
-       width: 20%;
+      padding-bottom: 0.1cm;
   }
   
   .box {
@@ -217,8 +213,8 @@
   .vtablo { 
     font-size: 1.2cm;
     text-align: center;
-    vertical-align:middle;
-    
+    vertical-align: middle;
+    margin-top: 2%;
   }
    
   .ontablo {
@@ -228,6 +224,7 @@
      height: 40%;
      padding: 1%;
      overflow-y: auto;
+     margin-top: 8%;
    }
   
   #ontablo_uv { 
@@ -245,20 +242,20 @@
   #ontablo_text {display: table-cell;}
     
   #strelka, #strelka_msg {
-    background: url('/images/strelka.png');
+    background: url('/uploads/images/strelka.png');
     background-size: 100% 100%; 
     height: 20%;
     margin-bottom: 5%;
   }
   #musorka, #musorka_msg {
-    background: url('/images/musorka.png');
+    background: url('/uploads/images/musorka.png');
     background-size: 100% 100%;
     width: 10%;
     margin: 5%;
     height: 20%;
   }
   #question, #question_msg {
-    background: url('/images/question.png');
+    background: url('/uploads/images/question.png');
     background-size: 100% 100%; 
   }
   
@@ -284,7 +281,7 @@
   #deleteChatMusorka{
     height: 2cm;
     width: 2cm;
-    background: url('/images/musorka.png');
+    background-image: url('/uploads/images/musorka.png');
     background-size: 100% 100%;
     display: inline-block;  
     position: relative;
@@ -293,7 +290,7 @@
   }
   
   #cross, #cross_msg, #cross_uv, #cross_pict {
-      background: url('/images/cross.png');
+      background-image: url('/uploads/images/cross.png');
       background-size: 100% 100%;
       height: 2cm;
       width: 2cm;
@@ -304,7 +301,7 @@
   }
   
   #tick, #tick_msg, #tick_pict {
-      background: url('/images/tick.png');
+      background-image: url('/uploads/images/tick.png');
       background-size: 100% 100%;
       height: 2cm;
       width: 2.5cm;
@@ -342,8 +339,8 @@
   }
   
   @keyframes get {
-      from {right: 350px;}
-      to {right: 5px;}
+      from {right: 100%;}
+      to {right: 0;}
   }
   
   .ul-chat{
@@ -384,7 +381,7 @@
   }
   
   .delete, .delete_pict {
-    background: url('/images/musorka.png');
+    background: url('/uploads/images/musorka.png');
     background-size: 100% 100%; 
     height: 40px;
     width: 40px;
@@ -419,29 +416,28 @@
   .downloads_form {
     width: 2cm;
     height: 2cm;
-       display: inline-block;
+    display: inline-block;
       
   }
   
   #div_submit {
-       right: 2%; 
-       top: 4cm;
-       position: fixed;
+    right: 2%; 
+    top: 4cm;
+    position: fixed;
   }
   
   #div_file {
-       right: 2%;
-       top: 1cm;
-       position: fixed;
+    right: 2%;
+    top: 1cm;
+    position: fixed;
   }
   
   #div_tick, #div_cross {
-  
-       margin-right: 10%;
+    margin-right: 10%;
     width: 1.5cm;
     height: 1.5cm;
   }
   
   #file {
-       display: none;
+    display: none;
   }

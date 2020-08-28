@@ -10,5 +10,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), controller.send
 router.delete('/:messageID', passport.authenticate('jwt', {session: false}), controller.remove)
 router.delete('/', passport.authenticate('jwt', {session: false}), controller.removeAll)
 router.post('/new', passport.authenticate('jwt', {session: false}), upload.array('files'), controller.create)
+router.get('/interlocutor/:id', passport.authenticate('jwt', {session: false}), controller.getFriend)
+
 
 module.exports = router

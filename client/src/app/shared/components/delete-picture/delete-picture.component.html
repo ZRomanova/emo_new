@@ -1,0 +1,16 @@
+<div class="backdrop"></div>
+
+<div class="tablo_pict">
+    <p class="tc vtablo">Хотите удалить картинку?</p>
+    <div id="delete_pict_id" hidden></div>
+    <div class="ontablo" 
+    [ngClass]="documentDelete: image == 'documentDelete', videoDelete: image == 'videoDelete', audioDelete: image == 'audioDelete'">
+         <img *ngIf="image != 'documentDelete' && image != 'videoDelete' && image != 'audioDelete'" 
+         id="delete_pict" [src]="image">
+    </div>
+    <div class="ontablo" id="strelka"></div>
+    <div class="ontablo" id="musorka"></div>
+    <div class="ontablo" id="question"></div>
+    <div id="cross_pict" (click)="checkedDelete(false)"></div>
+    <div id="tick_pict" (click)="checkedDelete(true)"></div>
+</div>

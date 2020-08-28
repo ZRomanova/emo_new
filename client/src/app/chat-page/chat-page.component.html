@@ -1,1 +1,93 @@
-<p>chat-page works!</p>
+<div class="all dark-{{session.secondColor}}-border" *ngIf="!reloading; else loader">
+    
+    <form hidden [formGroup]="form">
+        <input type="file" formControlName="files" id="files" multiple (change)="onFileUpload($event)">
+    </form>
+    
+    <span class="chat-menu">
+        <img 
+        class="menu-icon" 
+        src="/uploads/images/bw.png" 
+        *ngIf="queryC == 'color' && session.change && pictureAndFolder.folder.many != 0" 
+        (click)="newColor('grey')">
+
+        <img class="menu-icon" 
+        src="/uploads/images/color.png" 
+        *ngIf="queryC == 'grey' && session.change && pictureAndFolder.folder.many != 0" 
+        (click)="newColor('color')">
+
+        <label *ngIf="pictureAndFolder.folder._id == '5f130939962c2f062467f853'" for="files">
+            <img class="menu-icon" 
+            src="/uploads/images/downloads.png"  
+            >
+        </label>
+        
+    </span>
+    <span *ngFor="let picture of pictureAndFolder.pictures">
+        <div *ngIf="picture.folder" class="pictaandtext">
+            <div class="picta folder">
+                <div class="downloads-picture" (click)="newFolder(picture._id)">
+                    <img class="downloads" [src]="picture.src" *ngIf="picture.src">
+                    <img class="downloads" src="/uploads/images/clean.png" *ngIf="!picture.src">
+                </div>
+                <p 
+                class="libraryName tc dark-{{session.secondColor}}-border" 
+                *ngIf="picture.textInHTML"
+                (click)="newFolder(picture._id)">
+                    {{picture.textInHTML}}
+                </p>
+            </div>  
+        </div>        
+
+        <div class="pictaandtext" 
+        *ngIf="!picture.folder && picture.src && picture.parent != '5f1309f1962c2f062467f855' &&
+        picture.parent != '5f130a00962c2f062467f856' && picture.parent != '5f130a0d962c2f062467f857'">
+            <img class="pict dark-{{session.secondColor}}-border" [src]="picture.src">
+            <p 
+            class="pictatext tc dark-{{session.secondColor}}-border" 
+            *ngIf="picture.textInHTML && session.text">
+                {{picture.textInHTML}}
+            </p> 
+            <span class="file-delete" *ngIf="picture.parent == '5f1309e3962c2f062467f854'"
+            (click)="wantDeletePicture(picture.src)"></span>              
+        </div>
+
+        <div class="video-audio-box" 
+        *ngIf="picture.parent == '5f130a00962c2f062467f856'">
+            <p *ngIf="picture.textInHTML" 
+            class="audiotext dark-{{session.secondColor}}-border file-{{picture.color}}">{{picture.textInHTML}}</p>
+            <audio class="audio" controls>
+                <source [src]="picture.src">
+            </audio>
+            <span class="file-delete" (click)="wantDeletePicture('audioDelete')"></span> 
+            <span class="file-letter"></span>                       
+        </div>
+
+        <div class="video-audio-box" 
+        *ngIf="picture.parent == '5f1309f1962c2f062467f855'">
+            <video class="video dark-{{session.secondColor}}-border" controls>
+                <source [src]="picture.src">
+            </video>
+            <span class="file-delete" (click)="wantDeletePicture('videoDelete')"></span>  
+            <span class="file-letter"></span>                       
+        </div>
+
+        <div class="pictaandtext" *ngIf="picture.parent == '5f130a0d962c2f062467f857'">
+            <a [href]="picture.src" [download]="picture.textInHTML">
+                <img class="pict dark-{{session.secondColor}}-border file-{{picture.color}}" src="/uploads/images/docs.png">
+            </a>
+            <span class="file-delete" (click)="wantDeletePicture('documentDelete')"></span>
+            <span class="file-letter"></span> 
+        </div>
+
+    </span>
+    
+    <footer>
+        <div class="exit close_connection" (click)="cross()"></div>
+   </footer>
+   <app-delete-picture *ngIf="deletePicture" [image]="image" (checkedDelete)="fromDeletePicture($event)"></app-delete-picture>
+</div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

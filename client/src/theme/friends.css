@@ -19,6 +19,9 @@
       height: 100%;
       overflow: auto;
       display: inline-block;
+      border-left-width: 3px;
+      border-left-style: solid;
+      z-index: 3;
   }
   
   .friendAvatar {

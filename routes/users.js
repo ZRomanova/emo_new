@@ -15,7 +15,6 @@ const stop = (req, res, next) =>  {
 router.post('/', passport.authenticate('jwt', {session: false}), stop, upload.single('image'), controller.create)
 router.patch('/:userID', passport.authenticate('jwt', {session: false}), stop, upload.single('image'), controller.update)
 router.get('/', passport.authenticate('jwt', {session: false}), stop, controller.getAll)
-//router.get('/:institutionID', passport.authenticate('jwt', {session: false}), controller.getByInstitution)
 router.get('/:userID', passport.authenticate('jwt', {session: false}), stop, controller.getByUserID)
 router.delete('/:userID', passport.authenticate('jwt', {session: false}), stop, controller.remove)
 

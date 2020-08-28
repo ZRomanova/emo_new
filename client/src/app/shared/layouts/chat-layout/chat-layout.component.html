@@ -1,1 +1,31 @@
-<p>chat-layout works!</p>
+<div class="body" *ngIf="!reloading; else reloader">    
+     <div class="chat light-{{session.firstColor}}-bg">
+          <div *ngIf="user$ | async as user; else loader">
+               <div id="header" class="light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
+                    <img class="avatar" id="friend" [src]="user.photo">
+                    <img class="avatar" id="me" [src]="session.photo">
+               </div>
+               <div id="section" class="light-{{session.secondColor}}-bg">
+                    <ul id="middle">
+                         
+                    </ul>
+               </div>
+               <div id="chat" class="light-{{session.secondColor}}-bg">
+                    <img id="plus">
+                    <textarea class="text" id="tc"></textarea>
+                    <div id="footer_letter"></div>
+               </div>
+          </div>
+          <ng-template #loader>
+               <app-loader></app-loader>
+          </ng-template>     
+     </div>
+     
+     <div class="library light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
+          <app-chat-page [session]="session"></app-chat-page>
+     </div>
+</div>
+
+<ng-template #reloader>
+     <app-loader></app-loader>
+</ng-template>

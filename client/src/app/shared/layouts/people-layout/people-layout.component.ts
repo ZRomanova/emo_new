@@ -3,6 +3,7 @@ import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NavService } from '../../services/nav.service';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-people-layout',
@@ -17,17 +18,21 @@ export class PeopleLayoutComponent implements OnInit {
   online: boolean
   reloading: boolean = false
   photo: string
+  id: string
   setting: number
   levelStatus: number
   name: string
+  color: string
 
   constructor(
     private router: Router,
     private loginService: LoginService,
     private auth: LoginService,
-    private navService: NavService) {
+    private navService: NavService,
+    private chatService: ChatService) {
       this.navService.fColor.subscribe(color => this.color1 = color)
       this.navService.sColor.subscribe(color => this.color2 = color)
+      this.navService.newDefColor.subscribe(color => this.color = color)
       this.navService.newOnlane.subscribe(online => {
         this.online = online
         if (online == 'false') document.getElementById('online_me').style.display = 'none'
@@ -45,8 +50,14 @@ export class PeopleLayoutComponent implements OnInit {
       this.setting = user.setting
       this.levelStatus = user.levelStatus
       this.name = user.name
+      this.id = user._id
+      this.color = user.defaultColor
       this.reloading = false
     })
+  }
+
+  goToChat(id: string, color: string) {
+    this.chatService.goToChat(id, color)
   }
 
   logout(event: Event) {

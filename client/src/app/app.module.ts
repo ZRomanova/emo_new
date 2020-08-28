@@ -25,6 +25,7 @@ import { InstitutionsFormComponent } from './institutions-page/institutions-form
 import { InstitutionsDeleteComponent } from './institutions-page/institutions-delete/institutions-delete.component';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { FilterPipe } from './shared/pipes/filter.pipe';
+import { DeletePictureComponent } from './shared/components/delete-picture/delete-picture.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { FilterPipe } from './shared/pipes/filter.pipe';
     InstitutionsFormComponent,
     InstitutionsDeleteComponent,
     SettingsPageComponent,
-    FilterPipe
+    FilterPipe,
+    DeletePictureComponent
   ],
   imports: [
     BrowserModule,

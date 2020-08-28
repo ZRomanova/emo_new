@@ -50,6 +50,11 @@ module.exports.friends = async function(req, res) {
 
 module.exports.search = async function(req, res) {
     try {
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {onlineStatus: '0'}},
+        {new: true}) 
+        
       const users = await User
         .find({institution: req.params.instID}, {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, login: 1, photo: 1})
         .sort({name: 1, surname: 1}).lean()

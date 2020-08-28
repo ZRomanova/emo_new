@@ -13,13 +13,18 @@
 
     <div class="search" *ngIf="users$ | async as users; else loader">
         <div class="box-friend" *ngFor="let user of users | filter:name:'name' | filter:surname:'surname'">
-            <img class="friendAvatar gochat dark-{{session.firstColor}}-border" [src]="user.photo">
-            <div class="gochat letter"
-            *ngIf="user.letter"> </div>  
-            <div class="online gochat" 
+            <img 
+            class="friendAvatar dark-{{session.firstColor}}-border" 
+            [src]="user.photo"
+            (click)="goToChat(user._id, session.defaultColor)">
+            <div class="letter"
+            *ngIf="user.letter"
+            (click)="goToChat(user._id, session.defaultColor)"> </div>  
+            <div class="online" 
             *ngIf="user.onlineStatus != '-1' && session.online"
-            [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"> </div>
-            <div class="friendName tc gochat dark-{{session.firstColor}}-border">
+            [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"
+            (click)="goToChat(user._id, session.defaultColor)"> </div>
+            <div class="friendName tc dark-{{session.firstColor}}-border" (click)="goToChat(user._id, session.defaultColor)">
                 <span>{{user.name}}</span><br>
                 <span *ngIf="session.surnameView">{{user.surname}}</span>
             </div>                                             	 

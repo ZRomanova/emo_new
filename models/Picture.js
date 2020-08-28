@@ -66,6 +66,9 @@ const pictureSchema = new Schema({
     ref: 'users',
     type: [Schema.Types.ObjectId],
     default: []
+  },
+  color: {
+    type: Number
   }
 })
 

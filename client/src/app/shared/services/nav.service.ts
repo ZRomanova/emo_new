@@ -9,14 +9,16 @@ export class NavService {
   fColor: EventEmitter<string> = new EventEmitter()
   sColor: EventEmitter<string> = new EventEmitter()
   newOnlane: EventEmitter<string> = new EventEmitter()
+  newDefColor: EventEmitter<string> = new EventEmitter()
 
   public sendColor(color) {
     this.newColor.emit(color);
   }
 
-  public sendToPeople(color1, color2, online) {
+  public sendToPeople(color1, color2, online, color) {
     this.fColor.emit(color1);
     this.sColor.emit(color2);
     this.newOnlane.emit(online);
+    this.newDefColor.emit(color);
   }
 }

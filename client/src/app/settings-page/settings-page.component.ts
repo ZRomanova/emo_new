@@ -54,8 +54,8 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     this.oSub.unsubscribe()
   }
 
-  sendToParent(color1: string, color2: string, online: string) {
-    this.navService.sendToPeople(color1, color2, online)
+  sendToParent(color1: string, color2: string, online: string, color: string) {
+    this.navService.sendToPeople(color1, color2, online, color)
   }
 
   newRole(role: string) {
@@ -99,7 +99,7 @@ export class SettingsPageComponent implements OnInit, OnDestroy {
     obs$.subscribe(
       user => {
         this.session = user
-        this.sendToParent(this.form.value.first, this.form.value.second, this.form.value.online)
+        this.sendToParent(this.form.value.first, this.form.value.second, this.form.value.online, this.form.value.defaultColor)
         this.form.enable()
       },
       error => {

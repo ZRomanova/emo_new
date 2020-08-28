@@ -57,11 +57,14 @@ export interface Picture {
   user?: string
   many?: number
   _id?: string
+  src?: string
+  textInHTML?: string
+  color?: number
 }
 
 export interface Folder {
   text: string
-  many: boolean
+  many: number
   parent?: string
   _id?: string
 }

@@ -31,7 +31,10 @@
                     <div class="p_border_one dark-{{session.firstColor}}-border"><img class="picta_one" [src]="picture.boysGreyPicture"></div>
                 </div>
 
-                <div class="p_text">{{picture.p_sort}}. {{picture.text ? picture.text : '[без текста]'}}</div>
+                <div class="p_text">{{picture.p_sort}}. 
+                    <i *ngIf="!picture.text">[без текста]</i>
+                    <span *ngIf="picture.text">{{picture.text}}</span>
+                </div>
 
                 <div class="button edit-picture">
                     <a 

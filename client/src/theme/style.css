@@ -113,8 +113,7 @@ p, img, a:visited, a:active, a:hover {
     font-size: 2cm;
     z-index: 3;
 }
-button,
-button:active,
-button:focus {
+button, button:active, button:focus,
+audio, video {
     outline: none !important;
 }

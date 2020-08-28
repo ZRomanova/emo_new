@@ -38,11 +38,11 @@ const routes: Routes = [
   },
   {
     path: '', component: ChatLayoutComponent, canActivate: [AuthGuard], children: [
-      {path: 'chat', component: ChatPageComponent}
+      {path: 'chat/:id', component: ChatPageComponent}
     ]
   },
   {
-    path: '', component: AdminLayoutComponent, canActivate: [ModeratorGuard], children: [
+    path: '', component: AdminLayoutComponent, canActivate: [AuthGuard, ModeratorGuard], children: [
       {path: 'manage', redirectTo: '/manage/users', pathMatch: 'full'},
       {path: 'manage/users', component: UsersPageComponent},
       {path: 'manage/users/:id', component: UsersFormComponent},
