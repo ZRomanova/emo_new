@@ -17,6 +17,7 @@
   "author": "Zoya Romanova",
   "license": "ISC",
   "dependencies": {
+    "@angular-devkit/schematics": "^10.0.8",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
