@@ -12,7 +12,25 @@ const institutionsRoutes = require('./routes/institutions')
 const keys = require('./config/keys')
 
 const app = express()
+const http = require('http').createServer(app)
+const io = require('socket.io')(http, {perMessageDeflate: false})
 
+io.on('connection', (socket) => {
+    socket.on('in-chat', (id) => {
+        socket.join(id)
+    })
+
+    socket.on('new message', (data) => {
+        io.in(data.id).emit('new message', {message: data.message})
+    })
+
+    socket.on('leave room', (id) => {
+        socket.removeAllListeners(id)
+        socket.leave(id)
+        console.log('leave room', id)
+    })
+  })
+ 
 mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -37,4 +55,4 @@ app.use('/api/manage/pictures', picturesRoutes)
 app.use('/api/manage/users', usersRoutes)
 app.use('/api/manage/institutions', institutionsRoutes)
 
-module.exports = app
+module.exports = http

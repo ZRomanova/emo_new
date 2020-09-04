@@ -39,7 +39,7 @@ module.exports.update = async function(req, res) {
     }
   }
   
-module.exports.getAll = async function(req, res) {
+module.exports.getAllAdmin = async function(req, res) {
     try {
       if (req.user.levelStatus == 1) {
         const institutions = await Institution.find().sort({name: 1})
@@ -49,6 +49,15 @@ module.exports.getAll = async function(req, res) {
         res.status(200).json(institution)
       }
       
+    } catch (e) {
+      errorHandler(res, e)
+    }
+  }
+
+  module.exports.getAll = async function(req, res) {
+    try {
+      const institution = await Institution.find().sort({name: 1})
+      res.status(200).json(institution)
     } catch (e) {
       errorHandler(res, e)
     }

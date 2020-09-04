@@ -41,3 +41,7 @@
 @-moz-keyframes cssload-spin {
 	100%{ -moz-transform: rotate(360deg); transform: rotate(360deg); }
 }
+
+.loader-margin {
+	margin-top: 50px;
+}

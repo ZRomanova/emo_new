@@ -1,12 +1,44 @@
-<p>friends-page works!</p>
-<!--
-    <div class="search" *ngIf="users$ | async as users">
-        <div class="box-friend" *ngFor="let user of users">
-            <img class="friendAvatar gochat dark-{{session.firstColor}}-border" [src]="user.photo">
-            <p class="friendName tc gochat dark-{{session.firstColor}}-border">{{user.name}}</p>
-            <div class="gochat letter" *ngIf="true"> </div>  
-            <div class="online gochat" *ngIf="user.onlineStatus != '-1' && session.online"
-            [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"> </div>                                             	 
-       </div>
+<div *ngIf="!reloading; else reloader">
+
+    <div class="box-friend" *ngFor="let user of users.withMessageUsers">
+        <div class="birthday green-cursor" *ngIf="(user.birthDate | date:'MM.dd') == (today | date:'MM.dd') && session.birthdays"
+        (click)="goToChat(user._id, session.defaultColor, '5f3bfe9255ba364d9f2edfac')"></div>
+            <img 
+            class="friendAvatar dark-{{session.firstColor}}-border green-cursor" 
+            [src]="user.photo"
+            (click)="goToChat(user._id, session.defaultColor)">
+        <div class="letter green-cursor"
+        (click)="goToChat(user._id, session.defaultColor)"> </div>  
+        <div class="online green-cursor" 
+        *ngIf="user.onlineStatus != '-1' && session.online"
+        [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"
+        (click)="goToChat(user._id, session.defaultColor)"> </div>
+        <div class="friendName tc dark-{{session.firstColor}}-border green-cursor" (click)="goToChat(user._id, session.defaultColor)">
+            <span appEasyLang>{{user.name}}</span><br>
+            <span *ngIf="session.surnameView" appEasyLang>{{user.surname}}</span>
+        </div>                                             	 
+   </div>
+
+   <div class="box-friend" *ngFor="let user of users.withoutMessageUsers">
+        <div class="birthday green-cursor" *ngIf="(user.birthDate | date:'MM.dd') == (today | date:'MM.dd') && session.birthdays"
+        (click)="goToChat(user._id, session.defaultColor, '5f3bfe9255ba364d9f2edfac')"></div>
+            <img 
+            class="friendAvatar dark-{{session.firstColor}}-border green-cursor" 
+            [src]="user.photo"
+            (click)="goToChat(user._id, session.defaultColor)">
+        <div class="online green-cursor" 
+        *ngIf="user.onlineStatus != '-1' && session.online"
+        [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"
+        (click)="goToChat(user._id, session.defaultColor)"> 
+        </div>
+        <div class="friendName tc dark-{{session.firstColor}}-border green-cursor" (click)="goToChat(user._id, session.defaultColor)">
+            <span appEasyLang>{{user.name}}</span><br>
+            <span *ngIf="session.surnameView" appEasyLang>{{user.surname}}</span>
+        </div>                                             	 
     </div>
--->
+</div>
+
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>
+

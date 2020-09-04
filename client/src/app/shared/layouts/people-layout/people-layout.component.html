@@ -5,26 +5,28 @@
 
     <div class="menu light-{{color2}}-bg dark-{{color2}}-border">
         <a routerLink="/manage" *ngIf="levelStatus == 1 || levelStatus == 2">
-            <div class="exit-friends tc dark-{{color2}}-border">Управлять</div>
+            <div class="exit-friends tc dark-{{color2}}-border green-cursor" appEasyLang>Управлять</div>
         </a>
 
-        <div class="myPhoto" (click)="goToChat(id, color)">
+        <div class="myPhoto green-cursor" (click)="goToChat(id, color)">
             <img class="myPhotoIMG dark-{{color2}}-border" src="{{photo}}">
             <div *ngIf="online" id="online_me"></div>
         </div>           
-        <p class="exit-friends tc dark-{{color2}}-border myName"  (click)="goToChat(id, color)">{{name}}</p>              
+        <p class="exit-friends tc dark-{{color2}}-border myName green-cursor"  (click)="goToChat(id, color)" appEasyLang>{{name}}</p>              
 
-        <a routerLink="/people/search" routerLinkActive="people-active">
-            <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/lupa.png">
-        </a>
         <a routerLink="/people/friends" routerLinkActive="people-active">
-            <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/dialog.png">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/uploads/images/dialog.png">
         </a>
+        
+        <a routerLink="/people/search" routerLinkActive="people-active">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/uploads/images/lupa.png">
+        </a>
+        
         <a routerLink="/people/settings" routerLinkActive="people-active" *ngIf="levelStatus == 4 || setting != 0">
-            <img class="menuIMG dark-{{color2}}-border" src="/uploads/images/settings.jpg">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/uploads/images/settings.jpg">
         </a>
         <a href="#" (click)="logout($event)">
-            <div class="exit-friends tc dark-{{color2}}-border">Выход</div>
+            <div class="exit-friends tc dark-{{color2}}-border green-cursor" appEasyLang>Выход</div>
         </a>
         <br>
     </div>

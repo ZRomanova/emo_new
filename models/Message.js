@@ -18,7 +18,7 @@ const messageSchema = new Schema({
   },
   type: {
     type: [Number],
-    required: true // 1 - картинка, 2 - текст, 3 - аудио, 4 - видео
+    required: true // 1 - картинка, 2 - текст, 3 - аудио, 4 - видео, 5 - document
   },
   message: {
     type: [String],

@@ -1,7 +1,7 @@
 <form id="setting_form" [formGroup]="form" *ngIf="!reloading; else reloader" (submit)="onSubmit()">
 
     <div *ngIf="session.setting > 0">
-        <p class="pNotAdmin">Первый цвет:</p>
+        <p class="pNotAdmin" appEasyLang>Первый цвет:</p>
         <table>
             <tr>
                 <td *ngFor="let color of colors">
@@ -19,7 +19,7 @@
             </tr> 
         </table>
 
-        <p class="pNotAdmin">Второй цвет:</p>
+        <p class="pNotAdmin" appEasyLang>Второй цвет:</p>
         <table>
             <tr>
                 <td *ngFor="let color of colors">
@@ -39,7 +39,7 @@
     </div>
 
     <div *ngIf="session.setting == 2">
-        <p class="pNotAdmin">Онлайны:</p>
+        <p class="pNotAdmin" appEasyLang>Онлайны:</p>
         
         <label class="radio" [ngClass]="{checked: form.value.online == 'true'}">
             <input name="online" type="radio" value="true" formControlName="online" hidden> 
@@ -51,7 +51,7 @@
             <div class="no"></div> 
         </label>
 
-        <p class="pNotAdmin">Отправляемые подписи:</p>
+        <p class="pNotAdmin" appEasyLang>Отправляемые подписи:</p>
 
         <label class="radio"  [ngClass]="{checked: form.value.Text == 'true'}">
             <input name="Text" type="radio" value="true" formControlName="Text" hidden> 
@@ -63,7 +63,7 @@
             <div class="no"></div>
         </label>
 
-        <p class="pNotAdmin">Прочитано ли сообщение:</p>
+        <p class="pNotAdmin" appEasyLang>Прочитано ли сообщение:</p>
         <label class="radio" [ngClass]="{checked: form.value.read == 'true'}">
             <input name="read" type="radio" value="true" formControlName="read" hidden> 
             <div class="yes"></div> 
@@ -74,7 +74,7 @@
             <div class="no"></div> 
         </label>
 
-        <p class="pNotAdmin">Фамилии:</p>
+        <p class="pNotAdmin" appEasyLang>Фамилии:</p>
         <label class="radio" [ngClass]="{checked: form.value.surnameView == 'true'}">
             <input name="surnameView" type="radio" value="true" formControlName="surnameView" hidden> 
             <div class="yes"></div> 
@@ -85,7 +85,7 @@
             <div class="no"></div>
         </label>
 
-        <p class="pNotAdmin">Голосовые сообщения:</p>
+        <p class="pNotAdmin" appEasyLang>Голосовые сообщения:</p>
         <label class="radio" [ngClass]="{checked: form.value.vote == 'true'}">
             <input name="vote" type="radio" value="true" formControlName="vote" hidden> 
             <div class="yes"></div> 
@@ -96,7 +96,7 @@
             <div class="no"></div>
         </label>
 
-        <p class="pNotAdmin">Предложения:</p>
+        <p class="pNotAdmin" appEasyLang>Предложения:</p>
         <label class="radio" [ngClass]="{checked: form.value.sentence == 'true'}">
             <input name="sentence" type="radio" value="true" formControlName="sentence" hidden> 
             <div class="yes"></div> 
@@ -107,7 +107,7 @@
             <div class="no"></div>
         </label>
 
-        <p class="pNotAdmin">Подсказки к ответам:</p>
+        <p class="pNotAdmin" appEasyLang>Подсказки к ответам:</p>
         <label class="radio" [ngClass]="{checked: form.value.answers == 'true'}">
             <input name="answers" type="radio" value="true" formControlName="answers" hidden> 
             <div class="yes"></div> 
@@ -118,7 +118,7 @@
             <div class="no"></div>
         </label>
 
-        <p class="pNotAdmin">Смена цветных и чёрно-белых пиктограмм:</p>
+        <p class="pNotAdmin" appEasyLang>Смена цветных и чёрно-белых пиктограмм:</p>
         <label class="radio" [ngClass]="{checked: form.value.change == 'true'}">
             <input name="change" type="radio" value="true" formControlName="change" hidden> 
             <div class="yes"></div> 
@@ -129,7 +129,7 @@
             <div class="no"></div>
         </label>
 
-        <p class="pNotAdmin">Пиктограммы по умолчанию:</p>
+        <p class="pNotAdmin" appEasyLang>Пиктограммы по умолчанию:</p>
         <label class="radio" [ngClass]="{checked: form.value.defaultColor == 'grey'}">
             <input name="defaultColor" type="radio" value="grey" formControlName="defaultColor" hidden>
             <div class="grey"></div>
@@ -140,7 +140,7 @@
             <div class="color"></div>
         </label>
 
-        <p class="pNotAdmin">Именинники:</p>
+        <p class="pNotAdmin" appEasyLang>Именинники:</p>
         <label class="radio" [ngClass]="{checked: form.value.birthdays == 'true'}">
             <input name="birthdays" type="radio" value="true" formControlName="birthdays" hidden> 
             <div class="yes"></div> 
@@ -151,14 +151,14 @@
             <div class="no"></div>
         </label>
     </div>
-    <button class="btn tc dark-{{session.firstColor}}-border" type="submit" *ngIf="session.setting != 0">
+    <button class="btn tc dark-{{session.firstColor}}-border" type="submit" *ngIf="session.setting != 0" appEasyLang>
         Сохранить
     </button>
     <div *ngIf="session.levelStatus == 4">
-        <button class="btn tc dark-{{session.firstColor}}-border" type="button" (click)="newRole('3')">
+        <button class="btn tc dark-{{session.firstColor}}-border" type="button" (click)="newRole('3')" appEasyLang>
             Стать подопечным
         </button>
-        <button class="btn tc dark-{{session.firstColor}}-border" type="button" (click)="newRole('5')">
+        <button class="btn tc dark-{{session.firstColor}}-border" type="button" (click)="newRole('5')" appEasyLang>
             Стать взрослым
         </button>
     </div> 

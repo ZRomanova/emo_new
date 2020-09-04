@@ -1,17 +1,17 @@
 <div class="form">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
          <h1>
-              <p class="entrance tc notadmin">{{'Введите логин:' | easyLang}} </p>
+              <p class="entrance tc notadmin" appEasyLang>Введите логин: </p>
               <input 
               formControlName="login"
-              class="entrance" 
+              class="entrance text-cursor" 
               value=""
               placeholder="ЛОГИН">
 
-              <p class="entrance tc entrance_password notadmin">{{'Введите пароль:' | easyLang}}</p>
+              <p class="entrance tc entrance_password notadmin" appEasyLang>Введите пароль:</p>
               <input 
               formControlName="password"
-              class="entrance" 
+              class="entrance text-cursor" 
               value=""
               placeholder="ПАРОЛЬ"><br>
               
@@ -25,11 +25,12 @@
               <label 
               for="bottom_entrance_hidden"
               id="bottom_entrance" 
-              class="tc">
-                    {{'ВХОД' | easyLang}}
+              class="tc green-cursor"
+              appEasyLang>
+                    ВХОД
                </label>            
          </h1>
     </form>
 </div>
 <img id="emoPicture" src="uploads/images/emo.png">
-<h1 class="tc" id="emoText">{{'ЭМО' | easyLang}}</h1>
+<h1 class="tc" id="emoText" appEasyLang>ЭМО</h1>

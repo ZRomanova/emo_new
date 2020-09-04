@@ -57,17 +57,79 @@
     background-size: 100% 100%;
 }
 
-.documentDelete {
-    background-image: url('/uploads/images/docs.png');
-    background-size: 100% 100%;
+.sentence {
+    position: fixed;
+    top: 5%;
+    bottom: 5%;
+    right: 1.5%;
+    width: 15%;
+    background-color: white;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 10px;
+    z-index: 2;
+    padding-bottom: 60px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
-.audioDelete {
-    background-image: url('/uploads/images/vote.png');
-    background-size: 100% 100%;
+.sent {
+    margin-top: 5px;
+    text-align: center;
 }
 
-.videoDelete {
-    background-image: url('/uploads/images/camera.png');
+.sentLetter {
+    position: fixed;
+    height: 50px;
+    width: 5%;
+    right: 3%;
+    bottom: 6%;
+    background-image: url('/uploads/images/letter.png'); 
     background-size: 100% 100%;
+    display: block;
+}
+
+.sentDelete {
+    position: fixed;
+    height: 50px;
+    width: 50px;
+    right: 10%;
+    bottom: 6%;
+    background-image: url('/uploads/images/musorka.png'); 
+    background-size: 100% 100%;
+    display: block;
+}
+
+.sentence-in {
+    width: 80%;
+    height: auto;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 10px;
+    margin-left: 9%;
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.sent-m {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 100%;
+    position: relative;
+}
+
+.sentence-text {
+    padding: 3px;
+}
+
+.sentence-audio {
+    width: 80%;
+    margin-left: 9%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.sentence-doument {
+    height: 45px;
+    width: auto;
 }

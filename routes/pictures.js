@@ -23,6 +23,6 @@ router.post('/:parentID', passport.authenticate('jwt', {session: false}), stop, 
 router.patch('/:pictureID', passport.authenticate('jwt', {session: false}), stop, upload.fields(fields), controller.update)
 router.get('/:folderID', passport.authenticate('jwt', {session: false}), stop, controller.getAll)
 router.get('/one/:pictureID', passport.authenticate('jwt', {session: false}), stop, controller.getByPictureID)
-router.delete('/:pictureID', passport.authenticate('jwt', {session: false}), stop, controller.remove)
+router.delete('/:pictureID', passport.authenticate('jwt', {session: false}), controller.remove)
 
 module.exports = router

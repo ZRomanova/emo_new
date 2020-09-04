@@ -1,10 +1,19 @@
-.backdrop {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, .4);
-    z-index: 4;
+.audioDelete {
+    background-image: url('/uploads/images/vote.png');
+    background-size: 100% 100%;
 }
 
+.videoDelete {
+    background-image: url('/uploads/images/camera.png');
+    background-size: 100% 100%;
+}
+
+.documentDelete {
+    background-image: url('/uploads/images/docs.png');
+    background-size: 100% 100%;
+}
+
+.start-ontablo {
+    margin-left: 5%;
+    margin-left: 5%;
+}

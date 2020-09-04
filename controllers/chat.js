@@ -27,7 +27,7 @@ module.exports.getAllMessage = async function(req, res) {
         )
         .sort({time: 1})
 
-      const message = {"messagesRead": messagesRead, "messagesNotRead": messagesNotRead}
+      const message = {messagesRead, messagesNotRead}
 
       await Message.updateMany(
         {sender: friend, recipient: me}, 
@@ -68,11 +68,11 @@ module.exports.getAllPictures = async function(req, res) {
 
 module.exports.send = async function(req, res) {
     try { 
-        const status = await User.findOne({_id: req.query.friend}, {onlineStatus: 1, _id: 0})
+        const status = await User.findOne({_id: req.params.friend}, {onlineStatus: 1, _id: 0})
 
         const message = await new Message({
           sender: req.user.id,
-          recipient: req.query.friend,
+          recipient: req.params.friend,
           message: req.body.message,
           type: req.body.type,
           read: status.onlineStatus == req.user.id ? true : false
@@ -96,7 +96,7 @@ module.exports.remove = async function(req, res) {
 
 module.exports.removeAll = async function(req, res) {
   try {
-    const friend = req.query.friend
+    const friend = req.params.friend
     const me = req.user.id
 
     await Message.deleteMany({ $or: [
@@ -174,7 +174,9 @@ module.exports.create = async function(req, res) {
         || file.mimetype === 'audio/mod'
         || file.mimetype === 'audio/x-mod'
         || file.mimetype === 'audio/mpeg'
-        || file.mimetype === 'audio/x-mpeg') 
+        || file.mimetype === 'audio/x-mpeg'
+        || file.mimetype === 'audio/ogg'
+        || file.mimetype === 'audio/wav') 
         {
           const lastPicture = await Picture
             .findOne({parent: '5f130a00962c2f062467f856'})
@@ -225,4 +227,32 @@ module.exports.getFriend = async function (req, res) {
   } catch (e) {
       errorHandler(res, e)
   } 
+}
+
+module.exports.getAnswers = async function (req, res) {
+  try {
+    const src = `uploads/${req.params.pictureSRC}.${req.params.type}`
+    console.log(src)
+    const picture = await Picture.findOne({
+      $or: [
+        {boysGreyPicture: src},
+        {girlsGreyPicture: src},
+        {boysColorPicture: src},
+        {girlsColorPicture: src}
+      ]}, {answers: 1})
+
+      let answers = []
+      console.log(picture)
+
+      for (let id of picture.answers) {
+        let answer = await Picture.findOne({_id: id}, 
+          {boysGreyPicture: 1, girlsGreyPicture: 1, boysColorPicture: 1, girlsColorPicture: 1, 
+            folder: 1, text: 1, textForGirls: 1})
+        answers.push(answer)
+      }
+
+      res.status(200).json({answers})
+  } catch (e) {
+      errorHandler(res, e)
+  }
 }

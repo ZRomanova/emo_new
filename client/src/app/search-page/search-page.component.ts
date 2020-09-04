@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { User, Institution } from '../shared/interfaces';
 import { LoginService } from '../shared/services/login.service';
-import { UsersService } from '../shared/services/users.service';
 import { PeopleService } from '../shared/services/people.service';
 import { ChatService } from '../shared/services/chat.service';
 
@@ -16,12 +15,13 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   obs$: Subscription
   session: User
   institutions$: Observable<Institution[]>
-  users$: Observable<User[]>
+  users$: Subscription
+  users: User[]
   reloading = false
   institution: string
+  today = new Date()
 
-  constructor(private usersService: UsersService,
-              private loginService: LoginService,
+  constructor(private loginService: LoginService,
               private peopleService: PeopleService,
               private chatService: ChatService) { }
 
@@ -30,21 +30,26 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     this.obs$ = this.loginService.getUser().subscribe(user => {
       this.session = user
       this.institution = user.institution
-      this.users$ = this.peopleService.fetchAll(user.institution)
-      this.reloading = false
+      this.users$ = this.peopleService.fetchAll(user.institution).subscribe(users => {
+        this.users = users
+        this.reloading = false
+      })
     })
-    this.institutions$ = this.usersService.getInstitutions()
+    this.institutions$ = this.peopleService.getInstitutions()
   }
 
   ngOnDestroy() {
     this.obs$.unsubscribe()
+    this.users$.unsubscribe()
   }
 
-  goToChat(id: string, color: string) {
-    this.chatService.goToChat(id, color)
+  goToChat(id: string, color: string, folder?: string) {
+    this.chatService.goToChat(id, color, folder)
   }
 
   newInstitution() {
-    this.users$ = this.peopleService.fetchAll(this.institution)
+    this.users$ = this.peopleService.fetchAll(this.institution).subscribe(users => {
+      this.users = users
+    })
   }
 }

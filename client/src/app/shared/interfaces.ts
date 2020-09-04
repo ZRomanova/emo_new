@@ -21,18 +21,28 @@ export interface User {
   change?: boolean
   defaultColor?: string
   birthdays?: boolean
-  firstColor: string
-  secondColor: string
+  firstColor?: string
+  secondColor?: string
+}
+
+export interface Users {
+  withMessageUsers: User[]
+  withoutMessageUsers: User[]
 }
 
 export interface Message {
   sender?: string
-  recipient: string
-  time: Date
+  recipient?: string
+  time?: Date
   type: number[]
   message: string[]
   read?: boolean
   _id?: string
+}
+
+export interface Messages {
+  messagesRead: Message[]
+  messagesNotRead: Message[]
 }
 
 export interface Institution {
@@ -85,4 +95,8 @@ export interface Filter {
   institution?: string
   sex?: string
   levelStatus?: string
+}
+
+export interface Answers {
+  answers: Picture[]
 }

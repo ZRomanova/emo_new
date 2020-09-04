@@ -1,0 +1,43 @@
+<div class="backdrop"></div>
+
+<div class="tablo_msg">
+    <p class="tc vtablo" appEasyLang>Хотите удалить сообщение?</p>
+    <div id="delete_id"></div>
+    <div class="ontablo start-tablo">
+        
+        <div *ngFor="let message of letter.message; let i = index" class="div-in-li">
+            <div *ngIf="letter.type[i] == 1"  class="div-in-li">
+                 <img [src]="message" class="div-img" (click)="openZoom(message)">
+            </div>
+
+            <div *ngIf="letter.type[i] == 2" class="div-in-li" appEasyLang>
+                 {{message}}
+            </div>
+
+            <div *ngIf="letter.type[i] == 3" class="div-in-li">
+                 <audio controls  class="div-audio">
+                      <source [src]="message">
+                 </audio>
+            </div>
+
+            <div *ngIf="letter.type[i] == 4" class="div-in-li">
+                 <video controls class="div-img">
+                      <source [src]="message">
+                 </video>
+            </div>
+
+            <div *ngIf="letter.type[i] == 5" class="div-in-li">
+                 <a [href]="message" class="div-in-li" download>
+                      <img src="/uploads/images/docs.png" class="div-doument"> 
+                      <span class="docs" appEasyLang>ДОКУМЕНТ</span>
+                 </a>
+            </div>
+       </div>
+       
+    </div>
+    <div class="ontablo" id="strelka_msg"></div>
+    <div class="ontablo" id="musorka_msg"></div>
+    <div class="ontablo" id="question_msg"></div>
+    <div id="cross_msg" (click)="checked(false)"></div>
+    <div id="tick_msg" (click)="checked(true)"></div>
+</div>

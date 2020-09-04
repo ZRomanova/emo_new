@@ -10,6 +10,7 @@ export class NavService {
   sColor: EventEmitter<string> = new EventEmitter()
   newOnlane: EventEmitter<string> = new EventEmitter()
   newDefColor: EventEmitter<string> = new EventEmitter()
+  textMessage: EventEmitter<any[]> = new EventEmitter()
 
   public sendColor(color) {
     this.newColor.emit(color);
@@ -20,5 +21,9 @@ export class NavService {
     this.sColor.emit(color2);
     this.newOnlane.emit(online);
     this.newDefColor.emit(color);
+  }
+
+  public sendTextMessage(message: string, type: number) {
+    this.textMessage.emit([message, type])
   }
 }

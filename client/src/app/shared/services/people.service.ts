@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces';
+import { User, Institution, Users } from '../interfaces';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -56,7 +56,11 @@ export class PeopleService {
     return this.http.get<User[]>(`/api/people/search/${id}`)
   }
 
-  fetchFriends(): Observable<User[]> {
-    return this.http.get<User[]>(`/api/people/friends`)
+  fetchFriends(): Observable<Users> {
+    return this.http.get<Users>(`/api/people/friends`)
+  }
+
+  getInstitutions(): Observable<Institution[]> {
+    return this.http.get<Institution[]>(`/api/manage/institutions/search`)
   }
 }

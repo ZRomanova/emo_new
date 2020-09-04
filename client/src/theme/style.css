@@ -2,6 +2,7 @@ body {
     margin: 0;
     background: WHITE;
     overflow: scroll;
+    word-wrap: break-word;
 }
 
 .form {
@@ -80,7 +81,7 @@ p, img, a:visited, a:active, a:hover {
     text-decoration: none;
 }
 
-.black-cursor {
+.black-cursor, body, html {
      cursor: url('/uploads/images/cursorBlack.cur'), default;
      font-family: Arial, sans-serif;
 }
@@ -90,7 +91,9 @@ p, img, a:visited, a:active, a:hover {
      cursor: url('/uploads/images/cursor.cur'), pointer;
 }
 
-.text {cursor: text;}
+.text-cursor {
+    cursor: url('/uploads/images/cursorText.cur'), text;
+}
 
 #emoPicture {
      z-index: 2;

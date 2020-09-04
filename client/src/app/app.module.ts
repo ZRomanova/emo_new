@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
+import {SocketioService} from './shared/services/socketio.service'
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -19,13 +21,18 @@ import { PicturesPageComponent } from './pictures-page/pictures-page.component';
 import { InstitutionsPageComponent } from './institutions-page/institutions-page.component';
 import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-form.component';
 import { LoaderComponent } from './shared/components/loader/loader.component';
-import { EasyLangPipe } from './shared/pipes/easy-lang.pipe';
 import { UsersFormComponent } from './users-page/users-form/users-form.component';
 import { InstitutionsFormComponent } from './institutions-page/institutions-form/institutions-form.component';
 import { InstitutionsDeleteComponent } from './institutions-page/institutions-delete/institutions-delete.component';
 import { SettingsPageComponent } from './settings-page/settings-page.component';
 import { FilterPipe } from './shared/pipes/filter.pipe';
 import { DeletePictureComponent } from './shared/components/delete-picture/delete-picture.component';
+import { DeleteOneMessageComponent } from './shared/components/delete-one-message/delete-one-message.component';
+import { DeleteAllMessageComponent } from './shared/components/delete-all-message/delete-all-message.component';
+import { PictureZoomComponent } from './shared/components/picture-zoom/picture-zoom.component';
+import { RecordAudioComponent } from './shared/components/record-audio/record-audio.component';
+import { EasyLangDirective } from './shared/directive/easy-lang.directive';
+import { AnswersComponent } from './shared/components/answers/answers.component';
 
 @NgModule({
   declarations: [
@@ -43,27 +50,34 @@ import { DeletePictureComponent } from './shared/components/delete-picture/delet
     InstitutionsPageComponent,
     PicturesFormComponent,
     LoaderComponent,
-    EasyLangPipe,
     UsersFormComponent,
     InstitutionsFormComponent,
     InstitutionsDeleteComponent,
     SettingsPageComponent,
     FilterPipe,
-    DeletePictureComponent
+    DeletePictureComponent,
+    DeleteOneMessageComponent,
+    DeleteAllMessageComponent,
+    PictureZoomComponent,
+    RecordAudioComponent,
+    EasyLangDirective,
+    AnswersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       multi: true,
       useClass: TokenInterceptor
-    }
+    },
+    SocketioService
   ],
   bootstrap: [AppComponent]
 })

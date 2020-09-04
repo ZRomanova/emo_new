@@ -1,32 +1,34 @@
 <div *ngIf="!reloading; else reloader">
     <div class="header light-{{session.secondColor}}-bg">
         <select 
-        class="inheader" 
+        class="inheader green-cursor" 
         *ngIf="institutions$ | async as institutions" 
         (change)="newInstitution()"
         [(ngModel)]="institution">
             <option *ngFor="let institution of institutions" value="{{institution._id}}">{{institution.name}}</option>
         </select>
-        <span class="pNotAdmin">ИМЯ: <input type="text" class="inheader" [(ngModel)]="name"></span>
-        <span class="pNotAdmin" *ngIf="session.surnameView">ФАМИЛИЯ: <input type="text" class="inheader" [(ngModel)]="surname"></span>
+        <span class="pNotAdmin"><span appEasyLang>ИМЯ:</span> <input type="text" class="inheader text-cursor" [(ngModel)]="name"></span>
+        <span class="pNotAdmin" *ngIf="session.surnameView"><span appEasyLang>ФАМИЛИЯ:</span> <input type="text text-cursor" class="inheader" [(ngModel)]="surname"></span>
     </div>
 
-    <div class="search" *ngIf="users$ | async as users; else loader">
+    <div class="search">
         <div class="box-friend" *ngFor="let user of users | filter:name:'name' | filter:surname:'surname'">
+            <div class="birthday green-cursor" *ngIf="(user.birthDate | date:'MM.dd') == (today | date:'MM.dd') && session.birthdays"
+            (click)="goToChat(user._id, session.defaultColor, '5f3bfe9255ba364d9f2edfac')"></div>
             <img 
             class="friendAvatar dark-{{session.firstColor}}-border" 
             [src]="user.photo"
             (click)="goToChat(user._id, session.defaultColor)">
-            <div class="letter"
+            <div class="letter green-cursor"
             *ngIf="user.letter"
             (click)="goToChat(user._id, session.defaultColor)"> </div>  
-            <div class="online" 
+            <div class="online green-cursor" 
             *ngIf="user.onlineStatus != '-1' && session.online"
             [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"
             (click)="goToChat(user._id, session.defaultColor)"> </div>
-            <div class="friendName tc dark-{{session.firstColor}}-border" (click)="goToChat(user._id, session.defaultColor)">
-                <span>{{user.name}}</span><br>
-                <span *ngIf="session.surnameView">{{user.surname}}</span>
+            <div class="friendName tc dark-{{session.firstColor}}-border green-cursor" (click)="goToChat(user._id, session.defaultColor)">
+                <span appEasyLang>{{user.name}}</span><br>
+                <span *ngIf="session.surnameView" appEasyLang>{{user.surname}}</span>
             </div>                                             	 
        </div>
     </div>

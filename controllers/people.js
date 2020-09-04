@@ -5,6 +5,17 @@ const Message = require('../models/Message')
 
 module.exports.friends = async function(req, res) {
   try {
+    if (req.user.levelStatus == 4) {
+      await Message.deleteMany({ $or: [
+        {sender: req.user.id},
+        {recipient: req.user.id}
+        ]
+      })
+      await Picture.deleteMany({ 
+        user: req.user.id, parent: {$in: ['5f1309e3962c2f062467f854', '5f1309f1962c2f062467f855', '5f130a00962c2f062467f856', '5f130a0d962c2f062467f857']}
+      })
+    } 
+
     await User.updateOne(
       {_id: req.user.id}, 
       {$set: {onlineStatus: '0'}},
@@ -13,7 +24,7 @@ module.exports.friends = async function(req, res) {
       const NotRead = await Message.distinct("sender", {recipient: req.user.id, read: false})
 
       const withMessageUsers = await User.find(
-        {_id: {$in: NotRead}, _id: {$ne: req.user.id}}
+        { _id: {$ne: req.user.id, $in: NotRead}}, {name: 1, surname: 1, photo: 1, birthDate: 1, onlineStatus: 1}
       )
 
       const readSenders = await Message.distinct("sender", {recipient: req.user.id, read: true})
@@ -22,14 +33,12 @@ module.exports.friends = async function(req, res) {
       function union_arr(arr1, arr2) {
         // объединяем массивы
         arr3 = arr1.concat(arr2);
-        // сортируем полученный массив
-        arr3.sort();
         // формируем новый массив без повторяющихся элементов
         var arr = [arr3[0]]; 
         for (var i = 1; i < arr3.length; i++) {
-            if (arr3[i] != arr3[i-1]) {
-                arr.push(arr3[i]);
-            }
+          if (arr3[i] != arr3[i-1]) {
+              arr.push(arr3[i]);
+          }
         }
         return arr;
       }
@@ -37,10 +46,11 @@ module.exports.friends = async function(req, res) {
       const read = union_arr(readSenders, readRecipients)
 
       const withoutMessageUsers = await User.find(
-        {_id: {$in: read}, _id: {$ne: req.user.id}, _id: {$ne: {$in: NotRead}}}
+        {_id: {$in: read, $ne: req.user.id, $nin: NotRead}}, 
+        {name: 1, surname: 1, photo: 1, birthDate: 1, onlineStatus: 1}
       )
 
-      const users = {"withMessageUsers": withMessageUsers, "withoutMessageUsers": withoutMessageUsers}
+      const users = {withMessageUsers, withoutMessageUsers}
 
       res.status(200).json(users)
     } catch(e) {
@@ -56,7 +66,8 @@ module.exports.search = async function(req, res) {
         {new: true}) 
         
       const users = await User
-        .find({institution: req.params.instID}, {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, login: 1, photo: 1})
+        .find({institution: req.params.instID, $or: [ { levelStatus: { $ne: 4} }, { onlineStatus: { $ne: '-1'} } ], _id: { $ne: req.user._id } }, 
+          {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, login: 1, photo: 1})
         .sort({name: 1, surname: 1}).lean()
       
       for (let user of users) {
@@ -86,7 +97,7 @@ module.exports.search = async function(req, res) {
           ]
         })
         await Picture.deleteMany({ 
-          user: req.user.id
+          user: req.user.id, parent: {$in: ['5f1309e3962c2f062467f854', '5f1309f1962c2f062467f855', '5f130a00962c2f062467f856', '5f130a0d962c2f062467f857']}
         })
       }
       res.status(200).json({message: 'Данные гостя удалены, статус пользователя обновлён.'})
