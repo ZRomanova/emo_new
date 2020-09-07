@@ -18,16 +18,22 @@ const io = require('socket.io')(http, {perMessageDeflate: false})
 io.on('connection', (socket) => {
     socket.on('in-chat', (id) => {
         socket.join(id)
+        socket.join(id + '-online')
     })
 
     socket.on('new message', (data) => {
         io.in(data.id).emit('new message', {message: data.message})
     })
 
+    socket.on('online', (id) => {
+        io.in(id + '-online').emit('online', id)
+    })
+
     socket.on('leave room', (id) => {
-        socket.removeAllListeners(id)
+        //console.log(socket.adapter.rooms)
         socket.leave(id)
-        console.log('leave room', id)
+        socket.leave(id + '-online')
+        //console.log(socket.adapter.rooms)
     })
   })
  

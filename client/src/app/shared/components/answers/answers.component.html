@@ -5,23 +5,37 @@
     <div id="delete_id"></div>
     <div class="answers-in-modal" *ngIf="!reloading; else reloader">
         <span *ngFor="let picture of answers">
-            <div *ngIf="picture.folder" class="answers-box" (click)="checkAnswer(picture._id, true)">
+            <div *ngIf="picture.folder" class="answers-box green-cursor" (click)="checkAnswer(picture._id, true)">
                 <div class="picta folder">
                     <div class="downloads-picture">
                         <img class="downloads" [src]="picture.src" *ngIf="picture.src">
                         <img class="downloads" src="/uploads/images/clean.png" *ngIf="!picture.src">
                     </div>
+                    <p 
+                    class="libraryName tc green-cursor" 
+                    *ngIf="picture.textInHTML"
+                    appEasyLang>
+                        {{picture.textInHTML}}
+                    </p>
                 </div>  
             </div>        
 
-            <div class="answers-box" 
-            *ngIf="!picture.folder && picture.src" (click)="checkAnswer(picture.src, false)">
-                <img class="pict" [src]="picture.src" 
-                >            
+            <div class="answers-box green-cursor" 
+            *ngIf="!picture.folder && picture.src">
+                <img class="pict" [src]="picture.src"
+                (click)="checkAnswer(picture.src, false, 1)" 
+                >  
+                <p 
+                class="pictatext tc green-cursor" 
+                *ngIf="picture.textInHTML && session.text"
+                (click)="checkAnswer(picture.textInHTML, false, 2)"
+                appEasyLang>
+                    {{picture.textInHTML}}
+                </p>           
             </div>
         </span> 
     </div>   
-    <div id="cross_msg" (click)="closeModal(true)"></div>
+    <div id="cross_msg" class="green-cursor" (click)="closeModal(true)"></div>
     <ng-template #reloader>
         <app-loader></app-loader>
    </ng-template>

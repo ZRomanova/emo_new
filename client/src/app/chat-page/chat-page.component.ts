@@ -90,6 +90,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
           this.queryF = queryParam.folder
           this.oSub = this.chatService.getPictures(this.queryF).subscribe(pictureAndFolder =>{
             this.pictureAndFolder = pictureAndFolder
+            this.navService.sendMany(this.pictureAndFolder.folder.many)
             this.sortPictures()
           })
         }) 
@@ -102,7 +103,8 @@ export class ChatPageComponent implements OnInit, OnDestroy {
 
   sortPictures() {
     for (let picture of this.pictureAndFolder.pictures) {
-      if (picture.invisible === picture.answers.includes(this.session._id)) {
+      if (picture.invisible === picture.exceptions.includes(this.session._id)) {
+        picture.show = true
         if (picture._id == '5f130939962c2f062467f853') {
           picture.src = this.session.photo
           if (picture.text) picture.textInHTML = picture.text
@@ -191,7 +193,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     this.reloading = false
   }
 
-  makeMessage(type, message) {
+  makeMessage(type: number, message: string) {
     if (this.sentenceToggle) {
       this.types.push(type)
       this.messages.push(message)
@@ -313,6 +315,20 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   clearSentence() {
     this.messages = []
     this.types = []
+  }
+
+  newVote(audio) {
+    this.record = false
+    if (audio[0]) {
+      if (audio[1]) {
+        this.makeMessage(3, audio[2].boysGreyPicture)
+      }
+      if (this.queryF == '5f5486f982194ca1fb21ff6d') {
+        audio[2].textInHTML = audio[2].text
+        audio[2].src = audio[2].boysGreyPicture
+        this.pictureAndFolder.pictures.unshift(audio[2])
+      }
+    }
   }
 
   ngOnDestroy() {

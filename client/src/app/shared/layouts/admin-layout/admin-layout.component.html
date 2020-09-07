@@ -7,13 +7,13 @@
             >
             <a 
             [routerLink]="[link.url]" 
-            class="nav-admin middle-{{color}}-bg-hover green-cursor"
+            class="nav-admin middle-{{color}}-bg-hover"
             routerLinkActive="manage-active">
                 {{link.name}}
             </a>
             </li> 
-            <li class="nav-admin-li-right"><a class="nav-admin middle-{{color}}-bg-hover green-cursor"  href="#" (click)="logout($event)">Выход</a></li>
-            <li class="nav-admin-li-right"><a class="nav-admin middle-{{color}}-bg-hover green-cursor" routerLink="/people/friends">Вернуться</a></li>              
+            <li class="nav-admin-li-right"><a class="nav-admin middle-{{color}}-bg-hover"  href="#" (click)="logout($event)">Выход</a></li>
+            <li class="nav-admin-li-right"><a class="nav-admin middle-{{color}}-bg-hover" routerLink="/people/friends">Вернуться</a></li>              
         </ul>
     </div>
     <div class="content">

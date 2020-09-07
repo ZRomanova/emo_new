@@ -9,7 +9,8 @@ router.get('/:parentID', passport.authenticate('jwt', {session: false}), control
 router.post('/:friend', passport.authenticate('jwt', {session: false}), controller.send)
 router.delete('/:messageID', passport.authenticate('jwt', {session: false}), controller.remove)
 router.delete('/all/:friend', passport.authenticate('jwt', {session: false}), controller.removeAll)
-router.post('/new', passport.authenticate('jwt', {session: false}), upload.array('files'), controller.create)
+router.post('/picture/new', passport.authenticate('jwt', {session: false}), upload.array('files'), controller.create)
+router.post('/vote/new', passport.authenticate('jwt', {session: false}), upload.single('file'), controller.vote)
 router.get('/interlocutor/:id', passport.authenticate('jwt', {session: false}), controller.getFriend)
 router.get('/answers/:pictureSRC/:type', passport.authenticate('jwt', {session: false}), controller.getAnswers)
 

@@ -13,6 +13,11 @@
     background-size: 100% 100%;
 }
 
+.voteDelete {
+    background-image: url('/uploads/images/microphone.png');
+    background-size: 100% 100%;
+}
+
 .start-ontablo {
     margin-left: 5%;
     margin-left: 5%;

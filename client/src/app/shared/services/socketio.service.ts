@@ -9,14 +9,21 @@ import { Message } from '../interfaces';
 export class SocketioService {
 
   newMessage: EventEmitter<Message> = new EventEmitter()
+  online: EventEmitter<string> = new EventEmitter()
 
   socket = io(environment.SOCKET_ENDPOINT)
   
-  setupSocketConnection(id) {       //вхождение в чат (ngOnInit)
+  setupSocketConnection(id, interlocutor) {       //вхождение в чат (ngOnInit)
     this.socket.emit('in-chat', id)
+
+    this.socket.emit('online', interlocutor)
 
     this.socket.on('new message', (data) => {
       this.newMessage.emit(data.message)
+    })
+
+    this.socket.on('online', (id) => {
+      this.online.emit(id)
     })
   }
 

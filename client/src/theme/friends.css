@@ -44,7 +44,7 @@
       border-width: 3px;
       width: 70%;
       height: auto;
-      font-size: 0.85cm;
+      font-size: 0.7cm;
       text-align: center;
       padding-top: 0.2cm;
       padding-bottom: 0.2cm;
@@ -76,8 +76,8 @@
     margin-top: 10px;
     margin-left: 5%;
     width: 80%;
-    height: 1cm;
-    font-size: 0.85cm;
+    height: auto;
+    font-size: 0.7cm;
     text-align: center;
     padding-top: 0.1cm;
     padding-bottom: 0.1cm;

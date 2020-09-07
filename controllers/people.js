@@ -67,7 +67,7 @@ module.exports.search = async function(req, res) {
         
       const users = await User
         .find({institution: req.params.instID, $or: [ { levelStatus: { $ne: 4} }, { onlineStatus: { $ne: '-1'} } ], _id: { $ne: req.user._id } }, 
-          {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, login: 1, photo: 1})
+          {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, photo: 1})
         .sort({name: 1, surname: 1}).lean()
       
       for (let user of users) {
@@ -76,6 +76,19 @@ module.exports.search = async function(req, res) {
         if (message) user.letter = true
         else user.letter = false
       }
+
+      res.status(200).json(users)
+    } catch (e) {
+      errorHandler(res, e)
+    }
+  }
+
+  module.exports.toPictures = async function(req, res) {
+    try {       
+      const users = await User
+        .find({institution: req.params.instID}, 
+          {name: 1, surname: 1, login: 1})
+        .sort({name: 1, surname: 1})
 
       res.status(200).json(users)
     } catch (e) {

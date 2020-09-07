@@ -70,6 +70,7 @@ export interface Picture {
   src?: string
   textInHTML?: string
   color?: number
+  show?: boolean
 }
 
 export interface Folder {

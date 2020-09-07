@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { User, PictureAndFolder, MessageFromServer, Message, Messages, Answers } from '../interfaces';
+import { User, PictureAndFolder, MessageFromServer, Message, Messages, Answers, Picture } from '../interfaces';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -31,7 +31,14 @@ export class ChatService {
     for (let i = 0; i < files.length; i++) {
       fd.append(`files`, files[i], files[i].name)
     }
-    return this.http.post<MessageFromServer>(`/api/chat/new`, fd)
+    return this.http.post<MessageFromServer>(`/api/chat/picture/new`, fd)
+  }
+
+  newVote(blob: Blob): Observable<Picture> {
+    let file = new File([blob], 'vote.webm', {type: 'audio/webm'}) 
+    const fd = new FormData()
+    fd.append('file', file, file.name)
+    return this.http.post<Picture>(`/api/chat/vote/new`, fd)
   }
 
   deletePicture(id: string): Observable<MessageFromServer> {

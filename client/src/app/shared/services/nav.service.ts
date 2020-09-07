@@ -11,6 +11,7 @@ export class NavService {
   newOnlane: EventEmitter<string> = new EventEmitter()
   newDefColor: EventEmitter<string> = new EventEmitter()
   textMessage: EventEmitter<any[]> = new EventEmitter()
+  manyFolder: EventEmitter<number> = new EventEmitter()
 
   public sendColor(color) {
     this.newColor.emit(color);
@@ -25,5 +26,9 @@ export class NavService {
 
   public sendTextMessage(message: string, type: number) {
     this.textMessage.emit([message, type])
+  }
+
+  public sendMany(many: number) {
+    this.manyFolder.emit(many)
   }
 }

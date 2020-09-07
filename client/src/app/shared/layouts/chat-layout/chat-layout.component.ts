@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { LoginService } from '../../services/login.service';
 import { User, Message, Messages } from '../../interfaces';
@@ -12,7 +12,7 @@ import { SocketioService } from '../../services/socketio.service';
   templateUrl: './chat-layout.component.html',
   styleUrls: ['./chat-layout.component.css']
 })
-export class ChatLayoutComponent implements OnInit, OnDestroy {
+export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   reloading = false
   oSub: Subscription
@@ -38,7 +38,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy {
               private socketService: SocketioService,
               private router: Router) {
                 this.socketService.newMessage.subscribe(message => {
-                  if (message.sender == this.id) {
+                  if (message.sender == this.id && message.recipient == this.session._id && !this.newMessages.includes(message)) {
                     this.newMessages.push(message)
                     for (let src of message.message) {
                       let path = src.split('/')
@@ -52,6 +52,20 @@ export class ChatLayoutComponent implements OnInit, OnDestroy {
                         })
                       }
                     }
+                    setTimeout(scroll, 200)
+                    function scroll() {
+                      document.getElementById('forScroll').scrollIntoView(false)
+                    } 
+                  }
+                })
+                this.socketService.online.subscribe(online => {
+                  if (online == this.session._id && this.session._id != this.id) {
+                    for (let message of this.letters.messagesRead) {
+                      message.read = true
+                    }
+                    for (let message of this.newMessages) {
+                      message.read = true
+                    }
                   }
                 })
                }
@@ -61,7 +75,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy {
     this.mesloading = true
     this.oSub = this.loginService.getUser().subscribe(user =>{
       this.session = user
-      this.socketService.setupSocketConnection(user._id)
+      this.socketService.setupSocketConnection(user._id, this.id)
       this.reloading = false
     }) 
 
@@ -119,6 +133,19 @@ export class ChatLayoutComponent implements OnInit, OnDestroy {
     return ret
   }
 
+  ngAfterViewInit() {
+    let TimerId = setInterval(scroll, 500)
+
+    function scroll() {
+      if (document.getElementById('forScroll')) {
+        clearTimeout(TimerId)
+        let separator = document.getElementById('separator') 
+        if (separator) separator.scrollIntoView(true)
+        else document.getElementById('forScroll').scrollIntoView(false)
+      }
+    }
+  }
+
   newText() {
     if (this.textarea.trim()) {
       this.navService.sendTextMessage(this.textarea, 2)
@@ -128,6 +155,10 @@ export class ChatLayoutComponent implements OnInit, OnDestroy {
 
   newMessageFromMe(message) {
     this.newMessages.push(message)
+    setTimeout(scroll, 500)
+    function scroll() {
+      document.getElementById('forScroll').scrollIntoView(false)
+    }    
   }
 
   clearChat(clear) {
@@ -177,7 +208,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy {
       })
     }
     else {
-      this.navService.sendTextMessage(meta[0], 1)
+      this.navService.sendTextMessage(meta[0], meta[2])
     }
     this.answerFor = ''
   }

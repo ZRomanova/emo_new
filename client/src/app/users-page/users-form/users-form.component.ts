@@ -77,37 +77,36 @@ export class UsersFormComponent implements OnInit, OnDestroy {
       this.session = user
       this.id = user._id
       this.reloading = false
-    })
-     
-    this.form = new FormGroup({
-      login: new FormControl('', Validators.required),
-      password: new FormControl(''),
-      name: new FormControl('', Validators.required),
-      surname: new FormControl('', Validators.required),
-      sex: new FormControl('1'),
-      status: new FormControl('3'),
-      photo: new FormControl(null),
-      institution: new FormControl(null, Validators.required),
+      this.form = new FormGroup({
+        login: new FormControl('', Validators.required),
+        password: new FormControl(''),
+        name: new FormControl('', Validators.required),
+        surname: new FormControl('', Validators.required),
+        sex: new FormControl('1'),
+        status: new FormControl('3'),
+        photo: new FormControl(null),
+        institution: new FormControl(this.session.institution, Validators.required),
+  
+        online: new FormControl('false'),
+        Text: new FormControl('false'),
+        read: new FormControl('false'),
+        surnameView: new FormControl('false'),
+        setting: new FormControl('1'),
+        vote: new FormControl('false'),
+        sentence: new FormControl('false'),
+        answers: new FormControl('false'),
+        change: new FormControl('true'),
+        defaultColor: new FormControl('grey'),
+        birthdays: new FormControl('false'),
+        first: new FormControl('5'),
+        second: new FormControl('1'),
+  
+        day: new FormControl('0'),
+        month: new FormControl('0'),
+        year: new FormControl('', [Validators.minLength(4), Validators.maxLength(4)])
+      })
 
-      online: new FormControl('false'),
-      Text: new FormControl('false'),
-      read: new FormControl('false'),
-      surnameView: new FormControl('false'),
-      setting: new FormControl('1'),
-      vote: new FormControl('false'),
-      sentence: new FormControl('false'),
-      answers: new FormControl('false'),
-      change: new FormControl('true'),
-      defaultColor: new FormControl('grey'),
-      birthdays: new FormControl('false'),
-      first: new FormControl('5'),
-      second: new FormControl('1'),
-
-      day: new FormControl('0'),
-      month: new FormControl('0'),
-      year: new FormControl('', [Validators.minLength(4), Validators.maxLength(4)])
-    }) 
-    this.imagePreview = '/uploads/images/boy.png'
+      this.imagePreview = '/uploads/images/boy.png'
 
     this.form.disable()
 
@@ -175,7 +174,7 @@ export class UsersFormComponent implements OnInit, OnDestroy {
         },
         error => {console.log(error)}
       )
-
+    })
   }
 
   ngOnDestroy() {
@@ -239,7 +238,7 @@ export class UsersFormComponent implements OnInit, OnDestroy {
       }
 
       let obs$
-
+      
       if (this.whatDo === 'new') {
         obs$ = this.usersService.create(
           this.form.value.login,

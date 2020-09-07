@@ -98,7 +98,7 @@ export class PicturesService {
   }
 
   users(id: string): Observable<User[]> {
-    return this.http.get<User[]>(`/api/people/search/${id}`)
+    return this.http.get<User[]>(`/api/people/toPictures/${id}`)
   }
   
 }

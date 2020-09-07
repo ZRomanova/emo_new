@@ -8,7 +8,7 @@
             <option *ngFor="let institution of institutions" value="{{institution._id}}">{{institution.name}}</option>
         </select>
         <span class="pNotAdmin"><span appEasyLang>ИМЯ:</span> <input type="text" class="inheader text-cursor" [(ngModel)]="name"></span>
-        <span class="pNotAdmin" *ngIf="session.surnameView"><span appEasyLang>ФАМИЛИЯ:</span> <input type="text text-cursor" class="inheader" [(ngModel)]="surname"></span>
+        <span class="pNotAdmin" *ngIf="session.surnameView"><span appEasyLang>ФАМИЛИЯ:</span> <input type="text" class="inheader text-cursor" [(ngModel)]="surname"></span>
     </div>
 
     <div class="search">
@@ -16,7 +16,7 @@
             <div class="birthday green-cursor" *ngIf="(user.birthDate | date:'MM.dd') == (today | date:'MM.dd') && session.birthdays"
             (click)="goToChat(user._id, session.defaultColor, '5f3bfe9255ba364d9f2edfac')"></div>
             <img 
-            class="friendAvatar dark-{{session.firstColor}}-border" 
+            class="friendAvatar dark-{{session.firstColor}}-border green-cursor" 
             [src]="user.photo"
             (click)="goToChat(user._id, session.defaultColor)">
             <div class="letter green-cursor"

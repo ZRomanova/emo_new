@@ -35,8 +35,8 @@ export class PeopleLayoutComponent implements OnInit {
       this.navService.newDefColor.subscribe(color => this.color = color)
       this.navService.newOnlane.subscribe(online => {
         this.online = online
-        if (online == 'false') document.getElementById('online_me').style.display = 'none'
-        else document.getElementById('online_me').style.display = 'block'
+        if (online == 'false') this.online = false
+        else this.online = true
       })
      }
 

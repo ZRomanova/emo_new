@@ -49,6 +49,7 @@ module.exports.getAllPictures = async function(req, res) {
         req.params.parentID == '5f1309e3962c2f062467f854' || 
         req.params.parentID == '5f1309f1962c2f062467f855' || 
         req.params.parentID == '5f130a00962c2f062467f856' || 
+        req.params.parentID == '5f5486f982194ca1fb21ff6d' || 
         req.params.parentID == '5f130a0d962c2f062467f857') {
           f.user = req.user.id
           sort = -1
@@ -113,7 +114,6 @@ module.exports.removeAll = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
-  console.log('Here')
   function randomInteger(min, max) {
     // случайное число от min до (max+1)
     let rand = min + Math.random() * (max + 1 - min);
@@ -132,7 +132,7 @@ module.exports.create = async function(req, res) {
         || file.mimetype === 'image/webp') 
         {
           const lastPicture = await Picture
-            .findOne({parent: '5f1309e3962c2f062467f854'})
+            .findOne({parent: '5f1309e3962c2f062467f854', user: req.user.id})
             .sort({p_sort: -1})
 
           const maxSort = lastPicture ? lastPicture.p_sort : 0
@@ -155,7 +155,7 @@ module.exports.create = async function(req, res) {
         || file.mimetype === 'video/avi') 
         {
           const lastPicture = await Picture
-            .findOne({parent: '5f1309f1962c2f062467f855'})
+            .findOne({parent: '5f1309f1962c2f062467f855', user: req.user.id})
             .sort({p_sort: -1})
 
           const maxSort = lastPicture ? lastPicture.p_sort : 0
@@ -176,10 +176,11 @@ module.exports.create = async function(req, res) {
         || file.mimetype === 'audio/mpeg'
         || file.mimetype === 'audio/x-mpeg'
         || file.mimetype === 'audio/ogg'
-        || file.mimetype === 'audio/wav') 
+        || file.mimetype === 'audio/wav'
+        || file.mimetype === 'audio/webm') 
         {
           const lastPicture = await Picture
-            .findOne({parent: '5f130a00962c2f062467f856'})
+            .findOne({parent: '5f130a00962c2f062467f856', user: req.user.id})
             .sort({p_sort: -1})
 
           const maxSort = lastPicture ? lastPicture.p_sort : 0
@@ -197,7 +198,7 @@ module.exports.create = async function(req, res) {
 
         else {
           const lastPicture = await Picture
-            .findOne({parent: '5f130a0d962c2f062467f857'})
+            .findOne({parent: '5f130a0d962c2f062467f857', user: req.user.id})
             .sort({p_sort: -1})
 
           const maxSort = lastPicture ? lastPicture.p_sort : 0
@@ -242,7 +243,6 @@ module.exports.getAnswers = async function (req, res) {
       ]}, {answers: 1})
 
       let answers = []
-      console.log(picture)
 
       for (let id of picture.answers) {
         let answer = await Picture.findOne({_id: id}, 
@@ -250,9 +250,38 @@ module.exports.getAnswers = async function (req, res) {
             folder: 1, text: 1, textForGirls: 1})
         answers.push(answer)
       }
-
       res.status(200).json({answers})
   } catch (e) {
       errorHandler(res, e)
+  }
+}
+
+module.exports.vote = async function (req, res) {
+  function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+  }
+  try {
+    
+    const lastPicture = await Picture
+      .findOne({parent: '5f5486f982194ca1fb21ff6d', user: req.user.id})
+      .sort({p_sort: -1})
+
+    const maxSort = lastPicture ? lastPicture.p_sort : 0
+
+    const vote = await new Picture({
+      folder: false,
+      boysGreyPicture: req.file.path,
+      parent: '5f5486f982194ca1fb21ff6d',
+      p_sort: maxSort + 1,
+      user: req.user.id,
+      text: 'Моё голосовое сообщение',
+      color: randomInteger(1, 12)
+    }).save()
+
+    res.status(201).json(vote)
+  } catch(e) {
+    errorHandler(res, e)
   }
 }

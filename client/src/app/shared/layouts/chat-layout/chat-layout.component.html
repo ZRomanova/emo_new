@@ -87,6 +87,8 @@
                                    </div>
                               </div>
 
+                              <div *ngIf="letters.messagesNotRead.length > 0" class="separator" id="separator"></div>
+
                               <div *ngFor="let letter of letters.messagesNotRead">
                                    <div class="inter-message message dark-{{session.firstColor}}-border"
                                    id="{{letter._id}}">
@@ -204,7 +206,8 @@
                                         </div>
                                    </div>
                               </div>
-                         </div>
+                              <div class="forScroll" id="forScroll"></div>                                                          
+                         </div>                        
                     </div>
                     <ng-template #mesloader>
                          <app-loader></app-loader>
@@ -230,7 +233,7 @@
 
      <app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>
      <app-delete-one-message *ngIf="deleteMessage" [letter]="deleteID" (result)="closeDeleteMessage($event)"></app-delete-one-message>
-     <app-answers *ngIf="answerFor" [src]="answerFor"
+     <app-answers *ngIf="answerFor" [src]="answerFor" [session]="session"
      (close)="closeAnswers($event)" (meta)="checkAnswer($event)"></app-answers>
 </div>
 

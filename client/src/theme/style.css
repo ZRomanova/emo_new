@@ -92,7 +92,7 @@ p, img, a:visited, a:active, a:hover {
 }
 
 .text-cursor {
-    cursor: url('/uploads/images/cursorText.cur'), text;
+    cursor: url('/uploads/images/cursorText.cur') 16 16, text;
 }
 
 #emoPicture {
