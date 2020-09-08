@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const passport = require('passport')
 const bodyParser = require('body-parser')
+const path = require('path')
 
 const authRoutes = require('./routes/auth')
 const chatRoutes = require('./routes/chat')
@@ -60,5 +61,17 @@ app.use('/api/people', peopleRoutes)
 app.use('/api/manage/pictures', picturesRoutes)
 app.use('/api/manage/users', usersRoutes)
 app.use('/api/manage/institutions', institutionsRoutes)
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/dist/client'))
+  
+    app.get('*', (req, res) => {
+      res.sendFile(
+        path.resolve(
+          __dirname, 'client', 'dist', 'client', 'index.html'
+        )
+      )
+    })
+  }
 
 module.exports = http
