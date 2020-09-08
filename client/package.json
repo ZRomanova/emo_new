@@ -11,6 +11,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/compiler-cli": "~10.0.14",
+    "@angular/cli": "^10.0.8",
     "@angular/animations": "~10.0.14",
     "@angular/common": "~10.0.14",
     "@angular/compiler": "~10.0.14",
@@ -22,12 +24,11 @@
     "rxjs": "~6.6.2",
     "tslib": "^2.0.1",
     "upgrade-node-modules": "^1.3.3",
-    "zone.js": "~0.11.1"
+    "zone.js": "~0.11.1",
+    "typescript": "^3.9.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1000.8",
-    "@angular/cli": "^10.0.8",
-    "@angular/compiler-cli": "~10.0.14",
     "@types/dom-mediacapture-record": "^1.0.7",
     "@types/jasmine": "~3.5.14",
     "@types/jasminewd2": "~2.0.8",
@@ -42,7 +43,6 @@
     "karma-jasmine-html-reporter": "^1.5.4",
     "protractor": "~7.0.0",
     "ts-node": "~9.0.0",
-    "tslint": "~6.1.3",
-    "typescript": "^3.9.6"
+    "tslint": "~6.1.3"
   }
 }
