@@ -38,7 +38,6 @@ export class RecordAudioComponent implements OnInit {
         }, (err) => console.log('The following error occured: ' + err));
    } else {
       console.log('navigator.mediaDevices', navigator.mediaDevices)
-      console.log('navigator.mediaDevices.getUserMedia', navigator.mediaDevices.getUserMedia)
       console.log('getUserMedia not supported on your browser!');
    }
   }
