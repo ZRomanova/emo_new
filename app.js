@@ -14,7 +14,7 @@ const keys = require('./config/keys')
 
 const app = express()
 const http = require('http').createServer(app)
-const io = require('socket.io')(http, {perMessageDeflate: false})
+const io = require('socket.io').listen(http)
 
 io.on('connection', (socket) => {
     socket.on('in-chat', (id) => {
