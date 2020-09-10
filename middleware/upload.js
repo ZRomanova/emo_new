@@ -1,5 +1,7 @@
 const multer = require('multer')
 const moment = require('moment')
+const host = process.env.HOST || '0.0.0.0'
+const folder = host == '0.0.0.0' ? 'uploads/' : 'uploads-repo/'
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
@@ -7,7 +9,7 @@ function getRandomInt(min, max) {
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, folder)
   },
   filename(req, file, cb) {
     const date = moment().format('DDMMYYYY-HHmmss_SSS')

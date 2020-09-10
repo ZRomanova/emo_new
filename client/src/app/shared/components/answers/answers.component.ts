@@ -45,7 +45,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
         this.interlocutorSex = user.sex
         this.route.queryParams.subscribe((queryParam: any) => {
           this.queryC = queryParam.color
-          this.$answers = this.chatService.getAnswers(picture[0], picture[1]).subscribe(answers => {
+          this.$answers = this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
             this.answers = answers.answers
             this.sortAnswers()
           })

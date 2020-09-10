@@ -44,7 +44,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                       let path = src.split('/')
                       if (path[0] == 'uploads') {
                         let picture = path[1].split('.')
-                        this.chatService.getAnswers(picture[0], picture[1]).subscribe(answers => {
+                        this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
                           if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
                         },
                         error => {
@@ -87,9 +87,9 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         for (let message of messages.messagesRead) {
           for (let src of message.message) {
             let path = src.split('/')
-            if (path[0] == 'uploads') {
+            if (path[0] == 'uploads' || path[0] == 'uploads-repo') {
               let picture = path[1].split('.')
-              this.chatService.getAnswers(picture[0], picture[1]).subscribe(answers => {
+              this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
                 if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
               },
               error => {
@@ -101,9 +101,9 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         for (let message of messages.messagesNotRead) {
           for (let src of message.message) {
             let path = src.split('/')
-            if (path[0] == 'uploads') {
+            if (path[0] == 'uploads' || path[0] == 'uploads-repo') {
               let picture = path[1].split('.')
-              this.chatService.getAnswers(picture[0], picture[1]).subscribe(answers => {
+              this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
                 if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
               },
               error => {
@@ -121,7 +121,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     let path = src.split('/')
     let picture = path[1].split('.')
     let ret
-    this.chatService.getAnswers(picture[0], picture[1]).subscribe(answers => {
+    this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
       console.log(answers)
       if (answers.answers == []) ret = false
       else ret = true

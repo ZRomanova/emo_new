@@ -232,7 +232,7 @@ module.exports.getFriend = async function (req, res) {
 
 module.exports.getAnswers = async function (req, res) {
   try {
-    const src = `uploads/${req.params.pictureSRC}.${req.params.type}`
+    const src = `${req.params.folder}/${req.params.pictureSRC}.${req.params.type}`
     console.log(src)
     const picture = await Picture.findOne({
       $or: [

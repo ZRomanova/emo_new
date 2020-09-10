@@ -64,7 +64,7 @@ export class ChatService {
     return this.http.delete<MessageFromServer>(`/api/chat/all/${friend}`)
   }
 
-  getAnswers (picture: string, type: string): Observable<Answers> {
-    return this.http.get<Answers>(`/api/chat/answers/${picture}/${type}`)
+  getAnswers (picture: string, type: string, folder: string): Observable<Answers> {
+    return this.http.get<Answers>(`/api/chat/answers/${picture}/${type}/${folder}`)
   }
 }
