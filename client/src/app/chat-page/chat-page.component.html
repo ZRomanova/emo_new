@@ -6,39 +6,39 @@
     
     <span class="chat-menu" [@button]="buttonsState">
         <img class="menu-icon green-cursor" 
-        src="/uploads/images/musorka.png" 
+        src="/images/musorka.png" 
         *ngIf="pictureAndFolder.folder.parent != '5f12ff8cc06cd105437d84e3'" 
         (click)="wantDeleteChat()">
         
         <img class="menu-icon green-cursor" 
-        src="/uploads/images/left_pointing.png" 
+        src="/images/left_pointing.png" 
         *ngIf="!sentenceToggle && session.sentence" 
         (click)="changeSentence()">
 
         <img class="menu-icon green-cursor" 
-        src="/uploads/images/right_pointing.png" 
+        src="/images/right_pointing.png" 
         *ngIf="sentenceToggle && session.sentence" 
         (click)="changeSentence()">
 
         <img 
         class="menu-icon green-cursor" 
-        src="/uploads/images/bw.png" 
+        src="/images/bw.png" 
         *ngIf="queryC == 'color' && session.change && pictureAndFolder.folder.many != 0" 
         (click)="newColor('grey')">
 
         <img class="menu-icon green-cursor" 
-        src="/uploads/images/color.png" 
+        src="/images/color.png" 
         *ngIf="queryC == 'grey' && session.change && pictureAndFolder.folder.many != 0" 
         (click)="newColor('color')">
 
         <img class="menu-icon green-cursor" 
-        src="/uploads/images/microphone.png" 
+        src="/images/microphone.png" 
         *ngIf="session.vote" 
         (click)="wantRecordAudio()">
 
         <label *ngIf="pictureAndFolder.folder._id == '5f130939962c2f062467f853'" for="files">
             <img class="menu-icon green-cursor" 
-            src="/uploads/images/downloads.png"  
+            src="/images/downloads.png"  
             >
         </label>
         
@@ -67,7 +67,7 @@
             </div>
             <div *ngIf="types[i] == 5" class="sent-m">
                 <div class="sentence-in dark-{{session.secondColor}}-border">
-                    <img src="/uploads/images/docs.png" class="sentence-doument"> 
+                    <img src="/images/docs.png" class="sentence-doument"> 
                     <span appEasyLang>ДОКУМЕНТ</span>
                 </div>
             </div>
@@ -81,7 +81,7 @@
             <div class="picta folder">
                 <div class="downloads-picture green-cursor" (click)="newFolder(picture._id)">
                     <img class="downloads" [src]="picture.src" *ngIf="picture.src">
-                    <img class="downloads" src="/uploads/images/clean.png" *ngIf="!picture.src">
+                    <img class="downloads" src="/images/clean.png" *ngIf="!picture.src">
                 </div>
                 <p 
                 class="libraryName tc dark-{{session.secondColor}}-border green-cursor" 

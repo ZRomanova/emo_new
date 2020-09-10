@@ -99,7 +99,7 @@
   }
   
   #seach {
-      background: url('/uploads/images/lupa.png'); 
+      background: url('/images/lupa.png'); 
       background-size: 100% 100%;
   } 
   
@@ -107,7 +107,7 @@
       position: relative;
       height: 3rem;
       width: 6rem;
-      background-image: url('/uploads/images/letter.png'); 
+      background-image: url('/images/letter.png'); 
       background-size: 100% 100%;
       display: inline-block;
       margin-top: -3rem;
@@ -128,12 +128,12 @@
   }
   .inchat {
     background-size: 100% 100%;
-    background-image: url('/uploads/images/eye.png'); 
+    background-image: url('/images/eye.png'); 
   }
 
   .notincat {
     background-size: 100% 100%;
-    background-image: url('/uploads/images/computer.png');
+    background-image: url('/images/computer.png');
   }
   
   .letterandnoonline{
@@ -143,7 +143,7 @@
     position: relative;
     height: 1.3cm;
     width: 2.6cm;
-    background-image: url('/uploads/images/computer.png'); 
+    background-image: url('/images/computer.png'); 
     background-size: 100% 100%;
     display: block;
     bottom: 5px;
@@ -160,6 +160,6 @@
   height: 4rem;
   width: 4rem;
   background-size: 100% 100%;
-  background-image: url('/uploads/images/present.png');
+  background-image: url('/images/present.png');
   z-index: 2;
 }

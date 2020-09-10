@@ -106,7 +106,7 @@ export class UsersFormComponent implements OnInit, OnDestroy {
         year: new FormControl('', [Validators.minLength(4), Validators.maxLength(4)])
       })
 
-      this.imagePreview = '/uploads/images/boy.png'
+      this.imagePreview = '/images/boy.png'
 
     this.form.disable()
 
@@ -153,8 +153,8 @@ export class UsersFormComponent implements OnInit, OnDestroy {
             this.startL = user.login
             this.imagePreview = user.photo
             this.first = +user.firstColor
-            if (this.imagePreview == '/uploads/images/boy.png') this.imageText = '/uploads/images/boy.png'
-            if (this.imagePreview == '/uploads/images/girl.png') this.imageText = '/uploads/images/girl.png'
+            if (this.imagePreview == '/images/boy.png') this.imageText = '/images/boy.png'
+            if (this.imagePreview == '/images/girl.png') this.imageText = '/images/girl.png'
             this.userInstitution = user.institution.toString()
             if (user.birthDate) {
               let date = this.datePipe.transform(user.birthDate, "dd,MM,yyyy") 
@@ -182,14 +182,14 @@ export class UsersFormComponent implements OnInit, OnDestroy {
   }
 
   changeSex() {
-    if ((this.imagePreview == '/uploads/images/boy.png') || (this.imagePreview == '/uploads/images/girl.png')) {
+    if ((this.imagePreview == '/images/boy.png') || (this.imagePreview == '/images/girl.png')) {
       if (this.form.value.sex == '1') {
-        this.imagePreview = '/uploads/images/boy.png'
-        this.imageText = '/uploads/images/boy.png'
+        this.imagePreview = '/images/boy.png'
+        this.imageText = '/images/boy.png'
       }
       else {
-        this.imagePreview = '/uploads/images/girl.png'
-        this.imageText = '/uploads/images/girl.png'
+        this.imagePreview = '/images/girl.png'
+        this.imageText = '/images/girl.png'
       }
     }
   }

@@ -65,7 +65,7 @@
     height: 2cm;
     width: 2cm;
     bottom: 2%;
-    background-image: url('/uploads/images/cross.png'); 
+    background-image: url('/images/cross.png'); 
     background-size: 100% 100%;
   }
 
@@ -127,13 +127,13 @@
       height: 53px;
       width: 23%;
       right: 2px;
-      background-image: url('/uploads/images/letter.png'); 
+      background-image: url('/images/letter.png'); 
       background-size: 100% 100%;
       display: inline-block;
   }
   
   .folder { 
-    background-image: url('/uploads/images/folder.png');
+    background-image: url('/images/folder.png');
     background-size: 100% 100%; 
     border: 0;  
     display: block;
@@ -233,20 +233,20 @@
   #ontablo_text {display: table-cell;}
     
   #strelka, #strelka_msg {
-    background: url('/uploads/images/strelka.png');
+    background: url('/images/strelka.png');
     background-size: 100% 100%; 
     height: 20%;
     margin-bottom: 5%;
   }
   #musorka, #musorka_msg {
-    background: url('/uploads/images/musorka.png');
+    background: url('/images/musorka.png');
     background-size: 100% 100%;
     width: 10%;
     margin: 5%;
     height: 20%;
   }
   #question, #question_msg {
-    background: url('/uploads/images/question.png');
+    background: url('/images/question.png');
     background-size: 100% 100%; 
   }
   
@@ -272,7 +272,7 @@
   #deleteChatMusorka{
     height: 2cm;
     width: 2cm;
-    background-image: url('/uploads/images/musorka.png');
+    background-image: url('/images/musorka.png');
     background-size: 100% 100%;
     display: inline-block;  
     position: relative;
@@ -281,7 +281,7 @@
   }
   
   #cross, #cross_msg, #cross_uv, #cross_pict {
-      background-image: url('/uploads/images/cross.png');
+      background-image: url('/images/cross.png');
       background-size: 100% 100%;
       height: 2cm;
       width: 2cm;
@@ -292,7 +292,7 @@
   }
   
   #tick, #tick_msg, #tick_pict {
-    background-image: url('/uploads/images/tick.png');
+    background-image: url('/images/tick.png');
     background-size: 100% 100%;
     height: 2cm;
     width: 2.5cm;
@@ -303,7 +303,7 @@
   }
 
   #pause {
-    background-image: url('/uploads/images/stop.png');
+    background-image: url('/images/stop.png');
     background-size: 100% 100%;
     height: 2cm;
     width: 2cm;
@@ -314,7 +314,7 @@
   }
 
   #resume {
-    background-image: url('/uploads/images/start.png');
+    background-image: url('/images/start.png');
     background-size: 100% 100%;
     height: 2cm;
     width: 2cm;
@@ -325,7 +325,7 @@
   }
 
   #send-vote {
-    background-image: url('/uploads/images/letter.png');
+    background-image: url('/images/letter.png');
     background-size: 100% 100%;
     height: 2cm;
     width: 4cm;
@@ -373,7 +373,7 @@
   }
   
   .delete, .delete_pict {
-    background: url('/uploads/images/musorka.png');
+    background: url('/images/musorka.png');
     background-size: 100% 100%; 
     height: 40px;
     width: 40px;

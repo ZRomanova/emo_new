@@ -82,17 +82,17 @@ p, img, a:visited, a:active, a:hover {
 }
 
 .black-cursor, body, html {
-     cursor: url('/uploads/images/cursorBlack.cur'), default;
+     cursor: url('/images/cursorBlack.cur'), default;
      font-family: Arial, sans-serif;
 }
 
 .green-cursor
 {
-     cursor: url('/uploads/images/cursor.cur'), pointer;
+     cursor: url('/images/cursor.cur'), pointer;
 }
 
 .text-cursor {
-    cursor: url('/uploads/images/cursorText.cur') 16 16, text;
+    cursor: url('/images/cursorText.cur') 16 16, text;
 }
 
 #emoPicture {

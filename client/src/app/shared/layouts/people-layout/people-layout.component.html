@@ -15,15 +15,15 @@
         <p class="exit-friends tc dark-{{color2}}-border myName green-cursor"  (click)="goToChat(id, color)" appEasyLang>{{name}}</p>              
 
         <a routerLink="/people/friends" routerLinkActive="people-active">
-            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/uploads/images/dialog.png">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/dialog.png">
         </a>
         
         <a routerLink="/people/search" routerLinkActive="people-active">
-            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/uploads/images/lupa.png">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/lupa.png">
         </a>
         
         <a routerLink="/people/settings" routerLinkActive="people-active" *ngIf="levelStatus == 4 || setting != 0">
-            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/uploads/images/settings.jpg">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/settings.jpg">
         </a>
         <a href="#" (click)="logout($event)">
             <div class="exit-friends tc dark-{{color2}}-border green-cursor" appEasyLang>Выход</div>

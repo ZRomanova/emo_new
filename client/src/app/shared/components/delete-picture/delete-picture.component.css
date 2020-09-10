@@ -1,20 +1,20 @@
 .audioDelete {
-    background-image: url('/uploads/images/vote.png');
+    background-image: url('/images/vote.png');
     background-size: 100% 100%;
 }
 
 .videoDelete {
-    background-image: url('/uploads/images/camera.png');
+    background-image: url('/images/camera.png');
     background-size: 100% 100%;
 }
 
 .documentDelete {
-    background-image: url('/uploads/images/docs.png');
+    background-image: url('/images/docs.png');
     background-size: 100% 100%;
 }
 
 .voteDelete {
-    background-image: url('/uploads/images/microphone.png');
+    background-image: url('/images/microphone.png');
     background-size: 100% 100%;
 }
 

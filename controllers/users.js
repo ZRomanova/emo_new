@@ -31,7 +31,7 @@ module.exports.create = async function(req, res) {
         sex: req.body.sex,
         institution: institution,
         levelStatus: req.body.levelStatus,
-        photo: req.file ? req.file.path : (req.body.sex == '2' ? '/uploads/images/girl.png' : '/uploads/images/boy.png'),
+        photo: req.file ? req.file.path : (req.body.sex == '2' ? '/images/girl.png' : '/images/boy.png'),
         online: req.body.online,
         text: req.body.text,
         read: req.body.read,

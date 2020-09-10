@@ -5,8 +5,8 @@
     <p class="tc vtablo" *ngIf="recording" appEasyLang>Говорите...</p>
     <p class="tc vtablo" *ngIf="!recording" appEasyLang>Пауза</p>
 
-    <img class="ontablo_vote" *ngIf="recording" src="/uploads/images/listen.png">
-    <img class="ontablo_vote" *ngIf="!recording" src="/uploads/images/notlisten.png">
+    <img class="ontablo_vote" *ngIf="recording" src="/images/listen.png">
+    <img class="ontablo_vote" *ngIf="!recording" src="/images/notlisten.png">
 
     <div *ngIf="!reloading">
         <div id="pause" class="green-cursor" *ngIf="recording" (click)="pause()"></div>
@@ -15,6 +15,9 @@
 
         <div id="cross" class="green-cursor" (click)="break()"></div>
         <div id="tick" class="green-cursor" (click)="stop(false)"></div>
+    </div>
+    <div *ngIf="reloading">
+        <div id="cross" class="green-cursor" (click)="exit()"></div>  
     </div>
     
 </div>

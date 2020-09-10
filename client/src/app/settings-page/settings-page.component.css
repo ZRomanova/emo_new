@@ -27,25 +27,25 @@ td {
 .yes {
     height: 70px;
     width: 70px;
-    background: url('/uploads/images/tick.png');
+    background: url('/images/tick.png');
     background-size: 100% 100%;
 }
 .no {
     height: 70px;
     width: 70px;
-    background: url('/uploads/images/cross.png');
+    background: url('/images/cross.png');
     background-size: 100% 100%;
 }
 .grey {
     height: 70px;
     width: 70px;
-    background: url('/uploads/images/bw.png');
+    background: url('/images/bw.png');
     background-size: 100% 100%;
 }
 .color {
     height: 70px;
     width: 70px;
-    background: url('/uploads/images/color.png');
+    background: url('/images/color.png');
     background-size: 100% 100%;
 }
 label.radio {

@@ -90,29 +90,29 @@
  }
 
  .delete-message-btn {
-     background-image: url('/uploads/images/musorka.png');
+     background-image: url('/images/musorka.png');
      background-size: 100% 100%;
  }
 
  .see-message {
-    background-image: url('/uploads/images/eye_see.png');
+    background-image: url('/images/eye_see.png');
     background-size: 100% 100%;
 }
 
 .notsee-message {
-    background-image: url('/uploads/images/eye_notsee.png');
+    background-image: url('/images/eye_notsee.png');
     background-size: 100% 100%;
 }
 
 .answers-message-btn {
-    background-image: url('/uploads/images/question.png');
+    background-image: url('/images/question.png');
     background-size: 100% 100%;
 }
 
 .separator {
     height: 100px;
     width: 100px;
-    background-image: url('/uploads/images/eye_notsee.png');
+    background-image: url('/images/eye_notsee.png');
     background-size: 100% 100%;
     margin-top: 10px;
     margin-bottom: 10px;

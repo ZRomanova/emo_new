@@ -58,6 +58,10 @@ export class RecordAudioComponent implements OnInit {
     this.audio.emit([false])
   }
 
+  exit() {
+    this.audio.emit([false])
+  }
+
   stop(send) {
     this.mediaRecorder.stop()
     this.recording = false
