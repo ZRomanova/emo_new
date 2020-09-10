@@ -31,10 +31,8 @@ io.on('connection', (socket) => {
     })
 
     socket.on('leave room', (id) => {
-        //console.log(socket.adapter.rooms)
         socket.leave(id)
         socket.leave(id + '-online')
-        //console.log(socket.adapter.rooms)
     })
   })
  
