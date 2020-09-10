@@ -3,6 +3,9 @@ const moment = require('moment')
 const host = process.env.HOST || '0.0.0.0'
 const folder = host == '0.0.0.0' ? 'uploads/' : 'uploads-repo/'
 
+console.log('HOST', process.env.HOST)
+console.log('host', host)
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
