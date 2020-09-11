@@ -4,7 +4,7 @@ const keys = require('./../config/keys')
 let folder
 
 if (keys.production) {
-  folder = 'uploads-repo/'
+  folder = '/uploads-repo/'
 }
 else {
   folder = 'uploads/'

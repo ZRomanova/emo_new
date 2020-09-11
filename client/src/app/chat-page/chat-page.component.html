@@ -137,7 +137,7 @@
         <div class="pictaandtext" *ngIf="picture.parent == '5f130a0d962c2f062467f857'"
         id="{{picture._id}}">
             <a [href]="picture.src" [download]="picture.textInHTML">
-                <img class="pict dark-{{session.secondColor}}-border file-{{picture.color}} green-cursor" src="/uploads/images/docs.png">
+                <img class="pict dark-{{session.secondColor}}-border file-{{picture.color}} green-cursor" src="/images/docs.png">
             </a>
             <span class="file-delete green-cursor" (click)="wantDeletePicture('documentDelete', picture._id)"></span>
             <span class="file-letter green-cursor" (click)="makeMessage(5, picture.src)"></span> 
