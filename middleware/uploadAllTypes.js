@@ -4,14 +4,11 @@ const keys = require('./../config/keys')
 let folder
 
 if (keys.production) {
-  folder = '/uploads-repo/'
+  folder = 'uploads-repo/'
 }
 else {
   folder = 'uploads/'
 }
-
-console.log(keys.production)
-console.log(folder)
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
