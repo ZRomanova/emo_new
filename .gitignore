@@ -1,6 +1,4 @@
 node_modules
 config/keys.dev.js
 client/etc
-uploads-repo/*
-!uploads-repo
-!uploads-repo/.gitkeep
+uploads-repo
