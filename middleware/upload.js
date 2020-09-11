@@ -16,12 +16,12 @@ function getRandomInt(min, max) {
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, '')
+    cb(null, folder)
   },
   filename(req, file, cb) {
     const date = moment().format('DDMMYYYY-HHmmss_SSS')
     const random = getRandomInt(1, 10000)
-    cb(null, `${folder}/${date}-${random}-${file.originalname}`)
+    cb(null, `${date}-${random}-${file.originalname}`)
   }
 })
 
