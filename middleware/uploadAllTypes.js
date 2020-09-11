@@ -1,8 +1,14 @@
 const multer = require('multer')
 const moment = require('moment')
-const os = require('os');
-const hostname = os.hostname()
-const folder = hostname == 'Mac-Book.local' ? 'uploads/' : 'uploads-repo/'
+const keys = require('./../config/keys')
+let folder
+
+if (keys.production) {
+  folder = 'uploads-repo/'
+}
+else {
+  folder = 'uploads/'
+}
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
