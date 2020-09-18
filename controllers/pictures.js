@@ -18,10 +18,10 @@ module.exports.create = async function(req, res) {
           textForGirls: req.body.textForGirls,
           parent: req.params.parentID,
           p_sort: maxSort + 1,
-          boysGreyPicture: req.files ? (req.files['boysGreyPicture'] ? req.files['boysGreyPicture'][0].path : '') : '',
-          girlsGreyPicture: req.files ? (req.files['girlsGreyPicture'] ? req.files['girlsGreyPicture'][0].path : '') : '',
-          boysColorPicture: req.files ? (req.files['boysColorPicture'] ? req.files['boysColorPicture'][0].path : '') : '',
-          girlsColorPicture: req.files ? (req.files['girlsColorPicture'] ? req.files['girlsColorPicture'][0].path : '') : '',
+          boysGreyPicture: req.files ? (req.files['boysGreyPicture'] ? req.files['boysGreyPicture'][0].location : '') : '',
+          girlsGreyPicture: req.files ? (req.files['girlsGreyPicture'] ? req.files['girlsGreyPicture'][0].location : '') : '',
+          boysColorPicture: req.files ? (req.files['boysColorPicture'] ? req.files['boysColorPicture'][0].location : '') : '',
+          girlsColorPicture: req.files ? (req.files['girlsColorPicture'] ? req.files['girlsColorPicture'][0].location : '') : '',
           invisible: req.body.invisible,
           system: req.body.system,
           user: req.user.id,
@@ -43,16 +43,16 @@ module.exports.update = async function(req, res) {
     updated.exceptions = req.body.exceptions != '' ? req.body.exceptions.split(',') : []
     if (req.files) {
       if (req.files['boysGreyPicture']) {
-        updated.boysGreyPicture = req.files['boysGreyPicture'][0].path
+        updated.boysGreyPicture = req.files['boysGreyPicture'][0].location
       }
       if (req.files['girlsGreyPicture']) {
-        updated.girlsGreyPicture = req.files['girlsGreyPicture'][0].path
+        updated.girlsGreyPicture = req.files['girlsGreyPicture'][0].location
       }
       if (req.files['boysColorPicture']) {
-        updated.boysColorPicture = req.files['boysColorPicture'][0].path
+        updated.boysColorPicture = req.files['boysColorPicture'][0].location
       }
       if (req.files['girlsColorPicture']) {
-        updated.girlsColorPicture = req.files['girlsColorPicture'][0].path
+        updated.girlsColorPicture = req.files['girlsColorPicture'][0].location
       }
     }
     

@@ -56,7 +56,7 @@
                                                   <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
                                                   <div class="footer-out">
                                                        <div class="answers-message-btn footer green-cursor" 
-                                                       *ngIf="withAnswers.includes(message) && session.answers"
+                                                       *ngIf="withAnswers.includes(message) && session.answers && false"
                                                        (click)="openAnswers(message)"></div>
                                                   </div>
                                              </div>
@@ -97,7 +97,7 @@
                                                   <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
                                                   <div class="footer-out">
                                                        <div class="answers-message-btn footer green-cursor" 
-                                                       *ngIf="withAnswers.includes(message) && session.answers"
+                                                       *ngIf="withAnswers.includes(message) && session.answers && false"
                                                        (click)="openAnswers(message)"></div>
                                                   </div>
                                              </div>
@@ -176,7 +176,7 @@
                                                   <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
                                                   <div class="footer-out">
                                                        <div class="answers-message-btn footer green-cursor" 
-                                                       *ngIf="withAnswers.includes(message) && session.answers"
+                                                       *ngIf="withAnswers.includes(message) && session.answers && false"
                                                        (click)="openAnswers(message)"></div>
                                                   </div>
                                              </div>

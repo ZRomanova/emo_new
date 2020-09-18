@@ -201,6 +201,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   checkAnswer(meta) {
+    this.answerFor = ''
     if (meta[1]) {
       this.route.queryParams.subscribe((queryParam: any) => {
         let queryC = queryParam.color
@@ -210,7 +211,6 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     else {
       this.navService.sendTextMessage(meta[0], meta[2])
     }
-    this.answerFor = ''
   }
 
   ngOnDestroy() {

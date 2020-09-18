@@ -113,8 +113,8 @@ export class AnswersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.interlocutor.unsubscribe()
     this.$answers.unsubscribe()
+    this.interlocutor.unsubscribe()
   }
 
 }
