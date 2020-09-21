@@ -64,6 +64,22 @@ app.use('/api/manage/institutions', institutionsRoutes)
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/dist/client'))
   
+    const allowed = [
+      '.js',
+      '.css',
+      '.png',
+      '.jpg'
+    ];
+   
+    // Catch all other routes and return the angular index file
+    app.get('*', (req, res) => {
+       if (allowed.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
+          res.sendFile(path.resolve(`client/dist/cient/${req.url}`));
+       } else {
+          res.sendFile(path.join(__dirname, 'client/dist/client/index.html'));
+       }
+    })
+    /*
     app.get('*', (req, res) => {
       res.sendFile(
         path.resolve(
@@ -71,6 +87,7 @@ if (process.env.NODE_ENV === 'production') {
         )
       )
     })
+    */
   }
 
 module.exports = http
