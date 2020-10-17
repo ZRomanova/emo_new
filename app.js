@@ -73,12 +73,13 @@ if (process.env.NODE_ENV === 'production') {
    
     // Catch all other routes and return the angular index file
     app.get('*', (req, res) => {
-       if (allowed.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
-          res.sendFile(path.resolve(`client/dist/cient/${req.url}`));
+       if (allowed.includes(path.extname)) {
+          res.sendFile(path.resolve(`client/dist/cient/${req.path}`));
        } else {
           res.sendFile(path.join(__dirname, 'client/dist/client/index.html'));
        }
     })
+
     /*
     app.get('*', (req, res) => {
       res.sendFile(
