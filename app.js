@@ -68,13 +68,16 @@ if (process.env.NODE_ENV === 'production') {
       '.js',
       '.css',
       '.png',
-      '.jpg'
+      '.jpg',
+      '.jpeg',
+      '.cur',
+      '.ico'
     ];
    
     // Catch all other routes and return the angular index file
     app.get('*', (req, res) => {
-       if (allowed.includes(path.extname)) {
-          res.sendFile(path.resolve(`client/dist/cient/${req.path}`));
+       if (allowed.includes(path.extname(req.path))) {
+          res.sendFile(path.join(__dirname, `client/dist/client/${req.path}`));
        } else {
           res.sendFile(path.join(__dirname, 'client/dist/client/index.html'));
        }
