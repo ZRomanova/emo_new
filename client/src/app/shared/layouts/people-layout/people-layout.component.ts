@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,9 +10,10 @@ import { ChatService } from '../../services/chat.service';
   templateUrl: './people-layout.component.html',
   styleUrls: ['./people-layout.component.css']
 })
-export class PeopleLayoutComponent implements OnInit {
+export class PeopleLayoutComponent implements OnInit, OnDestroy {
 
   oSub: Subscription
+  logSub: Subscription
   color1: string
   color2: string
   online: boolean
@@ -61,11 +62,14 @@ export class PeopleLayoutComponent implements OnInit {
   }
 
   logout(event: Event) {
-    let oSub = this.loginService.exit().subscribe()
-    oSub.unsubscribe()
+    this.logSub = this.loginService.exit().subscribe()
     event.preventDefault()
     this.loginService.logout()
     this.router.navigate(['/login'])
+  }
+
+  ngOnDestroy() {
+    this.logSub.unsubscribe()
   }
 
 }

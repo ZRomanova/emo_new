@@ -12,6 +12,7 @@ import {Subscription } from 'rxjs';
 export class AdminLayoutComponent implements OnInit {
 
   oSub: Subscription
+  logSub: Subscription
 
   links = [
     {url: '/manage/users', name: 'Пользователи'},
@@ -37,12 +38,13 @@ export class AdminLayoutComponent implements OnInit {
   }
 
   logout(event: Event) {
-    let oSub = this.auth.exit().subscribe()
-    oSub.unsubscribe()
+    this.logSub = this.auth.exit().subscribe()
     event.preventDefault()
     this.auth.logout()
     this.router.navigate(['/login'])
   }
 
-
+  ngOnDestroy() {
+    this.logSub.unsubscribe()
+  }
 }
