@@ -56,7 +56,7 @@
                                                   <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
                                                   <div class="footer-out">
                                                        <div class="answers-message-btn footer green-cursor" 
-                                                       *ngIf="withAnswers.includes(message) && session.answers && false"
+                                                       *ngIf="withAnswers.includes(message) && session.answers"
                                                        (click)="openAnswers(message)"></div>
                                                   </div>
                                              </div>
@@ -97,7 +97,7 @@
                                                   <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
                                                   <div class="footer-out">
                                                        <div class="answers-message-btn footer green-cursor" 
-                                                       *ngIf="withAnswers.includes(message) && session.answers && false"
+                                                       *ngIf="withAnswers.includes(message) && session.answers"
                                                        (click)="openAnswers(message)"></div>
                                                   </div>
                                              </div>
@@ -176,7 +176,7 @@
                                                   <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
                                                   <div class="footer-out">
                                                        <div class="answers-message-btn footer green-cursor" 
-                                                       *ngIf="withAnswers.includes(message) && session.answers && false"
+                                                       *ngIf="withAnswers.includes(message) && session.answers"
                                                        (click)="openAnswers(message)"></div>
                                                   </div>
                                              </div>
@@ -233,8 +233,7 @@
 
      <app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>
      <app-delete-one-message *ngIf="deleteMessage" [letter]="deleteID" (result)="closeDeleteMessage($event)"></app-delete-one-message>
-     <app-answers *ngIf="answerFor" [src]="answerFor" [session]="session"
-     (close)="closeAnswers($event)" (meta)="checkAnswer($event)"></app-answers>
+     <ng-template appRef></ng-template>
 </div>
 
 <ng-template #reloader>

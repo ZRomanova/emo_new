@@ -50,4 +50,8 @@ import {tap} from 'rxjs/operators'
     exit(): Observable<MessageFromServer> {
       return this.http.delete<MessageFromServer>('/api/people')
     }
+
+    exitTimout(): Observable<MessageFromServer> {
+      return this.http.get<MessageFromServer>('/api/people/logout')
+    }
   }

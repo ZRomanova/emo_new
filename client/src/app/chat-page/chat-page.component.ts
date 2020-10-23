@@ -90,7 +90,6 @@ export class ChatPageComponent implements OnInit, OnDestroy {
           this.queryF = queryParam.folder
           this.oSub = this.chatService.getPictures(this.queryF).subscribe(pictureAndFolder =>{
             this.pictureAndFolder = pictureAndFolder
-            this.navService.sendMany(this.pictureAndFolder.folder.many)
             this.sortPictures()
           })
         }) 

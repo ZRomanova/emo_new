@@ -32,7 +32,7 @@ const storage = multerS3({
 })
 
 const limits = {
-  fileSize: 1024 * 1024 * 50
+  fileSize: 1024 * 1024 * 500
 }
 
 module.exports = multer({storage, limits})

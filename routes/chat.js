@@ -12,7 +12,7 @@ router.delete('/all/:friend', passport.authenticate('jwt', {session: false}), co
 router.post('/picture/new', passport.authenticate('jwt', {session: false}), upload.array('files'), controller.create)
 router.post('/vote/new', passport.authenticate('jwt', {session: false}), upload.single('file'), controller.vote)
 router.get('/interlocutor/:id', passport.authenticate('jwt', {session: false}), controller.getFriend)
-router.get('/answers/:pictureSRC/:type/:folder', passport.authenticate('jwt', {session: false}), controller.getAnswers)
+router.post('/answers/new', passport.authenticate('jwt', {session: false}), controller.getAnswers)
 
 
 module.exports = router

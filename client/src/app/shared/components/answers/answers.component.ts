@@ -24,20 +24,13 @@ export class AnswersComponent implements OnInit, OnDestroy {
   interlocutorSex: number
   id: string
   queryC = ''
-  many: number
 
   constructor(private chatService: ChatService,
-              private route: ActivatedRoute,
-              private navService: NavService) {
-                this.navService.manyFolder.subscribe(many => {
-                  this.many = many
-                })
-               }
+              private route: ActivatedRoute) {}
+               
 
   ngOnInit(): void {
     this.reloading = true
-    let path = this.src.split('/')
-    let picture = path[1].split('.')
 
     this.route.firstChild.params.subscribe((params: Params) => {
       this.id = params.id
@@ -45,7 +38,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
         this.interlocutorSex = user.sex
         this.route.queryParams.subscribe((queryParam: any) => {
           this.queryC = queryParam.color
-          this.$answers = this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
+          this.$answers = this.chatService.getAnswers(this.src).subscribe(answers => {
             this.answers = answers.answers
             this.sortAnswers()
           })
@@ -56,7 +49,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
   }
 
   sortAnswers() {
-    console.log(this.many)
+    console.log('InAnswers')
     for (let picture of this.answers) {     
       if (picture._id == '5f130939962c2f062467f853') {
         picture.src = this.session.photo

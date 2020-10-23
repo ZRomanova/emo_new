@@ -33,6 +33,7 @@ import { PictureZoomComponent } from './shared/components/picture-zoom/picture-z
 import { RecordAudioComponent } from './shared/components/record-audio/record-audio.component';
 import { EasyLangDirective } from './shared/directive/easy-lang.directive';
 import { AnswersComponent } from './shared/components/answers/answers.component';
+import { RefDirective } from './shared/directive/ref.directive';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { AnswersComponent } from './shared/components/answers/answers.component'
     PictureZoomComponent,
     RecordAudioComponent,
     EasyLangDirective,
-    AnswersComponent
+    AnswersComponent,
+    RefDirective
   ],
   imports: [
     BrowserModule,
@@ -79,6 +81,7 @@ import { AnswersComponent } from './shared/components/answers/answers.component'
     },
     SocketioService
   ],
+  entryComponents: [AnswersComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

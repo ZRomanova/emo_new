@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, ComponentFactoryResolver} from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { LoginService } from '../../services/login.service';
 import { User, Message, Messages } from '../../interfaces';
@@ -6,6 +6,8 @@ import { ChatService } from '../../services/chat.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { NavService } from '../../services/nav.service';
 import { SocketioService } from '../../services/socketio.service';
+import { AnswersComponent } from '../../components/answers/answers.component';
+import { RefDirective } from '../../directive/ref.directive';
 
 @Component({
   selector: 'app-chat-layout',
@@ -13,6 +15,8 @@ import { SocketioService } from '../../services/socketio.service';
   styleUrls: ['./chat-layout.component.css']
 })
 export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild(RefDirective) refDir: RefDirective
 
   reloading = false
   oSub: Subscription
@@ -29,28 +33,24 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   letters: Messages
   mesloading = false
   withAnswers = []
-  answerFor = ''
 
   constructor(private loginService: LoginService,
               private route: ActivatedRoute,
               private chatService: ChatService,
               private navService: NavService,
               private socketService: SocketioService,
-              private router: Router) {
+              private router: Router,
+              private resolver: ComponentFactoryResolver) {
                 this.socketService.newMessage.subscribe(message => {
                   if (message.sender == this.id && message.recipient == this.session._id && !this.newMessages.includes(message)) {
                     this.newMessages.push(message)
                     for (let src of message.message) {
-                      let path = src.split('/')
-                      if (path[0] == 'uploads') {
-                        let picture = path[1].split('.')
-                        this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
-                          if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
-                        },
-                        error => {
-                          console.log(error)
-                        })
-                      }
+                      this.chatService.getAnswers(src).subscribe(answers => {
+                        if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
+                      },
+                      error => {
+                        console.log(error.error.message)
+                      })
                     }
                     setTimeout(scroll, 200)
                     function scroll() {
@@ -86,51 +86,27 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.letters = messages
         for (let message of messages.messagesRead) {
           for (let src of message.message) {
-            let path = src.split('/')
-            if (path[0] == 'uploads' || path[0] == 'uploads-repo') {
-              let picture = path[1].split('.')
-              this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
-                if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
-              },
-              error => {
-                console.log(error)
-              })
-            }
+            this.chatService.getAnswers(src).subscribe(answers => {
+              if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
+            },
+            error => {
+              console.log(error.error.message)
+            })
           }
         }
         for (let message of messages.messagesNotRead) {
-          for (let src of message.message) {
-            let path = src.split('/')
-            if (path[0] == 'uploads' || path[0] == 'uploads-repo') {
-              let picture = path[1].split('.')
-              this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
-                if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
-              },
-              error => {
-                console.log(error)
-              })
-            }
+          for (let src of message.message) {    
+            this.chatService.getAnswers(src).subscribe(answers => {
+              if (answers.answers.length !== 0 && !this.withAnswers.includes(src)) this.withAnswers.push(src)
+            },
+            error => {
+              console.log(error)
+            })
           }
         }
         this.mesloading = false
       })
     }) 
-  }
-
-  getAnswers(src: string): boolean {
-    let path = src.split('/')
-    let picture = path[1].split('.')
-    let ret
-    this.chatService.getAnswers(picture[0], picture[1], path[0]).subscribe(answers => {
-      console.log(answers)
-      if (answers.answers == []) ret = false
-      else ret = true
-    },
-    error => {
-      console.log(error)
-      ret = false
-    })
-    return ret
   }
 
   ngAfterViewInit() {
@@ -193,19 +169,29 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openAnswers (ans) {
-    this.answerFor = ans
-  }
+    const modalFactory = this.resolver.resolveComponentFactory(AnswersComponent)
 
-  closeAnswers(close) {
-    if (close) this.answerFor = ''
+    this.refDir.containerRef.clear()
+    const component = this.refDir.containerRef.createComponent(modalFactory)
+
+    component.instance.src = ans
+    component.instance.session = this.session
+
+    component.instance.close.subscribe(close => {
+      if (close) this.refDir.containerRef.clear()
+    })
+    component.instance.meta.subscribe(meta => {
+      this.checkAnswer(meta)
+      this.refDir.containerRef.clear()
+    })
   }
 
   checkAnswer(meta) {
-    this.answerFor = ''
     if (meta[1]) {
       this.route.queryParams.subscribe((queryParam: any) => {
         let queryC = queryParam.color
         this.router.navigate([], {queryParams: {'folder': meta[0], 'color': queryC}})
+        location.href=location.href
       })
     }
     else {

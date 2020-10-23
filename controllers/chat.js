@@ -232,8 +232,7 @@ module.exports.getFriend = async function (req, res) {
 
 module.exports.getAnswers = async function (req, res) {
   try {
-    const src = `${req.params.folder}/${req.params.pictureSRC}.${req.params.type}`
-    console.log(src)
+    const src = req.body.src
     const picture = await Picture.findOne({
       $or: [
         {boysGreyPicture: src},
@@ -244,12 +243,15 @@ module.exports.getAnswers = async function (req, res) {
 
       let answers = []
 
-      for (let id of picture.answers) {
-        let answer = await Picture.findOne({_id: id}, 
-          {boysGreyPicture: 1, girlsGreyPicture: 1, boysColorPicture: 1, girlsColorPicture: 1, 
+      if (picture && picture.answers) {
+        for (let id of picture.answers) {
+          let answer = await Picture.findOne({_id: id}, 
+            {boysGreyPicture: 1, girlsGreyPicture: 1, boysColorPicture: 1, girlsColorPicture: 1, 
             folder: 1, text: 1, textForGirls: 1})
-        answers.push(answer)
+          answers.push(answer)
+        }
       }
+      
       res.status(200).json({answers})
   } catch (e) {
       errorHandler(res, e)

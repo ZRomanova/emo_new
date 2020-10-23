@@ -110,10 +110,25 @@ module.exports.search = async function(req, res) {
           ]
         })
         await Picture.deleteMany({ 
-          user: req.user.id, parent: {$in: ['5f1309e3962c2f062467f854', '5f1309f1962c2f062467f855', '5f130a00962c2f062467f856', '5f130a0d962c2f062467f857']}
+          user: req.user.id, parent: {$in: 
+            ['5f1309e3962c2f062467f854', '5f1309f1962c2f062467f855', '5f130a00962c2f062467f856', 
+            '5f130a0d962c2f062467f857', '5f5486f982194ca1fb21ff6d']}
         })
       }
       res.status(200).json({message: 'Данные гостя удалены, статус пользователя обновлён.'})
+    } catch(e) {
+      errorHandler(res, e)
+    }
+  }
+
+  module.exports.exitLogout = async function(req, res) {
+    try {
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {onlineStatus: '-1'}},
+        {new: true}) 
+
+      res.status(200).json({message: 'Cтатус пользователя обновлён.'})
     } catch(e) {
       errorHandler(res, e)
     }

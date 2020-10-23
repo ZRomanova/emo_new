@@ -64,7 +64,10 @@ export class ChatService {
     return this.http.delete<MessageFromServer>(`/api/chat/all/${friend}`)
   }
 
-  getAnswers (picture: string, type: string, folder: string): Observable<Answers> {
-    return this.http.get<Answers>(`/api/chat/answers/${picture}/${type}/${folder}`)
+  getAnswers (src: string): Observable<Answers> {
+    const fd = {src}
+    let json = JSON.stringify(fd)
+    const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
+    return this.http.post<Answers>(`/api/chat/answers/new`, json, {headers: myHeaders})
   }
 }
