@@ -32,6 +32,14 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       this.institution = user.institution
       this.users$ = this.peopleService.fetchAll(user.institution).subscribe(users => {
         this.users = users
+        for (user of users) {
+          if ((this.today.getTime() - new Date(user.last_active_at).getTime()) < 300000) {
+            user.active = true
+          }
+          else {
+            user.active = false
+          }
+        }
         this.reloading = false
       })
     })

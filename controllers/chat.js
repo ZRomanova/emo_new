@@ -7,10 +7,11 @@ module.exports.getAllMessage = async function(req, res) {
     try {
       const friend = req.params.userID
       const me = req.user.id
+      const now = new Date();
 
       await User.updateOne(
         {_id: req.user.id}, 
-        {$set: {onlineStatus: friend}},
+        {$set: {onlineStatus: friend, last_active_at: now}},
         {new: true})
 
       const messagesRead = await Message
@@ -42,6 +43,11 @@ module.exports.getAllMessage = async function(req, res) {
 
 module.exports.getAllPictures = async function(req, res) {
     try {
+      const now = new Date();
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {last_active_at: now}},
+        {new: true})
 
       const f = {parent: req.params.parentID}
       let sort = 1
@@ -68,24 +74,36 @@ module.exports.getAllPictures = async function(req, res) {
   }
 
 module.exports.send = async function(req, res) {
-    try { 
-        const status = await User.findOne({_id: req.params.friend}, {onlineStatus: 1, _id: 0})
+  try { 
+    const now = new Date();
+    await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true})
+      
+      const status = await User.findOne({_id: req.params.friend}, {onlineStatus: 1, _id: 0})
 
-        const message = await new Message({
-          sender: req.user.id,
-          recipient: req.params.friend,
-          message: req.body.message,
-          type: req.body.type,
-          read: status.onlineStatus == req.user.id ? true : false
-        }).save()
-        res.status(201).json(message)
-      } catch (e) {
-        errorHandler(res, e)
-      }
+      const message = await new Message({
+        sender: req.user.id,
+        recipient: req.params.friend,
+        message: req.body.message,
+        type: req.body.type,
+        read: status.onlineStatus == req.user.id ? true : false
+      }).save()
+      res.status(201).json(message)
+    } catch (e) {
+      errorHandler(res, e)
+    }
 }
 
 module.exports.remove = async function(req, res) {
   try {
+    const now = new Date();
+    await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true})
+
     await Message.deleteOne({_id: req.params.messageID})
     res.status(200).json({
       message: 'Сообщение удалено.'
@@ -97,6 +115,12 @@ module.exports.remove = async function(req, res) {
 
 module.exports.removeAll = async function(req, res) {
   try {
+    const now = new Date();
+    await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true})
+
     const friend = req.params.friend
     const me = req.user.id
 
@@ -114,6 +138,12 @@ module.exports.removeAll = async function(req, res) {
 }
 
 module.exports.create = async function(req, res) {
+  const now = new Date();
+    await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true}) 
+
   function randomInteger(min, max) {
     // случайное число от min до (max+1)
     let rand = min + Math.random() * (max + 1 - min);
@@ -259,6 +289,12 @@ module.exports.getAnswers = async function (req, res) {
 }
 
 module.exports.vote = async function (req, res) {
+
+  const now = new Date();
+    await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true})
 
   function randomInteger(min, max) {
     // случайное число от min до (max+1)

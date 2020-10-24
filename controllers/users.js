@@ -6,6 +6,7 @@ const Institution = require('../models/Institution')
 const Message = require('../models/Message')
 
 module.exports.create = async function(req, res) {
+
     // login password
     const candidate = await User.findOne({login: req.body.login})
   
@@ -148,6 +149,12 @@ module.exports.getAll = async function(req, res) {
   }
 
   try {
+    const now = new Date();
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {last_active_at: now}},
+        {new: true})
+        
     let users = await User
       .find(q)
       .sort({surname: 1, name: 1})

@@ -23,6 +23,8 @@ export interface User {
   birthdays?: boolean
   firstColor?: string
   secondColor?: string
+  last_active_at?: Date
+  active?: boolean
 }
 
 export interface Users {

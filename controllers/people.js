@@ -5,26 +5,17 @@ const Message = require('../models/Message')
 
 module.exports.friends = async function(req, res) {
   try {
-    if (req.user.levelStatus == 4) {
-      await Message.deleteMany({ $or: [
-        {sender: req.user.id},
-        {recipient: req.user.id}
-        ]
-      })
-      await Picture.deleteMany({ 
-        user: req.user.id, parent: {$in: ['5f1309e3962c2f062467f854', '5f1309f1962c2f062467f855', '5f130a00962c2f062467f856', '5f130a0d962c2f062467f857']}
-      })
-    } 
-
+    const now = new Date();
     await User.updateOne(
       {_id: req.user.id}, 
-      {$set: {onlineStatus: '0'}},
+      {$set: {onlineStatus: '0', last_active_at: now}},
       {new: true}) 
 
       const NotRead = await Message.distinct("sender", {recipient: req.user.id, read: false})
 
       const withMessageUsers = await User.find(
-        { _id: {$ne: req.user.id, $in: NotRead}}, {name: 1, surname: 1, photo: 1, birthDate: 1, onlineStatus: 1}
+        { _id: {$ne: req.user.id, $in: NotRead}}, {name: 1, 
+          surname: 1, photo: 1, birthDate: 1, onlineStatus: 1, last_active_at: 1}
       )
 
       const readSenders = await Message.distinct("sender", {recipient: req.user.id, read: true})
@@ -47,7 +38,7 @@ module.exports.friends = async function(req, res) {
 
       const withoutMessageUsers = await User.find(
         {_id: {$in: read, $ne: req.user.id, $nin: NotRead}}, 
-        {name: 1, surname: 1, photo: 1, birthDate: 1, onlineStatus: 1}
+        {name: 1, surname: 1, photo: 1, birthDate: 1, onlineStatus: 1, last_active_at: 1}
       )
 
       const users = {withMessageUsers, withoutMessageUsers}
@@ -60,14 +51,15 @@ module.exports.friends = async function(req, res) {
 
 module.exports.search = async function(req, res) {
     try {
+      const now = new Date();
       await User.updateOne(
         {_id: req.user.id}, 
-        {$set: {onlineStatus: '0'}},
+        {$set: {onlineStatus: '0', last_active_at: now}},
         {new: true}) 
         
       const users = await User
         .find({institution: req.params.instID, $or: [ { levelStatus: { $ne: 4} }, { onlineStatus: { $ne: '-1'} } ], _id: { $ne: req.user._id } }, 
-          {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, photo: 1})
+          {name: 1, surname: 1, birthDate: 1, onlineStatus: 1, photo: 1, last_active_at: 1})
         .sort({name: 1, surname: 1}).lean()
       
       for (let user of users) {
@@ -145,6 +137,12 @@ module.exports.search = async function(req, res) {
 
   module.exports.update = async function(req, res) {
     try {
+      const now = new Date();
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {last_active_at: now}},
+        {new: true})
+
       const user = await User.findOneAndUpdate(
         {_id: req.user.id},
         {$set: req.body},

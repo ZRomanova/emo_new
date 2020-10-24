@@ -38,10 +38,12 @@ export class AppComponent implements OnInit{
     window.setInterval(CheckIdleTime, 1000);
     //window.onbeforeunload = this.logout
 
+    const self = this
+
     function CheckIdleTime() {
       _idleSecondsCounter++;
       if (_idleSecondsCounter >= IDLE_TIMEOUT) {
-        this.oSub$ = this.auth.exitTimout().subscribe()
+        this.oSub$ = self.auth.exitTimout().subscribe()
         this.oSub$.unsubscribe()
       }
     }

@@ -29,6 +29,22 @@ export class FriendsPageComponent implements OnInit, OnDestroy {
       this.session = user
       this.users$ = this.peopleService.fetchFriends().subscribe(users => {
         this.users = users
+        for (user of users.withMessageUsers) {
+          if ((this.today.getTime() - new Date(user.last_active_at).getTime()) < 300000) {
+            user.active = true
+          }
+          else {
+            user.active = false
+          }
+        }
+        for (user of users.withoutMessageUsers) {
+          if ((this.today.getTime() - new Date(user.last_active_at).getTime()) < 300000) {
+            user.active = true
+          }
+          else {
+            user.active = false
+          }
+        }
         this.reloading = false
       })
     })

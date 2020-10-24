@@ -43,6 +43,9 @@ const userSchema = new Schema({
       type: String,
       default: '-1'
   },
+  last_active_at: {
+    type: Date
+  },
 
   // settings  
   online: {         // показывать ли онлайны других пользователей

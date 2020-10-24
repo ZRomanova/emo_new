@@ -5,6 +5,12 @@ const User = require('../models/User')
 
 module.exports.create = async function(req, res) {
   try {
+
+    const now = new Date();
+    await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true})
     
     const candidate = await Institution.findOne({name: req.body.name})
     
@@ -28,6 +34,13 @@ module.exports.create = async function(req, res) {
 
 module.exports.update = async function(req, res) {
     try {
+
+      const now = new Date();
+      await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true}) 
+
       const institution = await Institution.findOneAndUpdate(
         {_id: req.params.institutionID},
         {$set: req.body},
@@ -41,6 +54,13 @@ module.exports.update = async function(req, res) {
   
 module.exports.getAllAdmin = async function(req, res) {
     try {
+
+      const now = new Date();
+      await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true})
+
       if (req.user.levelStatus == 1) {
         const institutions = await Institution.find().sort({name: 1})
         res.status(200).json(institutions)
@@ -56,6 +76,12 @@ module.exports.getAllAdmin = async function(req, res) {
 
   module.exports.getAll = async function(req, res) {
     try {
+      const now = new Date();
+      await User.updateOne(
+      {_id: req.user.id}, 
+      {$set: {last_active_at: now}},
+      {new: true}) 
+
       const institution = await Institution.find().sort({name: 1})
       res.status(200).json(institution)
     } catch (e) {

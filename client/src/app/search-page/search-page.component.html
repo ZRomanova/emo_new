@@ -23,7 +23,7 @@
             *ngIf="user.letter"
             (click)="goToChat(user._id, session.defaultColor)"> </div>  
             <div class="online green-cursor" 
-            *ngIf="user.onlineStatus != '-1' && session.online"
+            *ngIf="user.onlineStatus != '-1' && session.online && user.active"
             [ngClass]="{notincat: user.onlineStatus != session._id, inchat: user.onlineStatus == session._id}"
             (click)="goToChat(user._id, session.defaultColor)"> </div>
             <div class="friendName tc dark-{{session.firstColor}}-border green-cursor" (click)="goToChat(user._id, session.defaultColor)">

@@ -1,8 +1,15 @@
 const errorHandler = require('../utils/errorHandler')
-const Picture = require('../models/Picture')
+const Picture = require('../models/Picture');
+const User = require('../models/User');
 
 module.exports.create = async function(req, res) {
     try {
+      const now = new Date();
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {last_active_at: now}},
+        {new: true})
+
       if (req.user.levelStatus == 1) {
         const lastPicture = await Picture
         .findOne({parent: req.params.parentID})
@@ -69,6 +76,12 @@ module.exports.update = async function(req, res) {
 
 module.exports.getAll = async function(req, res) {
   try {
+    const now = new Date();
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {last_active_at: now}},
+        {new: true})
+
     const pictures = await Picture.find({parent: req.params.folderID}).sort({p_sort: 1})
     const folder = await Picture.findOne({_id: req.params.folderID}, {many: 1, parent:1, text: 1})
     const picturesAndFolder = {"pictures": pictures, "folder": folder}
@@ -89,6 +102,12 @@ module.exports.getByPictureID = async function(req, res) {
 
 module.exports.remove = async function(req, res) {
   try {
+    const now = new Date();
+      await User.updateOne(
+        {_id: req.user.id}, 
+        {$set: {last_active_at: now}},
+        {new: true}) 
+        
     const deletePicture = await Picture.findOne({_id: req.params.pictureID})
   
     const pictures = await Picture.find({
