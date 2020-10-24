@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from '@angular/core'
+import {Component, OnInit} from '@angular/core'
 import {LoginService} from './shared/services/login.service'
 import { Subscription } from 'rxjs'
 
@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs'
   template: '<router-outlet></router-outlet>'
 })
 
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit{
 
   oSub$: Subscription
   
@@ -41,17 +41,11 @@ export class AppComponent implements OnInit, OnDestroy {
     function CheckIdleTime() {
       _idleSecondsCounter++;
       if (_idleSecondsCounter >= IDLE_TIMEOUT) {
-        this.logout()
+        this.oSub$ = this.auth.exitTimout().subscribe()
+        this.oSub$.unsubscribe()
       }
     }
 
   }
 
-  logout() {
-    this.oSub$ = this.auth.exitTimout().subscribe()
-  }
-
-  ngOnDestroy() {
-    this.oSub$.unsubscribe()
-  }
 }

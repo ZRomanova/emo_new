@@ -39,12 +39,9 @@ export class AdminLayoutComponent implements OnInit {
 
   logout(event: Event) {
     this.logSub = this.auth.exit().subscribe()
+    this.logSub.unsubscribe()
     event.preventDefault()
     this.auth.logout()
     this.router.navigate(['/login'])
-  }
-
-  ngOnDestroy() {
-    this.logSub.unsubscribe()
   }
 }
