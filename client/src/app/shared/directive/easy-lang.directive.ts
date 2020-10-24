@@ -1,4 +1,4 @@
-import { Directive, TemplateRef, ViewContainerRef, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 
 @Directive({
   selector: '[appEasyLang]'

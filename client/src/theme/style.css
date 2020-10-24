@@ -24,8 +24,6 @@ body {
 	height: 1.4cm;
 	font-size: 1.2cm; 
     margin-left: 20px;
-    resize: none;
-    overflow: hidden;   
 }
 
 .entrance_password {
