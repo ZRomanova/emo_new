@@ -1,0 +1,18 @@
+<div class="body" *ngIf="!reloading; else reloader"> 
+    <div class="chat light-{{session.firstColor}}-bg">
+        <div id="header" class="light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
+            <img class="avatar green-cursor" id="friend" src="/images/emo.png" (click)="openZoom(user.photo)">
+            <img class="avatar green-cursor" id="me" [src]="session.photo" (click)="openZoom(session.photo)">
+        </div>
+
+
+   </div>
+
+    <div class="library light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
+        <app-emo-bot-page></app-emo-bot-page>
+    </div>
+
+</div>   
+<ng-template #reloader>
+     <app-loader></app-loader>
+</ng-template>

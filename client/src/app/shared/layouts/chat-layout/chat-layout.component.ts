@@ -73,11 +73,6 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.reloading = true
     this.mesloading = true
-    this.oSub = this.loginService.getUser().subscribe(user =>{
-      this.session = user
-      this.socketService.setupSocketConnection(user._id, this.id)
-      this.reloading = false
-    }) 
 
     this.route.firstChild.params.subscribe((params: Params) => {
       this.id = params.id
@@ -106,6 +101,12 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         this.mesloading = false
       })
+    }) 
+
+    this.oSub = this.loginService.getUser().subscribe(user =>{
+      this.session = user
+      this.socketService.setupSocketConnection(user._id, this.id)
+      this.reloading = false
     }) 
   }
 

@@ -18,36 +18,7 @@ export class AppComponent implements OnInit{
     const potentialToken = localStorage.getItem('auth-token')
     if (potentialToken !== null) {
       this.auth.setToken(potentialToken)
-
-      this.exit()
     }
-  }
-
-  exit() {
-    var IDLE_TIMEOUT = 60; //seconds
-    var _idleSecondsCounter = 0;
-    document.onclick = function() {
-        _idleSecondsCounter = 0;
-    };
-    document.onmousemove = function() {
-        _idleSecondsCounter = 0;
-    };
-    document.onkeypress = function() {
-        _idleSecondsCounter = 0;
-    };
-    window.setInterval(CheckIdleTime, 1000);
-    //window.onbeforeunload = this.logout
-
-    const self = this
-
-    function CheckIdleTime() {
-      _idleSecondsCounter++;
-      if (_idleSecondsCounter >= IDLE_TIMEOUT) {
-        this.oSub$ = self.auth.exitTimout().subscribe()
-        this.oSub$.unsubscribe()
-      }
-    }
-
   }
 
 }

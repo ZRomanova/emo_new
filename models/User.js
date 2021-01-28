@@ -99,6 +99,10 @@ const userSchema = new Schema({
   birthdays: {          // отображаются ли именинники
     type: Boolean,
     default: false
+  },
+  events: {          // отображаются ли именинники
+    type: Boolean,
+    default: false
   }
     
   

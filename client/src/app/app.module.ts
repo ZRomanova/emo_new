@@ -34,6 +34,9 @@ import { RecordAudioComponent } from './shared/components/record-audio/record-au
 import { EasyLangDirective } from './shared/directive/easy-lang.directive';
 import { AnswersComponent } from './shared/components/answers/answers.component';
 import { RefDirective } from './shared/directive/ref.directive';
+import { EventsPageComponent } from './events-page/events-page.component';
+import { EmoBotPageComponent } from './emo-bot-page/emo-bot-page.component';
+import { BotLayoutComponent } from './shared/layouts/bot-layout/bot-layout.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +66,10 @@ import { RefDirective } from './shared/directive/ref.directive';
     RecordAudioComponent,
     EasyLangDirective,
     AnswersComponent,
-    RefDirective
+    RefDirective,
+    EventsPageComponent,
+    EmoBotPageComponent,
+    BotLayoutComponent
   ],
   imports: [
     BrowserModule,

@@ -25,6 +25,7 @@ export interface User {
   secondColor?: string
   last_active_at?: Date
   active?: boolean
+  events?: boolean
 }
 
 export interface Users {

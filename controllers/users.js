@@ -45,7 +45,8 @@ module.exports.create = async function(req, res) {
         answers: req.body.answers,
         change: req.body.change,
         defaultColor: req.body.defaultColor,
-        birthdays: req.body.birthdays
+        birthdays: req.body.birthdays,
+        events: req.body.events
       })
   
       try {

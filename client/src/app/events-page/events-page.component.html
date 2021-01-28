@@ -1,0 +1,19 @@
+<div *ngIf="!reloading; else reloader">
+
+    <div class="box-friend">
+        <img 
+        class="friendAvatar dark-{{session.firstColor}}-border green-cursor" 
+        src="/images/emo.png"
+        (click)="goToEmoBot()">
+        <div class="letter green-cursor"
+        *ngIf="emo"
+        (click)="goToEmoBot()"> </div>  
+        <div class="friendName tc dark-{{session.firstColor}}-border green-cursor" (click)="goToChat(user._id, session.defaultColor)">
+            <span appEasyLang>ЭМО</span><br>
+        </div>                                             	 
+   </div>
+
+</div>
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>

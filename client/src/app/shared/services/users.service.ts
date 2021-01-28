@@ -49,7 +49,8 @@ export class UsersService {
       answers?: boolean,
       change?: boolean,
       defaultColor?: string,
-      birthdays?: boolean
+      birthdays?: boolean,
+      events?: boolean
     ): Observable<User> {
 
       const fd = new FormData()
@@ -78,6 +79,7 @@ export class UsersService {
       if (change) fd.append('change', change.toString())
       if (defaultColor) fd.append('defaultColor', defaultColor)
       if (birthdays) fd.append('birthdays', birthdays.toString())
+      if (events) fd.append('events', events.toString())
 
       return this.http.post<User>(`/api/manage/users`, fd)
     }
@@ -109,7 +111,8 @@ export class UsersService {
       answers?: boolean,
       change?: boolean,
       defaultColor?: string,
-      birthdays?: boolean
+      birthdays?: boolean,
+      events?: boolean
     ): Observable<User> {
 
       const fd = new FormData()
@@ -139,6 +142,7 @@ export class UsersService {
       if (change) fd.append('change', change.toString())
       if (defaultColor) fd.append('defaultColor', defaultColor)
       if (birthdays) fd.append('birthdays', birthdays.toString())
+      if (events) fd.append('events', events.toString())
 
       return this.http.patch<User>(`/api/manage/users/${id}`, fd)
     }

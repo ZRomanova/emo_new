@@ -24,6 +24,7 @@ export class PeopleLayoutComponent implements OnInit{
   levelStatus: number
   name: string
   color: string
+  events: boolean
 
   constructor(
     private router: Router,
@@ -54,6 +55,7 @@ export class PeopleLayoutComponent implements OnInit{
       this.id = user._id
       this.color = user.defaultColor
       this.reloading = false
+      this.events = user.events
     })
   }
 

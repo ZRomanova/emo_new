@@ -21,9 +21,13 @@
         <a routerLink="/people/search" routerLinkActive="people-active">
             <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/lupa.png">
         </a>
-        
+
         <a routerLink="/people/settings" routerLinkActive="people-active" *ngIf="levelStatus == 4 || setting != 0">
             <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/settings.jpg">
+        </a>
+        
+        <a routerLink="/people/events" routerLinkActive="people-active" *ngIf="events">
+            <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/people.png">
         </a>
         <a href="#" (click)="logout($event)">
             <div class="exit-friends tc dark-{{color2}}-border green-cursor" appEasyLang>Выход</div>

@@ -20,6 +20,9 @@ import { PicturesFormComponent } from './pictures-page/pictures-form/pictures-fo
 import { InstitutionsPageComponent } from './institutions-page/institutions-page.component';
 import { InstitutionsFormComponent } from './institutions-page/institutions-form/institutions-form.component';
 import { InstitutionsDeleteComponent } from './institutions-page/institutions-delete/institutions-delete.component';
+import { EventsPageComponent } from './events-page/events-page.component';
+import { EmoBotPageComponent } from './emo-bot-page/emo-bot-page.component';
+import { BotLayoutComponent } from './shared/layouts/bot-layout/bot-layout.component';
 
 const routes: Routes = [
   {
@@ -33,12 +36,18 @@ const routes: Routes = [
       {path: 'people', redirectTo: '/people/friends', pathMatch: 'full'},
       {path: 'people/friends', component: FriendsPageComponent},
       {path: 'people/search', component: SearchPageComponent},
-      {path: 'people/settings', component: SettingsPageComponent}
+      {path: 'people/settings', component: SettingsPageComponent},
+      {path: 'people/events', component: EventsPageComponent}
     ]
   },
   {
     path: '', component: ChatLayoutComponent, canActivate: [AuthGuard], children: [
       {path: 'chat/:id', component: ChatPageComponent}
+    ]
+  },
+  {
+    path: '', component: BotLayoutComponent, canActivate: [AuthGuard], children: [
+      {path: 'emo/:id', component: EmoBotPageComponent}
     ]
   },
   {
