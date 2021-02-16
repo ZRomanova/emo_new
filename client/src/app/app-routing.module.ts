@@ -23,6 +23,10 @@ import { InstitutionsDeleteComponent } from './institutions-page/institutions-de
 import { EventsPageComponent } from './events-page/events-page.component';
 import { EmoBotPageComponent } from './emo-bot-page/emo-bot-page.component';
 import { BotLayoutComponent } from './shared/layouts/bot-layout/bot-layout.component';
+import { AdminBotPageComponent } from './admin-bot-page/admin-bot-page.component';
+import { AdminBotFormComponent } from './admin-bot-page/admin-bot-form/admin-bot-form.component';
+import { AdminEventsPageComponent } from './admin-events-page/admin-events-page.component';
+import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/admin-events-form.component';
 
 const routes: Routes = [
   {
@@ -47,7 +51,7 @@ const routes: Routes = [
   },
   {
     path: '', component: BotLayoutComponent, canActivate: [AuthGuard], children: [
-      {path: 'emo/:id', component: EmoBotPageComponent}
+      {path: 'emo', component: EmoBotPageComponent}
     ]
   },
   {
@@ -60,7 +64,11 @@ const routes: Routes = [
       {path: 'manage/pictures/:do/:many/:folder/:_id', component: PicturesFormComponent},
       {path: 'manage/institutions', component: InstitutionsPageComponent},
       {path: 'manage/institutions/:do', component: InstitutionsFormComponent},
-      {path: 'manage/institutions/delete/:id', component: InstitutionsDeleteComponent}
+      {path: 'manage/institutions/delete/:id', component: InstitutionsDeleteComponent},
+      {path: 'manage/emo', component: AdminBotPageComponent},
+      {path: 'manage/emo/:id', component: AdminBotFormComponent},
+      {path: 'manage/events', component: AdminEventsPageComponent},
+      {path: 'manage/events/:id', component: AdminEventsFormComponent}
     ]
   }
 ];

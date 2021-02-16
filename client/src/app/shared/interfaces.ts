@@ -104,3 +104,28 @@ export interface Filter {
 export interface Answers {
   answers: Picture[]
 }
+
+export interface BotButton {
+  img: string
+  text: string
+  type: number
+  _id?: string
+}
+
+export interface Event {
+  autor: string
+  moderator: string
+  participants?: string[] 
+  hide?: string[]
+  wait?: string[] 
+  date?: string[]
+  type: number
+  description?: string
+  address?: string
+  cost?: number
+  status: number
+  chatImage?: string
+  createTime?: Date
+  institution?: string
+  _id?: string
+}

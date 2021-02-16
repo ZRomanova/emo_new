@@ -10,6 +10,8 @@ const peopleRoutes = require('./routes/people')
 const picturesRoutes = require('./routes/pictures')
 const usersRoutes = require('./routes/users')
 const institutionsRoutes = require('./routes/institutions')
+const botRoutes = require('./routes/bot')
+const eventsRoutes = require('./routes/events')
 const keys = require('./config/keys')
 
 const app = express()
@@ -57,6 +59,8 @@ app.use(require('cors')())
 app.use('/api/login', authRoutes)
 app.use('/api/chat', chatRoutes)
 app.use('/api/people', peopleRoutes)
+app.use('/api/bot', botRoutes)
+app.use('/api/events', eventsRoutes)
 app.use('/api/manage/pictures', picturesRoutes)
 app.use('/api/manage/users', usersRoutes)
 app.use('/api/manage/institutions', institutionsRoutes)
@@ -82,16 +86,6 @@ if (process.env.NODE_ENV === 'production') {
           res.sendFile(path.join(__dirname, 'client/dist/client/index.html'));
        }
     })
-
-    /*
-    app.get('*', (req, res) => {
-      res.sendFile(
-        path.resolve(
-          __dirname, 'client', 'dist', 'client', 'index.html'
-        )
-      )
-    })
-    */
   }
 
 module.exports = http

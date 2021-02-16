@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { User } from '../../interfaces';
 import { LoginService } from '../../services/login.service';
@@ -8,7 +8,7 @@ import { LoginService } from '../../services/login.service';
   templateUrl: './bot-layout.component.html',
   styleUrls: ['./bot-layout.component.css']
 })
-export class BotLayoutComponent implements OnInit {
+export class BotLayoutComponent implements OnInit, OnDestroy {
 
   reloading = false
   oSub: Subscription
@@ -19,7 +19,7 @@ export class BotLayoutComponent implements OnInit {
   textarea = ''
   zoom = false
   mesloading = false
-  withAnswers = []
+  image = ''
 
   constructor(private loginService: LoginService) { }
 
@@ -29,6 +29,19 @@ export class BotLayoutComponent implements OnInit {
       this.session = user
       this.reloading = false
     })
+  }
+
+  openZoom(src) {
+    this.image = src
+    this.zoom = true
+  }
+
+  closeZoom(result) {
+    if (result) this.zoom = false
+  }
+
+  ngOnDestroy() {
+    this.oSub.unsubscribe()
   }
 
 }

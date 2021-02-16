@@ -7,19 +7,19 @@ const eventSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true
   },
-  moderators: {
+  moderator: {
+    ref: 'users',
+    type: Schema.Types.ObjectId
+  },
+  participants: {     //участники
     ref: 'users',
     type: [Schema.Types.ObjectId]
   },
-  participants: {
+  hide: {           //отказались участвовать
     ref: 'users',
     type: [Schema.Types.ObjectId]
   },
-  hide: {
-    ref: 'users',
-    type: [Schema.Types.ObjectId]
-  },
-  wait: {
+  wait: {           //не ответили на запрос
     ref: 'users',
     type: [Schema.Types.ObjectId]
   },
@@ -30,14 +30,29 @@ const eventSchema = new Schema({
     type: Number,
     required: true 
   },
-  description: {
+  description: {   //описание
     type: String
   },
-  place: {
+  address: {        //адрес
     type: String
   },
-  cost: {
+  cost: {       //стоимость
     type: Number
+  },
+  status: {     
+    type: Number,   //0 - ожидание, 1 - принято, рассылка, -1 - отклонено, 2 - завершено
+    required: true
+  },
+  chatImage: {
+    type: String
+  },
+  createTime: {
+    type: Date,
+    default: Date.now
+  },
+  institution: {
+    ref: 'institutions',
+    type: Schema.Types.ObjectId
   }
 })
 

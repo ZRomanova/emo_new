@@ -37,6 +37,10 @@ import { RefDirective } from './shared/directive/ref.directive';
 import { EventsPageComponent } from './events-page/events-page.component';
 import { EmoBotPageComponent } from './emo-bot-page/emo-bot-page.component';
 import { BotLayoutComponent } from './shared/layouts/bot-layout/bot-layout.component';
+import { AdminBotPageComponent } from './admin-bot-page/admin-bot-page.component';
+import { AdminEventsPageComponent } from './admin-events-page/admin-events-page.component';
+import { AdminBotFormComponent } from './admin-bot-page/admin-bot-form/admin-bot-form.component';
+import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/admin-events-form.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +73,11 @@ import { BotLayoutComponent } from './shared/layouts/bot-layout/bot-layout.compo
     RefDirective,
     EventsPageComponent,
     EmoBotPageComponent,
-    BotLayoutComponent
+    BotLayoutComponent,
+    AdminBotPageComponent,
+    AdminEventsPageComponent,
+    AdminBotFormComponent,
+    AdminEventsFormComponent
   ],
   imports: [
     BrowserModule,

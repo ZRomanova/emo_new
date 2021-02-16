@@ -1,0 +1,25 @@
+<div *ngIf="session$ | async as session; else loader">
+    <form id="edit_user" class="dark-{{session.firstColor}}-border" [formGroup]="form">
+
+        <p class="dark-{{session.firstColor}}-color">Текст:</p>
+        <input type="text" formControlName="text"> 
+
+        <p class="in_new_user dark-{{session.firstColor}}-color">Картинка:</p>
+        <input type="file" formControlName="img" (change)="onFileUpload($event)"><br>
+        <img 
+            class="now_img" 
+            [src]="imagePreview"
+            *ngIf="imagePreview"
+            >
+
+        <br> <br>
+        <a class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" [routerLink]="['/manage/emo']">Назад</a>
+
+        <button id="submit_button" type="submit" (click)="onSubmit()" hidden></button>
+        <label for="submit_button" class="new_user_button middle-{{session.firstColor}}-bg-hover">Сохранить</label>
+    </form>
+</div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

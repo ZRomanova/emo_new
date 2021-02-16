@@ -45,8 +45,7 @@ module.exports.create = async function(req, res) {
         answers: req.body.answers,
         change: req.body.change,
         defaultColor: req.body.defaultColor,
-        birthdays: req.body.birthdays,
-        events: req.body.events
+        birthdays: req.body.birthdays
       })
   
       try {
@@ -62,36 +61,8 @@ module.exports.create = async function(req, res) {
 module.exports.update = async function(req, res) {
   console.log(req.file)
   try {
-    if (!req.body.login) {
-      const updated = req.body
-
-      if (req.body.password) {
-        const salt = bcrypt.genSaltSync(10)
-        const password = req.body.password
-        updated.password = bcrypt.hashSync(password, salt)
-      }
-
-      if (req.file) {
-        updated.photo = req.file.location
-      }
-      
-      const thisuser = await User.findOneAndUpdate(
-        {_id: req.params.userID},
-        {$set: updated},
-        {new: true}
-      )
-      res.status(200).json(thisuser)
-    }
-    else {
-      const candidate = await User.findOne({login: req.body.login})
-  
-      if (candidate) {
-        // Пользователь существует, нужно отправить ошибку
-        res.status(409).json({
-          message: 'Такой логин уже занят. Попробуйте другой.'
-        })
-      } 
-      else {
+    if ((req.user.levelStatus == 2 && req.body.institution == req.user.institution && req.body.levelStatus != 1) || req.user.levelStatus == 1) {
+      if (!req.body.login) {
         const updated = req.body
 
         if (req.body.password) {
@@ -111,6 +82,41 @@ module.exports.update = async function(req, res) {
         )
         res.status(200).json(thisuser)
       }
+      else {
+        const candidate = await User.findOne({login: req.body.login})
+    
+        if (candidate) {
+          // Пользователь существует, нужно отправить ошибку
+          res.status(409).json({
+            message: 'Такой логин уже занят. Попробуйте другой.'
+          })
+        } 
+        else {
+          const updated = req.body
+
+          if (req.body.password) {
+            const salt = bcrypt.genSaltSync(10)
+            const password = req.body.password
+            updated.password = bcrypt.hashSync(password, salt)
+          }
+
+          if (req.file) {
+            updated.photo = req.file.location
+          }
+          
+          const thisuser = await User.findOneAndUpdate(
+            {_id: req.params.userID},
+            {$set: updated},
+            {new: true}
+          )
+          res.status(200).json(thisuser)
+        }
+      }
+    }
+    else {
+      res.status(403).json({
+        message: 'Недостаточно прав для совершения действия.'
+      })
     }
   }
   catch (e) {
@@ -187,7 +193,7 @@ module.exports.getByUserID = async function(req, res) {
 
 module.exports.remove = async function(req, res) {
   try { 
-    if (req.params.userID != req.user.id) {
+    if (req.params.userID != req.user.id && ((req.user.levelStatus == 2 && req.body.institution == req.user.institution && req.body.levelStatus != 1) || req.user.levelStatus == 1)) {
       await User.deleteOne({_id: req.params.userID})
       await Message.deleteMany({
         $or: [{recipient: req.params.userID}, {sender: req.params.userID}]
@@ -198,7 +204,7 @@ module.exports.remove = async function(req, res) {
     }
     else {
       res.status(403).json({
-        message: 'Вы не можете удалить себя.'
+        message: 'Недостаточно прав для совершения действия.'
       })
     }
     

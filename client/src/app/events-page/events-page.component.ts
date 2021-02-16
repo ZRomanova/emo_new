@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../shared/interfaces';
 import { Subscription } from 'rxjs';
 import { LoginService } from '../shared/services/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-events-page',
@@ -14,7 +15,8 @@ export class EventsPageComponent implements OnInit {
   reloading = false
   obs$: Subscription
 
-  constructor(private loginService: LoginService) { }
+  constructor(private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.reloading = true
@@ -25,7 +27,7 @@ export class EventsPageComponent implements OnInit {
   }
 
   goToEmoBot() {
-    
+    this.router.navigate([`/emo`])
   }
 
 }

@@ -86,7 +86,7 @@
         <button id="more_button" type="button" hidden></button>
         <div *ngIf="!noMore">
             <label 
-            *ngIf="!loading; loader"
+            *ngIf="!loading; else loader"
             for="more_button" 
             class="new_user_button center middle-{{session.firstColor}}-bg-hover"
             (click)="loadMore()">

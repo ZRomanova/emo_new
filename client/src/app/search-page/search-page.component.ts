@@ -32,7 +32,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
       this.institution = user.institution
       this.users$ = this.peopleService.fetchAll(user.institution).subscribe(users => {
         this.users = users
-        for (user of users) {
+        for (let user of users) {
           if ((this.today.getTime() - new Date(user.last_active_at).getTime()) < 300000) {
             user.active = true
           }
@@ -58,6 +58,14 @@ export class SearchPageComponent implements OnInit, OnDestroy {
   newInstitution() {
     this.users$ = this.peopleService.fetchAll(this.institution).subscribe(users => {
       this.users = users
+      for (let user of users) {
+        if ((this.today.getTime() - new Date(user.last_active_at).getTime()) < 300000) {
+          user.active = true
+        }
+        else {
+          user.active = false
+        }
+      } 
     })
   }
 }

@@ -1,1 +1,99 @@
-<p>emo-bot-page works!</p>
+<div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 0">
+     <div class="start_event dark-{{session.secondColor}}-border green-cursor" appEasyLang (click)="startEvent()">
+         СОЗДАТЬ МЕРОПРИЯТИЕ
+     </div>
+</div>
+
+<div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 1">
+    <div class="header" appEasyLang>
+        КУДА ВЫ ХОТИТЕ?
+    </div>    
+    <div *ngIf="buttons$ | async as buttons; else loader">
+        <span *ngFor="let button of buttons"> 
+    
+            <div class="pictaandtext">
+                <img class="pict dark-{{session.secondColor}}-border green-cursor" [src]="button.img" 
+                (click)="makeEvent(button.type)">
+                <p 
+                class="pictatext tc dark-{{session.secondColor}}-border green-cursor" 
+                *ngIf="button.text && session.text"
+                (click)="makeEvent(button.type)"
+                appEasyLang>
+                    {{button.text}}
+                </p>               
+            </div>
+    
+        </span>
+    </div>
+
+</div>
+
+<div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 2">
+    <div class="header" appEasyLang>
+        КОГО ВЫ ХОТИТЕ ПОЗВАТЬ?
+    </div> 
+    
+    <select 
+        class="inheader green-cursor" 
+        *ngIf="institutions$ | async as institutions" 
+        (change)="newInstitution()"
+        [(ngModel)]="institution">
+            <option *ngFor="let institution of institutions" value="{{institution._id}}">{{institution.name}}</option>
+        </select>
+
+    <span class="chat-menu">
+
+        <img class="menu-icon green-cursor" 
+        src="/images/tick.png" 
+        (click)="toDescription()">
+
+        <img class="menu-icon green-cursor" 
+        src="/images/people_transparent.png" 
+        (click)="checkAll()">
+        
+        <img class="menu-icon green-cursor" 
+        src="/images/notpeople.png" 
+        (click)="checkNobody()">
+        
+    </span>
+
+    <div *ngIf="users; else loader">
+        <div class="pictaandtext" *ngFor="let user of users">
+            <img 
+            class="pict_event dark-{{session.secondColor}}-border green-cursor" 
+            [src]="user.photo"
+            (click)="checkUser(user._id)">
+            <div class="green-cursor" 
+            [ngClass]="{event_tick: myEventUsers.includes(user._id), event_cross: !myEventUsers.includes(user._id)}"
+            (click)="checkUser(user._id)"> </div>
+            <div class="pictatext tc dark-{{session.secondColor}}-border green-cursor" (click)="checkUser(user._id)">
+                <span appEasyLang>{{user.name}}</span><br>
+                <span *ngIf="session.surnameView" appEasyLang>{{user.surname}}</span>
+            </div>                                             	 
+       </div>
+    </div>
+
+</div>
+
+<div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 3">
+    <div class="header" appEasyLang>
+        ПРИМЕЧАНИЯ
+    </div> 
+
+    <span class="chat-menu">
+
+        <img class="menu-icon green-cursor" 
+        src="/images/tick.png" 
+        (click)="finish()">
+        
+    </span>
+
+
+    <textarea class="description" [(ngModel)]="description"></textarea>
+</div>
+
+<div class="exit green-cursor" (click)="cross()"></div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

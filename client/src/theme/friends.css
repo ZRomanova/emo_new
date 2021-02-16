@@ -1,39 +1,40 @@
 .friends {
-    width: 80%;
+  width: 80%;
+  height: 100%;
+  overflow: auto;
+  border-spacing: 50px;
+  display: inline-block;
+}
+
+.box-friend {
+    display: inline-block;
+    width: 33%;
+    margin-bottom: 2.5%;
+    margin-top: 2.5%;
+    z-index: 1;
+}
+
+.menu {
+    width: 19.5%;
     height: 100%;
     overflow: auto;
-    border-spacing: 50px;
     display: inline-block;
-  }
+    border-left-width: 3px;
+    border-left-style: solid;
+    z-index: 3;
+}
   
-  .box-friend {
-      display: inline-block;
-      width: 33%;
-      margin-bottom: 2.5%;
-      margin-top: 2.5%;
-      z-index: 1;
-  }
-  
-  .menu {
-      width: 19.5%;
-      height: 100%;
-      overflow: auto;
-      display: inline-block;
-      border-left-width: 3px;
-      border-left-style: solid;
-      z-index: 3;
-  }
-  
-  .friendAvatar {
-      margin-top: 5%;
-      margin: auto;
-      width: 70%;
-      height: auto;
-      border-style: solid;
-      border-radius: 10px;
-      border-width: 3px;
-      display: block;
-  }
+.friendAvatar {
+    margin-top: 5%;
+    margin: auto;
+    width: 18vw;
+    height: 18vw;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 3px;
+    display: block;
+    object-fit: cover;
+}
   
   .friendName {
       display: block;

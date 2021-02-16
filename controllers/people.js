@@ -11,12 +11,30 @@ module.exports.friends = async function(req, res) {
       {$set: {onlineStatus: '0', last_active_at: now}},
       {new: true}) 
 
+      function compareTime(a, b) {
+        if (a.time < b.time) {
+          return 1
+        }
+        if (a.time > b.time) {
+          return -1
+        }
+        return 0
+      }
+
       const NotRead = await Message.distinct("sender", {recipient: req.user.id, read: false})
 
       const withMessageUsers = await User.find(
         { _id: {$ne: req.user.id, $in: NotRead}}, {name: 1, 
           surname: 1, photo: 1, birthDate: 1, onlineStatus: 1, last_active_at: 1}
-      )
+      ).lean()
+
+      for (let user of withMessageUsers) {
+        const message = await Message
+          .findOne({sender: user._id, recipient: req.user.id, read: false}).sort({time: -1})
+        user.time = message.time
+      }
+
+      withMessageUsers.sort(compareTime)
 
       const readSenders = await Message.distinct("sender", {recipient: req.user.id, read: true})
       const readRecipients = await Message.distinct("recipient", {sender: req.user.id})
@@ -39,7 +57,18 @@ module.exports.friends = async function(req, res) {
       const withoutMessageUsers = await User.find(
         {_id: {$in: read, $ne: req.user.id, $nin: NotRead}}, 
         {name: 1, surname: 1, photo: 1, birthDate: 1, onlineStatus: 1, last_active_at: 1}
-      )
+      ).lean()
+
+      for (let user of withoutMessageUsers) {
+        const message = await Message
+          .findOne({$or: [
+            {sender: user._id, recipient: req.user.id}, 
+            {sender: req.user.id, recipient: user._id}
+          ]}).sort({time: -1})
+        user.time = message.time
+      }
+
+      withoutMessageUsers.sort(compareTime)
 
       const users = {withMessageUsers, withoutMessageUsers}
 

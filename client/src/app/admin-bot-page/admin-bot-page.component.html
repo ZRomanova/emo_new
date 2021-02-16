@@ -1,0 +1,49 @@
+<div *ngIf="session$ | async as session; else loader">
+    <div class="pictures" *ngIf="buttons$ | async as buttons; else loader">
+        <div *ngIf="buttons.length !== 0; else empty">
+            <div class="picture dark-{{session.firstColor}}-border" 
+            *ngFor="let button of buttons">
+                <div class="p_border_one dark-{{session.firstColor}}-border">
+                    <img class="picta_one" [src]="button.img">
+                </div>
+
+                <div class="p_text">
+                    <span>{{button.text}}</span>
+                </div>
+
+                <div class="button edit-picture">
+                    <a 
+                    class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                    [routerLink]="['/manage/emo', button._id]"
+                    *ngIf="session.levelStatus == 1"
+                    >
+                        Редактировать
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <ng-template #empty>
+            Кнопок нет
+        </ng-template>
+
+    </div>
+
+    <button id="add_button" hidden></button>
+    <label 
+    *ngIf="session.levelStatus == 1"
+    for="add_button" 
+    id="add_picture" 
+    >
+        <a 
+        *ngIf="session.levelStatus == 1"
+        class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+        [routerLink]="['/manage/emo', 'new']">
+            Добавить кнопку
+        </a>
+    </label>
+</div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>
