@@ -4,3 +4,71 @@
     width: 100%;
     overflow: hidden;
 }
+
+.message {
+    height: auto;
+    max-width: 60%;
+    display: inline-block;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 10px;
+    width: auto;
+}
+
+.section {
+    margin: 0;
+}
+
+.sender-message {
+    float: right;
+    clear: both;
+}
+
+.inter-message {
+    float: left;
+    clear: both;
+    background-color: white;
+}
+
+.div-in-li {
+    max-width: 100%;
+    width: auto;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.div-img {
+    max-width: 12rem;
+    margin: auto;
+}
+
+#middle {
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 94%;
+    margin: 0; 
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+    top: 70px;
+    display: table-cell;
+    vertical-align: bottom;
+    font-family: Arial, sans-serif;
+    font-size: 0.6cm;
+ } 
+
+ .btn {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+.forScroll {
+    width: 100%;
+    clear: both;
+    height: 1px;
+}

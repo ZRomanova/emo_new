@@ -129,6 +129,39 @@ export class AdminEventsFormComponent implements OnInit {
     reader.readAsDataURL(file)
   }
 
+  mailing() {
+    this.form.disable()
+
+    this.eventsService.update(this.id, null, 1)
+    .subscribe(event => {
+      this.event = event
+      this.form.enable()
+    },
+    error => console.log(error))
+  }
+
+  complate() {
+    this.form.disable()
+
+    this.eventsService.update(this.id, null, 2)
+    .subscribe(event => {
+      this.event = event
+      this.form.enable()
+    },
+    error => console.log(error))
+  }
+
+  reject() {
+    this.form.disable()
+
+    this.eventsService.update(this.id, null, -1)
+    .subscribe(event => {
+      this.event = event
+      this.form.enable()
+    },
+    error => console.log(error))
+  }
+
   onSubmit() {
     this.form.disable()
 
@@ -137,7 +170,7 @@ export class AdminEventsFormComponent implements OnInit {
       null, 
       this.wait, 
       this.form.value.date,
-      this.form.value.discription,
+      this.form.value.description,
       this.form.value.address,
       this.image,
       this.form.value.cost)

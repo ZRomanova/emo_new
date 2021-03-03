@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { User, BotButton, Institution } from '../shared/interfaces';
+import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { User, BotButton, Institution, Event } from '../shared/interfaces';
 import { BotService } from '../shared/services/bot.service';
 import { EventsService } from '../shared/services/events.service';
 import { Observable, Subscription } from 'rxjs';
@@ -14,6 +14,7 @@ import { PeopleService } from '../shared/services/people.service';
 export class EmoBotPageComponent implements OnInit, OnDestroy {
 
   @Input() session: User
+  @Output() newEvent = new EventEmitter<Event>()
 
   stage: number = 0
   myEventType: number
@@ -89,6 +90,7 @@ export class EmoBotPageComponent implements OnInit, OnDestroy {
       this.stage = 0
       this.myEventType = null
       this.myEventUsers = []
+      this.newEvent.emit(event)
     },
     error => console.log(error.error.message)
     )

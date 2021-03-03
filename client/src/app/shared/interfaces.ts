@@ -129,3 +129,14 @@ export interface Event {
   institution?: string
   _id?: string
 }
+
+export interface GroupMessage {
+  sender?: string
+  group?: string
+  time?: Date
+  type: number[]
+  message: string[]
+  read?: string[]
+  wait?: string[]
+  _id: string
+}

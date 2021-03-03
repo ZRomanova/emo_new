@@ -53,6 +53,9 @@ const eventSchema = new Schema({
   institution: {
     ref: 'institutions',
     type: Schema.Types.ObjectId
+  },
+  mailingTime: {
+    type: Date
   }
 })
 

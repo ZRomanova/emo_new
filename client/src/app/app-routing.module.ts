@@ -27,6 +27,9 @@ import { AdminBotPageComponent } from './admin-bot-page/admin-bot-page.component
 import { AdminBotFormComponent } from './admin-bot-page/admin-bot-form/admin-bot-form.component';
 import { AdminEventsPageComponent } from './admin-events-page/admin-events-page.component';
 import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/admin-events-form.component';
+import { GroupLayoutComponent } from './shared/layouts/group-layout/group-layout.component';
+import { GroupPageComponent } from './group-page/group-page.component';
+import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-start.component';
 
 const routes: Routes = [
   {
@@ -50,6 +53,11 @@ const routes: Routes = [
     ]
   },
   {
+    path: '', component: GroupLayoutComponent, canActivate: [AuthGuard], children: [
+      {path: 'group/:id', component: GroupPageComponent}
+    ]
+  },
+  {
     path: '', component: BotLayoutComponent, canActivate: [AuthGuard], children: [
       {path: 'emo', component: EmoBotPageComponent}
     ]
@@ -59,7 +67,7 @@ const routes: Routes = [
       {path: 'manage', redirectTo: '/manage/users', pathMatch: 'full'},
       {path: 'manage/users', component: UsersPageComponent},
       {path: 'manage/users/:id', component: UsersFormComponent},
-      {path: 'manage/pictures', redirectTo: '/manage/pictures/5f12ff8cc06cd105437d84e3', pathMatch: 'full'},
+      {path: 'manage/pictures', component: PicturesStartComponent},
       {path: 'manage/pictures/:_id', component: PicturesPageComponent},
       {path: 'manage/pictures/:do/:many/:folder/:_id', component: PicturesFormComponent},
       {path: 'manage/institutions', component: InstitutionsPageComponent},

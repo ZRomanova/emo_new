@@ -20,6 +20,8 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   reloading = false
   oSub: Subscription
+  socMesSub: any
+  socOnlSub: any
   session: User
   user$: Observable<User>
   messages$: Subscription
@@ -41,7 +43,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
               private socketService: SocketioService,
               private router: Router,
               private resolver: ComponentFactoryResolver) {
-                this.socketService.newMessage.subscribe(message => {
+                this.socMesSub = this.socketService.newMessage.subscribe(message => {
                   if (message.sender == this.id && message.recipient == this.session._id && !this.newMessages.includes(message)) {
                     this.newMessages.push(message)
                     for (let src of message.message) {
@@ -58,7 +60,7 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
                     } 
                   }
                 })
-                this.socketService.online.subscribe(online => {
+                this.socOnlSub = this.socketService.online.subscribe(online => {
                   if (online == this.session._id && this.session._id != this.id) {
                     for (let message of this.letters.messagesRead) {
                       message.read = true
@@ -203,6 +205,9 @@ export class ChatLayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy() {
     this.socketService.disconnectSocket(this.session._id)
     this.oSub.unsubscribe()
+    this.messages$.unsubscribe()
+    this.socMesSub.unsubscribe()
+    this.socOnlSub.unsubscribe()
   }
 
 }

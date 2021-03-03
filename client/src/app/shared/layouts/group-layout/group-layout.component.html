@@ -1,0 +1,118 @@
+<div class="body" *ngIf="!reloading; else reloader">
+    <div class="chat light-{{session.firstColor}}-bg">
+          <div id="header" class="light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
+               <img class="avatar green-cursor" id="friend" [src]="group.chatImage" (click)="openZoom(group.chatImage)">
+               <img class="avatar green-cursor" id="me" [src]="session.photo" (click)="openZoom(session.photo)">
+          </div>
+
+          <div id="section" class="light-{{session.secondColor}}-bg">
+               <div id="middle" *ngIf="!mesloading; else mesloader">
+                    <div *ngFor="let letter of messages; let j = index">
+                         <div *ngIf="messages[j-1] && messages[j-1].read.includes(session._id) && !letter.read.includes(session._id)" class="separator" id="separator"></div>
+                         <div *ngIf="letter.sender == session._id" 
+                         class="sender-message message dark-{{session.firstColor}}-border middle-{{session.firstColor}}-bg"
+                         id="{{letter._id}}">
+                              <div *ngFor="let message of letter.message; let i = index" class="div-in-li">
+                                   <div *ngIf="letter.type[i] == 1"  class="div-in-li">
+                                        <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 2" class="div-in-li" appEasyLang>
+                                        {{message}}
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 3" class="div-in-li">
+                                        <audio controls  class="div-audio">
+                                             <source [src]="message">
+                                        </audio>
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 4" class="div-in-li">
+                                        <video controls class="div-img">
+                                             <source [src]="message">
+                                        </video>
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 5" class="div-in-li">
+                                        <a [href]="message" class="div-in-li green-cursor" download>
+                                             <img src="/images/docs.png" class="div-doument"> 
+                                             <span class="docs" appEasyLang>ДОКУМЕНТ</span>
+                                        </a>
+                                   </div>
+                              </div>
+                              <div class="footer-out">
+                                   <div *ngIf="letter.read.length > 1 && session.read" class="see-message footer"></div>
+                                   <div *ngIf="letter.read.length <= 1 && session.read" class="notsee-message footer"></div>
+                                   <div class="delete-message-btn footer green-cursor" (click)="openDeleteMessage(letter)"></div>
+                              </div>
+                         </div>
+
+                         <div *ngIf="letter.sender != session._id"  
+                         class="inter-message message dark-{{session.firstColor}}-border"
+                         id="{{letter._id}}">
+                              <div class="div-in-li" appEasyLang>
+                                   <b>{{letter.senderName}}</b>
+                              </div>
+                              <div *ngFor="let message of letter.message; let i = index" class="div-in-li">
+                                   <div *ngIf="letter.type[i] == 1"  class="div-in-li">
+                                        <img [src]="message" class="div-img green-cursor" (click)="openZoom(message)">
+                                        <div class="footer-out">
+                                             <div class="answers-message-btn footer green-cursor" 
+                                             *ngIf="withAnswers.includes(message) && session.answers"
+                                             (click)="openAnswers(message)"></div>
+                                        </div>
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 2" class="div-in-li" appEasyLang>
+                                        {{message}}
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 3" class="div-in-li">
+                                        <audio controls  class="div-audio">
+                                             <source [src]="message">
+                                        </audio>
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 4" class="div-in-li">
+                                        <video controls class="div-img">
+                                             <source [src]="message">
+                                        </video>
+                                   </div>
+
+                                   <div *ngIf="letter.type[i] == 5" class="div-in-li">
+                                        <a [href]="message" class="div-in-li green-cursor" download>
+                                             <img src="/images/docs.png" class="div-doument"> 
+                                             <span class="docs" appEasyLang>ДОКУМЕНТ</span>
+                                        </a>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+                    <div class="forScroll" id="forScroll"></div>
+               </div>
+          </div>
+
+          <div id="chat" class="light-{{session.firstColor}}-bg">
+               <textarea class="text text-cursor" id="tc" [(ngModel)]="textarea"></textarea>
+               <div id="footer_letter" (click)="newText()" class="green-cursor"></div>
+          </div>
+
+          <ng-template #loader>
+               <app-loader></app-loader>
+          </ng-template> 
+
+    </div>
+
+    <div class="library light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
+        <app-group-page [session]="session" 
+        (newMessage)="newMessageFromMe($event)"></app-group-page>
+    </div>
+
+    <app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>
+    <app-delete-one-message *ngIf="deleteMessage" [letter]="deleteID" (result)="closeDeleteMessage($event)"></app-delete-one-message>
+    <ng-template appRef></ng-template>
+</div>
+
+<ng-template #reloader>
+     <app-loader></app-loader>
+</ng-template>

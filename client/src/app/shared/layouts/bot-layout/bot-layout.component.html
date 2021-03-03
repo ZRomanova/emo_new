@@ -4,10 +4,91 @@
             <img class="avatar green-cursor" id="friend" src="/images/emo.png" (click)="openZoom('/images/emo.png')">
             <img class="avatar green-cursor" id="me" [src]="session.photo" (click)="openZoom(session.photo)">
         </div>
+
+        <div id="section">
+            <div id="middle" *ngIf="events; else loader">
+                <div *ngFor="let event of events">
+                    <div *ngIf="event.autor == session._id" 
+                    class="sender-message message dark-{{session.firstColor}}-border middle-{{session.firstColor}}-bg"
+                    id="{{event._id}}">
+                        <div class="div-in-li">
+                            <img [src]="event.chatImage" class="div-img green-cursor" (click)="openZoom(event.chatImage)">
+                        </div>
+                        <div *ngIf="event.status == 0" appEasyLang>
+                            На рассмотрении
+                        </div>
+                        <div *ngIf="event.status == -1" appEasyLang>
+                            Отклонено
+                        </div>
+                        <div *ngIf="event.status == 1" appEasyLang>
+                            Активное
+                        </div>
+                        <div *ngIf="event.status == 2" appEasyLang>
+                            Завершено
+                        </div>
+                        <div *ngIf="event.description" appEasyLang>
+                            {{event.description}}
+                        </div>
+                        <div *ngIf="event.wait.includes(session._id) && event.status == 1">
+                            <button class="btn tc dark-{{session.firstColor}}-border green-cursor" 
+                            type="button" appEasyLang (click)="want(event._id)" id="w-{{event._id}}">
+                                👍Хочу
+                            </button>
+                            <button class="btn tc dark-{{session.firstColor}}-border green-cursor" 
+                            type="button" appEasyLang (click)="not_want(event._id)" id="n-{{event._id}}">
+                                👎Нет
+                            </button>
+                        </div>
+                        <div *ngIf="event.participants.includes(session._id) && event.status == 1">
+                            <button class="btn tc dark-{{session.firstColor}}-border green-cursor" (click)="toGroup(event._id)" type="button" appEasyLang>
+                                В чат
+                            </button>
+                        </div>
+                    </div>
+
+                    <div *ngIf="event.autor != session._id" 
+                    class="inter-message message dark-{{session.firstColor}}-border middle-{{session.firstColor}}-bg"
+                    id="{{event._id}}">
+                        <div class="div-in-li">
+                            <img [src]="event.chatImage" class="div-img green-cursor" (click)="openZoom(event.chatImage)">
+                        </div>
+                        <div *ngIf="event.status == 1" appEasyLang>
+                            Активное
+                        </div>
+                        <div *ngIf="event.status == 2" appEasyLang>
+                            Завершено
+                        </div>
+                        <div *ngIf="event.description" appEasyLang>
+                            {{event.description}}
+                        </div>
+                        <div *ngIf="event.wait.includes(session._id) && event.status == 1">
+                            <button class="btn tc dark-{{session.firstColor}}-border green-cursor" 
+                            type="button" appEasyLang (click)="want(event._id)" id="w-{{event._id}}">
+                                👍Хочу
+                            </button>
+                            <button class="btn tc dark-{{session.firstColor}}-border green-cursor" 
+                            type="button" appEasyLang (click)="not_want(event._id)" id="n-{{event._id}}">
+                                👎Нет
+                            </button>
+                        </div>
+                        <div *ngIf="event.participants.includes(session._id) && event.status == 1">
+                            <button class="btn tc dark-{{session.firstColor}}-border green-cursor" type="button" (click)="toGroup(event._id)" appEasyLang>
+                                В чат
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="forScroll" id="forScroll"></div>  
+            </div>
+        </div>
+
+        <ng-template #loader>
+            <app-loader></app-loader>
+       </ng-template>
    </div>
 
     <div class="library light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
-        <app-emo-bot-page [session]="session"></app-emo-bot-page>
+        <app-emo-bot-page [session]="session" (newEvent)="newEventFromMe($event)"></app-emo-bot-page>
     </div>
 
     <app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>

@@ -1,7 +1,9 @@
+const mongoose = require('mongoose')
 const errorHandler = require('../utils/errorHandler')
 const User = require('../models/User');
 const Event = require('../models/Event');
 const Bot = require('../models/Bot');
+const GroupMessage = require('../models/GroupMessage');
 
 module.exports.create = async function(req, res) {
     try {
@@ -12,11 +14,13 @@ module.exports.create = async function(req, res) {
           {new: true})
 
         const bot = await Bot.findOne({type: req.body.type}).lean()
-        console.log(bot)
+
+        let wait = req.body.wait
+        if (!req.body.wait.includes(req.user.id)) wait.push(req.user.id)
         
         const event = await new Event({
             autor: req.user.id,
-            wait: req.body.wait,
+            wait,
             type: req.body.type,
             description: req.body.description,
             status: 0,
@@ -74,8 +78,10 @@ module.exports.update = async function(req, res) {
             {new: true})
         
         const updated = req.body
+        if (req.body.status == 1) updated.mailingTime = now
         if (req.file) updated.chatImage = req.file.location
-        if (req.body.wait) updated.wait = req.body.wait.split(',')
+        if (req.body.wait && req.body.wait != "") updated.wait = req.body.wait.split(',')
+        else delete updated.wait
 
         const event = await Event.findOneAndUpdate(
             {_id: req.params.eventID},
@@ -98,6 +104,118 @@ module.exports.getByID = async function(req, res) {
         )
 
         const event = await Event.findOne({_id: req.params.eventID})
+        res.status(200).json(event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getForBot = async function (req, res) {
+    try {
+        function compareFunction(a, b) {
+            if (a.Tpoint < b.Tpoint) return -1;
+            return 1;
+        }
+
+        const now = new Date();
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true})
+        
+        const events = await Event
+        .find({$or: [
+            {autor: req.user.id}, 
+            {participants: req.user.id},
+            {wait: req.user.id}
+        ]}).lean()
+
+        for (let event of events) {
+            if (event.status > 0) event.Tpoint = event.mailingTime
+            else event.Tpoint = event.createTime
+        }
+
+        events.sort(compareFunction)
+
+        res.status(200).json(events)
+
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getForEvents = async function (req, res) {
+    try {
+        const now = new Date();
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now, onlineStatus: '0'}},
+            {new: true})
+
+        const events = await Event.find({participants: req.user.id, status: 1}).sort({date: 1}).lean()
+
+        for (let event of events) {
+            const message = await GroupMessage.findOne({group: event._id, wait: req.user.id})
+            if (message) event.letter = true
+            else event.letter = false
+        }
+
+        res.status(200).json(events)
+
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.changeUserStatus = async function (req, res) {
+    try {
+        const now = new Date();
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true})
+
+        const event = await Event.findOne({_id: req.params.eventID}).lean()
+
+        let updated = {}
+        const id = mongoose.Types.ObjectId(req.user.id);
+
+        let index = event.wait.indexOf(id)
+        event.wait.splice(index, 1)
+        updated.wait = event.wait
+        console.log(updated.wait)
+
+        if (req.body.change == 1) {
+            event.participants.push(id) 
+            updated.participants = event.participants
+        }
+        else {
+            event.hide.push(id)
+            updated.hide = event.hide
+        }
+        
+        const new_event = await Event.findOneAndUpdate(
+            {_id: req.params.eventID},
+            {$set: updated},
+            {new: true}
+        )
+
+        res.status(200).json(new_event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.emoLetters = async function(req, res) {
+    try {
+        const now = new Date();
+        await User.updateOne(
+          {_id: req.user.id}, 
+          {$set: {last_active_at: now}},
+          {new: true})
+
+        const event = await Event.findOne({wait: req.user.id, status: 1})
+
         res.status(200).json(event)
     } catch (e) {
         errorHandler(res, e)

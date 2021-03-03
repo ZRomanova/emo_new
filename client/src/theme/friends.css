@@ -12,6 +12,7 @@
     margin-bottom: 2.5%;
     margin-top: 2.5%;
     z-index: 1;
+    vertical-align: top;
 }
 
 .menu {

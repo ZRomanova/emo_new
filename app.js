@@ -12,6 +12,7 @@ const usersRoutes = require('./routes/users')
 const institutionsRoutes = require('./routes/institutions')
 const botRoutes = require('./routes/bot')
 const eventsRoutes = require('./routes/events')
+const groupRoutes = require('./routes/group')
 const keys = require('./config/keys')
 
 const app = express()
@@ -24,8 +25,17 @@ io.on('connection', (socket) => {
         socket.join(id + '-online')
     })
 
+    socket.on('in-group', (data) => {
+      socket.join(data.group)
+      io.in(data.group).emit('online', data.id)
+    })
+
     socket.on('new message', (data) => {
         io.in(data.id).emit('new message', {message: data.message})
+    })
+
+    socket.on('new-group-message', (data) => {
+      io.in(data.group).emit('new-group-message', data.message)
     })
 
     socket.on('online', (id) => {
@@ -36,6 +46,10 @@ io.on('connection', (socket) => {
         socket.leave(id)
         socket.leave(id + '-online')
     })
+
+    socket.on('leave group room', (id) => {
+      socket.leave(id)
+  })
   })
  
 mongoose.connect(keys.mongoURI, {
@@ -61,6 +75,7 @@ app.use('/api/chat', chatRoutes)
 app.use('/api/people', peopleRoutes)
 app.use('/api/bot', botRoutes)
 app.use('/api/events', eventsRoutes)
+app.use('/api/group', groupRoutes)
 app.use('/api/manage/pictures', picturesRoutes)
 app.use('/api/manage/users', usersRoutes)
 app.use('/api/manage/institutions', institutionsRoutes)

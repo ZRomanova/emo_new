@@ -59,15 +59,12 @@ export class PicturesFormComponent implements OnInit, OnDestroy {
       this.route.queryParams.subscribe((queryParam: any) => {
         this.users$ = this.picturesService.users(queryParam.institution)
         this.queryI = queryParam.institution
+        this.picturesAndFolder$ = this.picturesService.fetch(queryParam.folder)
+        this.queryF = queryParam.folder
       }) 
     })
 
     this.institutions$ = this.usersService.getInstitutions()
-    
-    this.route.queryParams.subscribe((queryParam: any) => {
-      this.picturesAndFolder$ = this.picturesService.fetch(queryParam.folder)
-      this.queryF = queryParam.folder
-    }) 
 
     this.form = new FormGroup({
       many: new FormControl('0', [Validators.required]),
@@ -182,7 +179,7 @@ export class PicturesFormComponent implements OnInit, OnDestroy {
         .subscribe(
           response => {},
           error => {},
-          () => this.router.navigate([`/manage/pictures/${this.folder}`])
+          () => this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: '603df642e8189fa35e95273f'}})
         )
     }
   }
@@ -276,7 +273,7 @@ export class PicturesFormComponent implements OnInit, OnDestroy {
       picture => {
         this.picture = picture      
         this.form.enable()
-        if (this.whatDo === 'newfolder' || this.whatDo === 'newpicture') {this.router.navigate([`/manage/pictures/${this.folder}`])}
+        if (this.whatDo === 'newfolder' || this.whatDo === 'newpicture') {this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: '603df642e8189fa35e95273f'}})}
       },
       error => {
         console.log(error.error.message)

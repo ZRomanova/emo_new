@@ -14,6 +14,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
   @Input() src: string
   @Input() session: User
+  @Input() group: boolean
   @Output() close = new EventEmitter<boolean>()
   @Output() meta = new EventEmitter<any[]>()
 
@@ -34,24 +35,21 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
     this.route.firstChild.params.subscribe((params: Params) => {
       this.id = params.id
-      this.interlocutor = this.chatService.getInterlocutor(this.id).subscribe(user => {
-        this.interlocutorSex = user.sex
-        this.route.queryParams.subscribe((queryParam: any) => {
-          this.queryC = queryParam.color
-          this.$answers = this.chatService.getAnswers(this.src).subscribe(answers => {
-            this.answers = answers.answers
-            this.sortAnswers()
-          })
+      
+      this.route.queryParams.subscribe((queryParam: any) => {
+        this.queryC = queryParam.color
+        this.$answers = this.chatService.getAnswers(this.src).subscribe(answers => {
+          this.answers = answers.answers
+          this.sortAnswers()
         })
-        
       })
+      
     })
   }
 
   sortAnswers() {
-    console.log('InAnswers')
     for (let picture of this.answers) {     
-      if (picture._id == '5f130939962c2f062467f853') {
+      if (picture._id == '5f130939962c2f062467f853' || picture._id == '602fcb569ca5cc7b757d0443') {
         picture.src = this.session.photo
         if (picture.text) picture.textInHTML = picture.text
         else if (picture.textForGirls) picture.textInHTML = picture.textForGirls
@@ -107,7 +105,6 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.$answers.unsubscribe()
-    this.interlocutor.unsubscribe()
   }
 
 }

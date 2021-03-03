@@ -28,6 +28,14 @@ export class EventsService {
     })
   }
 
+  fetchForBot(): Observable<Event[]> {
+    return this.http.get<Event[]>(`/api/events/bot`)
+  }
+
+  fetchForEvents(): Observable<Event[]> {
+    return this.http.get<Event[]>(`/api/events`)
+  }
+
   update(id: string,
     moderator?: string,
     status?: number,
@@ -50,7 +58,22 @@ export class EventsService {
       return this.http.patch<Event>(`/api/events/${id}`, fd)
   }
 
+  changeUserStatus(id: string,
+    change: number
+    ): Observable<Event> {
+      const fd = {change}
+      const json = JSON.stringify(fd)
+      const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
+      return this.http.patch<Event>(`/api/events/users/${id}`, json, {headers: myHeaders})
+  }
+
   getById(id): Observable<Event>  {
     return this.http.get<Event>(`/api/events/one/${id}`)
   }
+
+  emoLetters(): Observable<Event> {
+    return this.http.get<Event>(`/api/events/emo`)
+  }
 }
+
+

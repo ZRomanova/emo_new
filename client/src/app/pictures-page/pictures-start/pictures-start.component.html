@@ -1,0 +1,14 @@
+<div *ngIf="session$ | async as session; else loader" class="center">
+    <a 
+    class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
+    [routerLink]="['/manage/pictures/5f12ff8cc06cd105437d84e3']"
+    [queryParams]="{'answersFolder': '5f12ff8cc06cd105437d84e3'}">Личные чаты</a>
+    <a 
+    class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
+    [routerLink]="['/manage/pictures/603df642e8189fa35e95273f']"
+    [queryParams]="{'answersFolder': '603df642e8189fa35e95273f'}">Групповые чаты</a>
+</div>
+
+<ng-template #loader>
+    <app-loader></app-loader>
+</ng-template>

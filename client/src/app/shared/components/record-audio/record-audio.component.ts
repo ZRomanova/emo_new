@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, HostListener, Output, EventEmitter, Input } from '@angular/core';
 import { ChatService } from '../../services/chat.service';
 
 @Component({
@@ -8,6 +8,7 @@ import { ChatService } from '../../services/chat.service';
 })
 export class RecordAudioComponent implements OnInit {
 
+  @Input() group: string
   @Output() audio = new EventEmitter<any[]>()
 
   recording = false
@@ -67,14 +68,26 @@ export class RecordAudioComponent implements OnInit {
     this.recording = false
     const blob = new Blob(this.chunks, {'type': 'audio/webm'})
     
-    this.chatService.newVote(blob).subscribe(vote => {
-      if (send) {
-        this.audio.emit([true, true, vote])
-      }
-      else {
-        this.audio.emit([true, false, vote])
-      }
-    })  
+    if (this.group == "true") {
+      this.chatService.newVoteInGroup(blob).subscribe(vote => {
+        if (send) {
+          this.audio.emit([true, true, vote])
+        }
+        else {
+          this.audio.emit([true, false, vote])
+        }
+      }) 
+    }
+    else {
+      this.chatService.newVote(blob).subscribe(vote => {
+        if (send) {
+          this.audio.emit([true, true, vote])
+        }
+        else {
+          this.audio.emit([true, false, vote])
+        }
+      })  
+    }
      
   }
 

@@ -57,19 +57,16 @@ class="dark-{{session.firstColor}}-border"
                 <div *ngFor="let user of users">    
                     <div *ngIf="wait.includes(user._id)">{{user.name}} {{user.surname}}, {{user.login}} </div>
                 </div>
-                <div *ngIf="!users.lenght">Пользователей нет</div>
             </div>
             <div *ngIf="whomShow == 1"> 
                 <div *ngFor="let user of users">    
                     <div *ngIf="event.hide.includes(user._id)">{{user.name}} {{user.surname}}, {{user.login}} </div>
                 </div>
-                <div *ngIf="!users.lenght">Пользователей нет</div>
             </div>
             <div *ngIf="whomShow == 2"> 
                 <div *ngFor="let user of users">    
-                    <div *ngIf="event.wait.includes(user._id)">{{user.name}} {{user.surname}}, {{user.login}} </div>
+                    <div *ngIf="event.participants.includes(user._id)">{{user.name}} {{user.surname}}, {{user.login}} </div>
                 </div>
-                <div *ngIf="!users.lenght">Пользователей нет</div>
             </div>
         </div>
         <br>
@@ -80,19 +77,47 @@ class="dark-{{session.firstColor}}-border"
         class="now_img" 
         [src]="imagePreview"
         *ngIf="imagePreview"
-        >
+        > <br>
+    
+
+        <a 
+        class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
+        [routerLink]="['/manage/events']">Назад</a>
+
+        <button id="submit_button" type="submit" hidden></button>
+        <label 
+        for="submit_button" 
+        class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover">
+            Сохранить
+        </label>
+
+        <button id="submit_button" type="button" hidden></button>
+        <label 
+        for="submit_button" 
+        class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover"
+        (click)="mailing()"
+        *ngIf="event.status == 0">
+            Сделать рассылку
+        </label>
+
+        <button id="submit_button" type="button" hidden></button>
+        <label 
+        for="submit_button" 
+        class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover"
+        (click)="reject()"
+        *ngIf="event.status == 0">
+            Отклонить
+        </label>
+
+        <button id="submit_button" type="button" hidden></button>
+        <label 
+        for="submit_button" 
+        class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover"
+        (click)="complate()"
+        *ngIf="event.status == 1">
+            Завершить
+        </label>
     </div>
-
-    <a 
-    class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
-    [routerLink]="['/manage/events']">Назад</a>
-
-    <button id="submit_button" type="submit" hidden></button>
-    <label 
-    for="submit_button" 
-    class="new_user_button form_picture_button middle-{{session.firstColor}}-bg-hover">
-        Сохранить
-    </label>
 </form>
 
 <ng-template #loader>

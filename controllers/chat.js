@@ -56,7 +56,12 @@ module.exports.getAllPictures = async function(req, res) {
         req.params.parentID == '5f1309f1962c2f062467f855' || 
         req.params.parentID == '5f130a00962c2f062467f856' || 
         req.params.parentID == '5f5486f982194ca1fb21ff6d' || 
-        req.params.parentID == '5f130a0d962c2f062467f857') {
+        req.params.parentID == '5f130a0d962c2f062467f857' ||
+        req.params.parentID == '603e1ae80c54fc9b6e417951' || 
+        req.params.parentID == '603e1b0c0c54fc9b6e417952' || 
+        req.params.parentID == '603e1b430c54fc9b6e417953' || 
+        req.params.parentID == '603e1b630c54fc9b6e417954' || 
+        req.params.parentID == '603e1ba10c54fc9b6e417955') {
           f.user = req.user.id
           sort = -1
         }
@@ -81,19 +86,19 @@ module.exports.send = async function(req, res) {
       {$set: {last_active_at: now}},
       {new: true})
       
-      const status = await User.findOne({_id: req.params.friend}, {onlineStatus: 1, _id: 0})
+    const status = await User.findOne({_id: req.params.friend}, {onlineStatus: 1, _id: 0})
 
-      const message = await new Message({
-        sender: req.user.id,
-        recipient: req.params.friend,
-        message: req.body.message,
-        type: req.body.type,
-        read: status.onlineStatus == req.user.id ? true : false
-      }).save()
-      res.status(201).json(message)
-    } catch (e) {
-      errorHandler(res, e)
-    }
+    const message = await new Message({
+      sender: req.user.id,
+      recipient: req.params.friend,
+      message: req.body.message,
+      type: req.body.type,
+      read: status.onlineStatus == req.user.id ? true : false
+    }).save()
+    res.status(201).json(message)
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
 
 module.exports.remove = async function(req, res) {

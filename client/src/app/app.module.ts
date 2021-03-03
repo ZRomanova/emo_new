@@ -41,6 +41,9 @@ import { AdminBotPageComponent } from './admin-bot-page/admin-bot-page.component
 import { AdminEventsPageComponent } from './admin-events-page/admin-events-page.component';
 import { AdminBotFormComponent } from './admin-bot-page/admin-bot-form/admin-bot-form.component';
 import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/admin-events-form.component';
+import { GroupLayoutComponent } from './shared/layouts/group-layout/group-layout.component';
+import { GroupPageComponent } from './group-page/group-page.component';
+import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-start.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +80,10 @@ import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/
     AdminBotPageComponent,
     AdminEventsPageComponent,
     AdminBotFormComponent,
-    AdminEventsFormComponent
+    AdminEventsFormComponent,
+    GroupLayoutComponent,
+    GroupPageComponent,
+    PicturesStartComponent
   ],
   imports: [
     BrowserModule,

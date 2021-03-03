@@ -13,7 +13,25 @@
         </div>                                             	 
    </div>
 
+   <div class="box-friend" *ngFor="let event of events">
+        <img 
+        class="friendAvatar dark-{{session.firstColor}}-border green-cursor" 
+        [src]="event.chatImage"
+        (click)="goToChat(event._id)">
+        <div class="letter green-cursor"
+        *ngIf="event.letter"
+        (click)="goToChat(event._id)"> </div>  
+        <div class="friendName tc dark-{{session.firstColor}}-border green-cursor" (click)="goToChat(event._id)">
+            <div *ngIf="buttons$ | async as buttons">
+                <span *ngFor="let button of buttons">
+                    <span *ngIf="event.type == button.type" appEasyLang>{{button.text}}</span>
+                </span><br>
+                <span *ngIf="event.date">{{event.date | date:"dd.MM.yyyy"}}</span>
+            </div>
+        </div> 
+    </div>                                            	 
 </div>
+
 <ng-template #reloader>
     <app-loader></app-loader>
 </ng-template>

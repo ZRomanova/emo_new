@@ -14,7 +14,12 @@ const stop = (req, res, next) =>  {
 
 router.post('/', passport.authenticate('jwt', {session: false}), controller.create)
 router.patch('/:eventID', passport.authenticate('jwt', {session: false}), upload.single('image'), controller.update)
+router.patch('/users/:eventID', passport.authenticate('jwt', {session: false}), controller.changeUserStatus)
 router.get('/one/:eventID', passport.authenticate('jwt', {session: false}), controller.getByID)
 router.get('/moderators', passport.authenticate('jwt', {session: false}), stop, controller.getForModerators)
+router.get('/bot', passport.authenticate('jwt', {session: false}), controller.getForBot)
+router.get('/', passport.authenticate('jwt', {session: false}), controller.getForEvents)
+router.get('/emo', passport.authenticate('jwt', {session: false}), controller.emoLetters)
+
 
 module.exports = router

@@ -40,7 +40,7 @@
                     <a 
                     class="nav-admin middle-{{session.firstColor}}-bg-hover" 
                     [routerLink]="['/manage/pictures', 'edit' + picture.folder, pictureAndFolder.folder.many, pictureAndFolder.folder._id, picture._id]"
-                    [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3', 'institution': session.institution}">
+                    [queryParams]="{'folder': queryA, 'institution': session.institution}">
                         Редактировать
                     </a>
                 </div>
@@ -49,7 +49,8 @@
                 *ngIf="picture.folder && pictureAndFolder.folder._id !== '5f130939962c2f062467f853'">
                     <a 
                     class="nav-admin middle-{{session.firstColor}}-bg-hover"
-                    [routerLink]="['/manage/pictures', picture._id]">
+                    [routerLink]="['/manage/pictures', picture._id]"
+                    [queryParams]="{'answersFolder': queryA}">
                         Перейти
                     </a>
                 </div>
@@ -70,7 +71,7 @@
                 *ngIf="session.levelStatus == 1"
                 class="nav-admin middle-{{session.firstColor}}-bg-hover" 
                 [routerLink]="['/manage/pictures', 'newpicture', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']"
-                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3', 'institution': session.institution}">
+                [queryParams]="{'folder': queryA, 'institution': session.institution}">
                     Добавить каринку
                 </a>
             </label>
@@ -84,7 +85,7 @@
                 *ngIf="session.levelStatus == 1"
                 class="nav-admin middle-{{session.firstColor}}-bg-hover" 
                 [routerLink]="['/manage/pictures', 'newfolder', pictureAndFolder.folder.many, pictureAndFolder.folder._id, 'null']"
-                [queryParams]="{'folder': '5f12ff8cc06cd105437d84e3', 'institution': session.institution}">
+                [queryParams]="{'folder': queryA, 'institution': session.institution}">
                     Добавить папку
                 </a>
             </label>
@@ -93,9 +94,21 @@
             <label 
                 for="back_picture_botton" 
                 id="back_picture"
-                *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'">
+                *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3' && pictureAndFolder.folder._id !== '603df642e8189fa35e95273f'">
                     <a class="nav-admin middle-{{session.firstColor}}-bg-hover" 
-                    [routerLink]="['/manage/pictures', pictureAndFolder.folder.parent]">
+                    [routerLink]="['/manage/pictures', pictureAndFolder.folder.parent]"
+                    [queryParams]="{'answersFolder': queryA}">
+                        Назад
+                    </a>
+            </label>
+
+            <button id="back_picture_botton" hidden></button>
+            <label 
+                for="back_picture_botton" 
+                id="back_picture"
+                *ngIf="pictureAndFolder.folder._id == '5f12ff8cc06cd105437d84e3' || pictureAndFolder.folder._id == '603df642e8189fa35e95273f'">
+                    <a class="nav-admin middle-{{session.firstColor}}-bg-hover" 
+                    [routerLink]="['/manage/pictures']">
                         Назад
                     </a>
             </label>

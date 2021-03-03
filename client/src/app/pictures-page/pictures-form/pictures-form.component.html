@@ -98,7 +98,7 @@ class="dark-{{session.firstColor}}-border"
             <p class="in_new_user dark-{{session.firstColor}}-color">Ответы:</p>
             <div class="answers_box dark-{{session.firstColor}}-border" *ngIf="picturesAndFolder$ | async as pictureAndFolder">
                 <button 
-                *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3'"
+                *ngIf="pictureAndFolder.folder._id !== '5f12ff8cc06cd105437d84e3' && pictureAndFolder.folder._id !== '603df642e8189fa35e95273f'"
                 (click)="answerChange(true, pictureAndFolder.folder.parent)">
                     Назад
                 </button>
@@ -151,7 +151,8 @@ class="dark-{{session.firstColor}}-border"
 
     <a 
     class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 
-    [routerLink]="['/manage/pictures', folder]">Назад</a>
+    [routerLink]="['/manage/pictures', folder]"
+    [queryParams]="{'answersFolder': '603df642e8189fa35e95273f'}">Назад</a>
 
     <button id="submit_button" type="submit" hidden></button>
     <label 

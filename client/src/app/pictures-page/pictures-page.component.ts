@@ -15,6 +15,7 @@ export class PicturesPageComponent implements OnInit {
   pictureAndFolder: PictureAndFolder
   picturesAndFolder$: Observable<PictureAndFolder>
   session$: Observable<User>
+  queryA = ''
 
   constructor(
     private picturesService: PicturesService,
@@ -27,6 +28,9 @@ export class PicturesPageComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.picturesAndFolder$ = this.picturesService.fetch(params._id)
     })   
+    this.route.queryParams.subscribe((queryParam: any) => {
+      this.queryA = queryParam.answersFolder
+    })
   }
 
 }

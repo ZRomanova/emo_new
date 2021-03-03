@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { User, PictureAndFolder, Message, GroupMessage } from '../shared/interfaces';
+import { User, PictureAndFolder, GroupMessage} from '../shared/interfaces';
 import { ChatService } from '../shared/services/chat.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -7,11 +7,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { NavService } from '../shared/services/nav.service';
 import { SocketioService } from '../shared/services/socketio.service';
+import { EventsService } from '../shared/services/events.service';
 
 @Component({
-  selector: 'app-chat-page',
-  templateUrl: './chat-page.component.html',
-  styleUrls: ['./chat-page.component.css'],
+  selector: 'app-group-page',
+  templateUrl: './group-page.component.html',
+  styleUrls: ['./group-page.component.css'],
   animations: [
     trigger('all', [
       state('nosentence', style({
@@ -37,20 +38,19 @@ import { SocketioService } from '../shared/services/socketio.service';
     ])
   ]
 })
-export class ChatPageComponent implements OnInit, OnDestroy {
+export class GroupPageComponent implements OnInit, OnDestroy {
 
   @Input() session: User
-  @Output() newMessage = new EventEmitter<Message>()
+  @Output() newMessage = new EventEmitter<GroupMessage>()
   @Output() deleteAll = new EventEmitter<boolean>()
 
   allState = 'nosentence'
   buttonsState = 'nosentence'
 
-  interlocutor: Subscription
   oSub: Subscription
   mSub: any
-  interlocutorSex: number
-  interlocutorID: string
+  eventID: string
+  event: Subscription
   id: string
   pictureAndFolder: PictureAndFolder
   queryF = ''
@@ -64,27 +64,26 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   sentenceToggle = false
   types: number[] = []
   messages: string[] = []
-  deleteChat = false
   record = false
 
   constructor(private chatService: ChatService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private navService: NavService,
-              private socketService: SocketioService) {
-                this.mSub = this.navService.textMessage.subscribe(message => {
-                  this.makeMessage(message[1], message[0])
-                })
-               }
+    private route: ActivatedRoute,
+    private router: Router,
+    private navService: NavService,
+    private socketService: SocketioService,
+    private eventsService: EventsService) {
+      this.mSub = this.navService.textMessage.subscribe(message => {
+        this.makeMessage(message[1], message[0])
+      })
+    }
 
   ngOnInit(): void {
     this.reloading = true
     this.route.firstChild.params.subscribe((params: Params) => {
       this.id = params.id
 
-      this.interlocutor = this.chatService.getInterlocutor(this.id).subscribe(user => {
-        this.interlocutorSex = user.sex
-        this.interlocutorID = user._id
+      this.event = this.eventsService.getById(this.id).subscribe(event => {
+        this.eventID = event._id
 
         this.route.queryParams.subscribe((queryParam: any) => {
           this.queryC = queryParam.color
@@ -105,7 +104,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     for (let picture of this.pictureAndFolder.pictures) {
       if (picture.invisible === picture.exceptions.includes(this.session._id)) {
         picture.show = true
-        if (picture._id == '5f130939962c2f062467f853') {
+        if (picture._id == '603e1a6f0c54fc9b6e417950') {
           picture.src = this.session.photo
           if (picture.text) picture.textInHTML = picture.text
           else if (picture.textForGirls) picture.textInHTML = picture.textForGirls
@@ -115,7 +114,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
             picture.src = picture.boysGreyPicture
             if (picture.text) picture.textInHTML = picture.text
           }
-          else if (this.pictureAndFolder.folder.many == 1) {
+          else {
             if (this.session.sex == 1) {
               if (picture.text) picture.textInHTML = picture.text
               else if (picture.textForGirls) picture.textInHTML = picture.textForGirls
@@ -151,42 +150,6 @@ export class ChatPageComponent implements OnInit, OnDestroy {
               }
             }
           }
-          else {
-            if (this.interlocutorSex == 1) {
-              if (picture.text) picture.textInHTML = picture.text
-              else if (picture.textForGirls) picture.textInHTML = picture.textForGirls
-
-              if (this.queryC == 'grey') {
-                if (picture.boysGreyPicture) picture.src = picture.boysGreyPicture
-                else if (picture.girlsGreyPicture) picture.src = picture.girlsGreyPicture
-                else if (picture.boysColorPicture) picture.src = picture.boysColorPicture
-                else if (picture.girlsColorPicture) picture.src = picture.girlsColorPicture
-              }
-              else {
-                if (picture.boysColorPicture) picture.src = picture.boysColorPicture
-                else if (picture.girlsColorPicture) picture.src = picture.girlsColorPicture
-                else if (picture.boysGreyPicture) picture.src = picture.boysGreyPicture
-                else if (picture.girlsGreyPicture) picture.src = picture.girlsGreyPicture
-              }
-            }
-            else {
-              if (picture.textForGirls) picture.textInHTML = picture.textForGirls
-              else if (picture.text) picture.textInHTML = picture.text
-              
-              if (this.queryC == 'grey') {
-                if (picture.girlsGreyPicture) picture.src = picture.girlsGreyPicture
-                else if (picture.boysGreyPicture) picture.src = picture.boysGreyPicture
-                else if (picture.girlsColorPicture) picture.src = picture.girlsColorPicture
-                else if (picture.boysColorPicture) picture.src = picture.boysColorPicture
-              }
-              else {
-                if (picture.girlsColorPicture) picture.src = picture.girlsColorPicture
-                else if (picture.boysColorPicture) picture.src = picture.boysColorPicture
-                else if (picture.girlsGreyPicture) picture.src = picture.girlsGreyPicture
-                else if (picture.boysGreyPicture) picture.src = picture.boysGreyPicture
-              }
-            }
-          }
         }
       }
     }
@@ -201,11 +164,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     else {
       const types = [type]
       const messages = [message]
-      this.chatService.sendMessage(this.interlocutorID, messages, types).subscribe(
+      this.chatService.sendGroupMessage(this.eventID, messages, types).subscribe(
         message => {
-          if (this.interlocutorID != this.session._id) {
-            this.socketService.sendMessage(this.interlocutorID, message)
-          }
+          this.socketService.sendMessageGroup(this.eventID, message)
+
           this.newMessage.emit(message)
         },
         error => console.log(error)
@@ -215,10 +177,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
 
   sendSentence() {
     if (this.messages != []) {
-      this.chatService.sendMessage(this.interlocutorID, this.messages, this.types).subscribe(
+      this.chatService.sendGroupMessage(this.eventID, this.messages, this.types).subscribe(
         message => {
-          if (this.interlocutorID != this.session._id) {
-            this.socketService.sendMessage(this.interlocutorID, message)
+          if (this.eventID != this.session._id) {
+            this.socketService.sendMessageGroup(this.eventID, message)
           }
           this.newMessage.emit(message)
           this.messages = []
@@ -230,8 +192,8 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   }
 
   cross() {
-    if (this.queryF == '5f12ff8cc06cd105437d84e3') {
-      this.router.navigate(['/people/friends'])
+    if (this.queryF == '603df642e8189fa35e95273f') {
+      this.router.navigate(['/people/events'])
     }
     else {
       this.router.navigate([], {queryParams: {'folder': this.pictureAndFolder.folder.parent, 'color': this.queryC}})
@@ -262,7 +224,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   onFileUpload(event: any) {
     const files = event.target.files
     this.form.disable()
-    this.chatService.newFiles(files).subscribe(
+    this.chatService.newFilesInGroup(files).subscribe(
       message => this.form.enable(),
       error => {
         console.log(error.error.message)
@@ -289,23 +251,10 @@ export class ChatPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  fromDeleteChat(result: boolean) {
-    if (result) {
-      this.chatService.deleteAllMessages(this.interlocutorID).subscribe(message => {
-        this.deleteAll.emit(true)
-      })
-    }
-    this.deleteChat = false
-  }
-
   wantDeletePicture(src: string, id: string) {
     this.image = src
     this.deletingElement = id
     this.deletePicture = true
-  }
-
-  wantDeleteChat() {
-    this.deleteChat = true
   }
 
   wantRecordAudio() {
@@ -323,7 +272,7 @@ export class ChatPageComponent implements OnInit, OnDestroy {
       if (audio[1]) {
         this.makeMessage(3, audio[2].boysGreyPicture)
       }
-      if (this.queryF == '5f5486f982194ca1fb21ff6d') {
+      if (this.queryF == '603e1ba10c54fc9b6e417955') {
         audio[2].textInHTML = audio[2].text
         audio[2].src = audio[2].boysGreyPicture
         this.pictureAndFolder.pictures.unshift(audio[2])
@@ -332,9 +281,8 @@ export class ChatPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.interlocutor.unsubscribe()
     this.oSub.unsubscribe()
+    this.event.unsubscribe()
     this.mSub.unsubscribe()
   }
-
 }
