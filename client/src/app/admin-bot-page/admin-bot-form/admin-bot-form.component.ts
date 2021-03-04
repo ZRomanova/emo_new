@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { User, BotButton } from 'src/app/shared/interfaces';
 import { Observable, of } from 'rxjs';
 import { LoginService } from 'src/app/shared/services/login.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BotService } from 'src/app/shared/services/bot.service';
 import { switchMap } from 'rxjs/operators';
 
@@ -22,6 +22,7 @@ export class AdminBotFormComponent implements OnInit {
 
   constructor(private loginService: LoginService,
               private route: ActivatedRoute,
+              private router: Router,
               private botService: BotService) { }
 
   ngOnInit(): void {
@@ -87,6 +88,7 @@ export class AdminBotFormComponent implements OnInit {
     obs$.subscribe(
       button => {
         this.form.enable()
+        this.router.navigate(['/manage/bot'])
       },
       error => {
         alert(error.error.message)

@@ -72,7 +72,7 @@ export class InstitutionsFormComponent implements OnInit {
       obs$.subscribe(
         institution => {    
           this.form.enable()
-          if (this.whatDo === 'new') {this.router.navigate([`/manage/institution`])}
+          this.router.navigate([`/manage/institution`])
         },
         error => {
           console.log(error.error.message)

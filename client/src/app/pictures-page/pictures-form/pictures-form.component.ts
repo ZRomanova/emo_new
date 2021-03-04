@@ -273,7 +273,7 @@ export class PicturesFormComponent implements OnInit, OnDestroy {
       picture => {
         this.picture = picture      
         this.form.enable()
-        if (this.whatDo === 'newfolder' || this.whatDo === 'newpicture') {this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: '603df642e8189fa35e95273f'}})}
+        this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: '603df642e8189fa35e95273f'}})
       },
       error => {
         console.log(error.error.message)
