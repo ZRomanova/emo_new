@@ -48,7 +48,7 @@ export class GroupLayoutComponent implements OnInit, OnDestroy {
     private router: Router,
     private resolver: ComponentFactoryResolver) { 
       this.socMesSub = this.socketService.newGroupMessage.subscribe(message => {
-        if (message.group == this.id && !this.messages.includes(message)) {
+        if (message.sender != this.session._id && message.group == this.id && !this.messages.includes(message)) {
           this.messages.push(message)
           for (let src of message.message) {
             this.chatService.getAnswers(src).subscribe(answers => {
@@ -133,7 +133,7 @@ export class GroupLayoutComponent implements OnInit, OnDestroy {
   }
 
   newMessageFromMe(message) {
-    this.messages.push(message)
+    if (!this.messages.includes(message)) this.messages.push(message)
     setTimeout(scroll, 500)
     function scroll() {
       document.getElementById('forScroll').scrollIntoView(false)

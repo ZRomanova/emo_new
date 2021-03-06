@@ -175,30 +175,30 @@ module.exports.changeUserStatus = async function (req, res) {
             {$set: {last_active_at: now}},
             {new: true})
 
-        const event = await Event.findOne({_id: req.params.eventID}).lean()
-
-        let updated = {}
         const id = mongoose.Types.ObjectId(req.user.id);
 
-        let index = event.wait.indexOf(id)
-        event.wait.splice(index, 1)
-        updated.wait = event.wait
-        console.log(updated.wait)
-
-        if (req.body.change == 1) {
-            event.participants.push(id) 
-            updated.participants = event.participants
-        }
-        else {
-            event.hide.push(id)
-            updated.hide = event.hide
-        }
-        
-        const new_event = await Event.findOneAndUpdate(
+        await Event.findOneAndUpdate(
             {_id: req.params.eventID},
-            {$set: updated},
+            {$pull: {wait: id}},
             {new: true}
         )
+
+        let new_event
+
+        if (req.body.change == 1 ) {
+            new_event = await Event.findOneAndUpdate(
+                {_id: req.params.eventID},
+                {$addToSet: {participants: id}},
+                {new: true}
+              )
+        }
+        else {
+            new_event = await Event.findOneAndUpdate(
+                {_id: req.params.eventID},
+                {$addToSet: {hide: id}},
+                {new: true}
+              )
+        }
 
         res.status(200).json(new_event)
     } catch (e) {

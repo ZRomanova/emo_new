@@ -7,7 +7,7 @@
     <span class="chat-menu" [@button]="buttonsState">
         <img class="menu-icon green-cursor" 
         src="/images/musorka.png" 
-        *ngIf="pictureAndFolder.folder.parent != '5f12ff8cc06cd105437d84e3'" 
+        *ngIf="pictureAndFolder.folder._id == '5f12ff8cc06cd105437d84e3'" 
         (click)="wantDeleteChat()">
         
         <img class="menu-icon green-cursor" 
