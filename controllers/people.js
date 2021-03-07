@@ -133,7 +133,10 @@ module.exports.search = async function(req, res) {
         await Picture.deleteMany({ 
           user: req.user.id, parent: {$in: 
             ['5f1309e3962c2f062467f854', '5f1309f1962c2f062467f855', '5f130a00962c2f062467f856', 
-            '5f130a0d962c2f062467f857', '5f5486f982194ca1fb21ff6d']}
+            '5f130a0d962c2f062467f857', '5f5486f982194ca1fb21ff6d', '603e1ae80c54fc9b6e417951',
+            '603e1b0c0c54fc9b6e417952','603e1b430c54fc9b6e417953', '603e1b630c54fc9b6e417954',
+            '603e1ba10c54fc9b6e417955'
+          ]}
         })
       }
       res.status(200).json({message: 'Данные гостя удалены, статус пользователя обновлён.'})

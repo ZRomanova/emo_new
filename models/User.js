@@ -103,6 +103,9 @@ const userSchema = new Schema({
   events: {          // отображаются ли именинники
     type: Boolean,
     default: false
+  },
+  loginDates: {
+    type: [String]
   }
     
   

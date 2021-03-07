@@ -56,7 +56,7 @@ module.exports.getForModerators = async function(req, res) {
         for (let event of events) {
             const text = await Bot.findOne({type: event.type})
             event.text = text.text
-            const autorName = await User.findOne({_id: event.autor})
+            const autorName = await User.findOne({_id: event.autor}, {name: 1, surname: 1, login: 1})
             event.autorName = autorName.name + ' ' + autorName.surname + ', ' + autorName.login
             if (event.moderator) {
                 const moderatorName = await User.findOne({_id: event.moderator})

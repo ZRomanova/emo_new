@@ -21,5 +21,4 @@ router.get('/bot', passport.authenticate('jwt', {session: false}), controller.ge
 router.get('/', passport.authenticate('jwt', {session: false}), controller.getForEvents)
 router.get('/emo', passport.authenticate('jwt', {session: false}), controller.emoLetters)
 
-
 module.exports = router

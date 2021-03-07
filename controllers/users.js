@@ -163,7 +163,7 @@ module.exports.getAll = async function(req, res) {
         {new: true})
         
     let users = await User
-      .find(q)
+      .find(q, {loginDates: 0})
       .sort({surname: 1, name: 1})
       .skip(+req.query.offset)
       .limit(+req.query.limit)
