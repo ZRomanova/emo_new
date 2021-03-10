@@ -44,6 +44,8 @@ import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/
 import { GroupLayoutComponent } from './shared/layouts/group-layout/group-layout.component';
 import { GroupPageComponent } from './group-page/group-page.component';
 import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-start.component';
+import { PhotolikesPageComponent } from './photolikes-page/photolikes-page.component';
+import { EventInGroupFormComponent } from './group-page/event-in-group-form/event-in-group-form.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-
     AdminEventsFormComponent,
     GroupLayoutComponent,
     GroupPageComponent,
-    PicturesStartComponent
+    PicturesStartComponent,
+    PhotolikesPageComponent,
+    EventInGroupFormComponent
   ],
   imports: [
     BrowserModule,

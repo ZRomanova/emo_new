@@ -30,6 +30,7 @@ import { AdminEventsFormComponent } from './admin-events-page/admin-events-form/
 import { GroupLayoutComponent } from './shared/layouts/group-layout/group-layout.component';
 import { GroupPageComponent } from './group-page/group-page.component';
 import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-start.component';
+import { PhotolikesPageComponent } from './photolikes-page/photolikes-page.component';
 
 const routes: Routes = [
   {
@@ -44,16 +45,19 @@ const routes: Routes = [
       {path: 'people/friends', component: FriendsPageComponent},
       {path: 'people/search', component: SearchPageComponent},
       {path: 'people/settings', component: SettingsPageComponent},
+      {path: 'people/photolikes', component: PhotolikesPageComponent},
       {path: 'people/events', component: EventsPageComponent}
     ]
   },
   {
     path: '', component: ChatLayoutComponent, canActivate: [AuthGuard], children: [
+      {path: 'chat', redirectTo: '/people/friends', pathMatch: 'full'},
       {path: 'chat/:id', component: ChatPageComponent}
     ]
   },
   {
     path: '', component: GroupLayoutComponent, canActivate: [AuthGuard], children: [
+      {path: 'group', redirectTo: '/people/events', pathMatch: 'full'},
       {path: 'group/:id', component: GroupPageComponent}
     ]
   },

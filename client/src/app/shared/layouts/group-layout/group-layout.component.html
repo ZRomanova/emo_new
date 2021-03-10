@@ -1,7 +1,7 @@
 <div class="body" *ngIf="!reloading; else reloader">
     <div class="chat light-{{session.firstColor}}-bg">
           <div id="header" class="light-{{session.secondColor}}-bg dark-{{session.secondColor}}-border">
-               <img class="avatar green-cursor" id="friend" [src]="group.chatImage" (click)="openZoom(group.chatImage)">
+               <img class="avatar green-cursor" id="friend" [src]="group.chatImage" (click)="openForm()">
                <img class="avatar green-cursor" id="me" [src]="session.photo" (click)="openZoom(session.photo)">
           </div>
 
@@ -110,6 +110,7 @@
 
     <app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>
     <app-delete-one-message *ngIf="deleteMessage" [letter]="deleteID" (result)="closeDeleteMessage($event)"></app-delete-one-message>
+    <app-event-in-group-form *ngIf="eventForm" [group]="group" [session]="session" (result)="closeForm($event)" (newEvent)="newEvent($event)"></app-event-in-group-form>
     <ng-template appRef></ng-template>
 </div>
 

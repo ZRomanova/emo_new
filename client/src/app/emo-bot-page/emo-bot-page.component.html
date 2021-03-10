@@ -6,7 +6,7 @@
 
 <div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 1">
     <div class="header" appEasyLang>
-        КУДА ВЫ ХОТИТЕ?
+        Куда вы хотите пойти?
     </div>    
     <div *ngIf="buttons$ | async as buttons; else loader">
         <span *ngFor="let button of buttons"> 
@@ -30,7 +30,7 @@
 
 <div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 2">
     <div class="header" appEasyLang>
-        КОГО ВЫ ХОТИТЕ ПОЗВАТЬ?
+        Кого вы хотите позвать?
     </div> 
     
     <select 
@@ -77,7 +77,7 @@
 
 <div class="all dark-{{session.secondColor}}-border" *ngIf="stage == 3">
     <div class="header" appEasyLang>
-        ПРИМЕЧАНИЯ
+        Описание
     </div> 
 
     <span class="chat-menu">

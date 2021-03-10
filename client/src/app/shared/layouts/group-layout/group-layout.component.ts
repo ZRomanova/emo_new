@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ComponentFactoryResolver, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription} from 'rxjs';
 import { User, GroupMessage, Event } from '../../interfaces';
 import { LoginService } from '../../services/login.service';
 import { GroupService } from '../../services/group.service';
@@ -37,6 +37,7 @@ export class GroupLayoutComponent implements OnInit, OnDestroy {
   deleteID: GroupMessage
   mesloading = false
   withAnswers = []
+  eventForm = false
 
   constructor(private loginService: LoginService,
     private route: ActivatedRoute,
@@ -123,6 +124,20 @@ export class GroupLayoutComponent implements OnInit, OnDestroy {
 
   closeZoom(result) {
     if (result) this.zoom = false
+  }
+
+  openForm() {
+    this.eventForm = true
+  }
+
+  closeForm(result) {
+    if (result) {
+      this.eventForm = false
+    }
+  }
+
+  newEvent(event) {
+    this.group = event
   }
 
   newText() {

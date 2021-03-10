@@ -100,7 +100,7 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  events: {          // отображаются ли именинники
+  events: {          // мероприятия
     type: Boolean,
     default: false
   },

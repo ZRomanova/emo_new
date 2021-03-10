@@ -1,0 +1,51 @@
+#edit_event {
+    width: 90%;
+    height: 70%;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.textarea {
+    height: 3cm;
+    width: 97%;
+    font-size: 1cm;
+    margin: auto;
+    resize: none;
+    display: block;
+    overflow: hidden;
+}
+
+.text-input {
+    height: 1.2cm;
+    width: 97%;
+    font-size: 1cm;
+    margin: auto;
+    resize: none;
+    display: block;
+    overflow: hidden;
+}
+
+.number-input {
+    height: 1.2cm;
+    width: 15%;
+    font-size: 1cm;
+    margin-left: 1%;
+}
+
+.datetime-local {
+    height: 1.2cm;
+    width: auto;
+    font-size: 1cm;
+    margin-left: 1%;
+}
+
+.select {
+    width: auto;
+    height: 0.8cm;
+    font-size: 0.5cm;
+}
+
+input, textarea {
+    margin-bottom: 10px;
+}

@@ -1,0 +1,59 @@
+<div class="backdrop"></div>
+
+<div class="tablo_uv">
+    <p class="tc vtablo" appEasyLang>Описание</p>
+    <form 
+    id="edit_event" 
+    [formGroup]="form">
+        <div *ngIf="buttons$ | async as buttons">
+            <div *ngFor="let button of buttons">
+                <div *ngIf="group.type == button.type" class="pNotAdmin" appEasyLang>{{button.text}}</div>
+            </div>
+        </div> <br>
+
+        <textarea formControlName="description" class="textarea"></textarea> <br>
+
+        <p class="pNotAdmin" appEasyLang>Адрес:</p>
+        <input type="text" formControlName="address" class="text-input"> <br>
+
+        <p class="pNotAdmin" appEasyLang>Стоимость:</p>
+        <input type="number" min="0" formControlName="cost" class="number-input"> <br>
+
+        <p class="pNotAdmin" appEasyLang>Дата и время:</p>
+        <input type="datetime-local" formControlName="date" class="datetime-local"> <br>
+
+        <p class="pNotAdmin" appEasyLang>Картинка чата:</p>
+        <input type="file"  formControlName="chatImage" id="chatImage" (change)="onFileUpload($event)" hidden>
+        <label for="chatImage">
+            <img 
+            class="now_img" 
+            [src]="imagePreview"
+            *ngIf="imagePreview"
+            > 
+        </label>
+        <br>
+
+        <div *ngIf="users$ | async as users">
+            <p class="pNotAdmin" appEasyLang>Участники:</p>
+            <select *ngIf="institutions$ | async as institutions" formControlName="institution" (change)="changeInstitution()" class="select">
+                <option 
+                *ngFor="let institution of institutions" 
+                value="{{institution._id}}"
+                >
+                {{institution.name}}</option>
+            </select>
+
+            <div *ngIf="form.value.institution == session.institution" class="pNotAdmin" appEasyLang>
+                {{session.name}} <span *ngIf="session.surname">{{session.surname}} </span>(ВЫ)
+            </div>
+            <div *ngFor="let user of users">    
+                <div *ngIf="group.participants.includes(user._id)" class="pNotAdmin" appEasyLang>
+                    {{user.name}} <span *ngIf="session.surname">{{user.surname}} </span>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    <div id="cross_pict" (click)="close()" class="green-cursor"></div>
+    <div id="tick_pict" (click)="update()" class="green-cursor"></div>
+</div>

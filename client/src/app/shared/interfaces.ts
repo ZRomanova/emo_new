@@ -118,7 +118,7 @@ export interface Event {
   participants?: string[] 
   hide?: string[]
   wait?: string[] 
-  date?: string[]
+  date?: Date
   type: number
   description?: string
   address?: string

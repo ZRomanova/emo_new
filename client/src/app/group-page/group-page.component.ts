@@ -50,7 +50,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   oSub: Subscription
   mSub: any
   eventID: string
-  event: Subscription
+  event$: Subscription
   id: string
   pictureAndFolder: PictureAndFolder
   queryF = ''
@@ -65,6 +65,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
   types: number[] = []
   messages: string[] = []
   record = false
+  eventForm = false
 
   constructor(private chatService: ChatService,
     private route: ActivatedRoute,
@@ -82,7 +83,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
     this.route.firstChild.params.subscribe((params: Params) => {
       this.id = params.id
 
-      this.event = this.eventsService.getById(this.id).subscribe(event => {
+      this.event$ = this.eventsService.getById(this.id).subscribe(event => {
         this.eventID = event._id
 
         this.route.queryParams.subscribe((queryParam: any) => {
@@ -282,7 +283,7 @@ export class GroupPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.oSub.unsubscribe()
-    this.event.unsubscribe()
+    this.event$.unsubscribe()
     this.mSub.unsubscribe()
   }
 }

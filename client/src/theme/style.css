@@ -15,10 +15,14 @@ body {
     margin-top: 1%;
  }
 
- .pNotAdmin {
-     font-size: 0.8cm;
-     font-family: Arial, sans-serif;
-    }
+.pNotAdmin {
+    font-size: 0.8cm;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    font-family: Arial, sans-serif;
+}
  
 .entrance {
 	height: 1.4cm;
