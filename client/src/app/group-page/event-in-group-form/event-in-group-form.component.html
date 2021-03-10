@@ -11,22 +11,22 @@
             </div>
         </div> <br>
 
-        <textarea formControlName="description" class="textarea"></textarea> <br>
+        <textarea formControlName="description" class="textarea text-cursor"></textarea> <br>
 
         <p class="pNotAdmin" appEasyLang>Адрес:</p>
-        <input type="text" formControlName="address" class="text-input"> <br>
+        <input type="text" formControlName="address" class="text-input text-cursor"> <br>
 
         <p class="pNotAdmin" appEasyLang>Стоимость:</p>
-        <input type="number" min="0" formControlName="cost" class="number-input"> <br>
+        <input type="number" min="0" formControlName="cost" class="number-input text-cursor"> <br>
 
         <p class="pNotAdmin" appEasyLang>Дата и время:</p>
-        <input type="datetime-local" formControlName="date" class="datetime-local"> <br>
+        <input type="datetime-local" formControlName="date" class="datetime-local green-cursor"> <br>
 
         <p class="pNotAdmin" appEasyLang>Картинка чата:</p>
         <input type="file"  formControlName="chatImage" id="chatImage" (change)="onFileUpload($event)" hidden>
         <label for="chatImage">
             <img 
-            class="now_img" 
+            class="now_img green-cursor" 
             [src]="imagePreview"
             *ngIf="imagePreview"
             > 
@@ -35,7 +35,7 @@
 
         <div *ngIf="users$ | async as users">
             <p class="pNotAdmin" appEasyLang>Участники:</p>
-            <select *ngIf="institutions$ | async as institutions" formControlName="institution" (change)="changeInstitution()" class="select">
+            <select *ngIf="institutions$ | async as institutions" formControlName="institution" (change)="changeInstitution()" class="select green-cursor">
                 <option 
                 *ngFor="let institution of institutions" 
                 value="{{institution._id}}"
