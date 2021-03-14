@@ -50,7 +50,8 @@
                          <div *ngIf="letter.sender != session._id"  
                          class="inter-message message dark-{{session.firstColor}}-border"
                          id="{{letter._id}}">
-                              <div class="div-in-li" appEasyLang>
+                              <img [src]="letter.senderPhoto" (click)="openZoom(letter.senderPhoto)" class="footer green-cursor inline-block"/>
+                              <div class="div-in-li inline-block senderName" appEasyLang>
                                    <b>{{letter.senderName}}</b>
                               </div>
                               <div *ngFor="let message of letter.message; let i = index" class="div-in-li">

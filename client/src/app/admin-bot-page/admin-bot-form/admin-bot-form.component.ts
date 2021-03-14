@@ -88,7 +88,7 @@ export class AdminBotFormComponent implements OnInit {
     obs$.subscribe(
       button => {
         this.form.enable()
-        this.router.navigate(['/manage/bot'])
+        this.router.navigate(['/manage/emo'])
       },
       error => {
         alert(error.error.message)

@@ -139,4 +139,6 @@ export interface GroupMessage {
   read?: string[]
   wait?: string[]
   _id: string
+  senderName?: string
+  senderPhoto?: string
 }
