@@ -34,7 +34,16 @@ module.exports.send = async function(req, res) {
             wait
         }).save()
 
-        res.status(201).json(message)
+        const user = await User.findOne({_id: req.user.id}, {name: 1, photo: 1})
+
+        const messageInBD = await GroupMessage.findOne({_id: message._id}).lean()
+
+        messageInBD.senderName = user.name
+        messageInBD.senderPhoto = user.photo
+
+        console.log(message)
+
+        res.status(201).json(messageInBD)
 
     } catch (e) {
         errorHandler(res, e) 

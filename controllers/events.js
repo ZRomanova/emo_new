@@ -79,6 +79,7 @@ module.exports.update = async function(req, res) {
         
         const updated = req.body
         if (req.body.status == 1) updated.mailingTime = now
+        if (req.body.status == 2) updated.closingTime = now
         if (req.file) updated.chatImage = req.file.location
         if (req.body.wait && req.body.wait != "") updated.wait = req.body.wait.split(',')
         else delete updated.wait
@@ -190,14 +191,14 @@ module.exports.changeUserStatus = async function (req, res) {
                 {_id: req.params.eventID},
                 {$addToSet: {participants: id}},
                 {new: true}
-              )
+            )
         }
         else {
             new_event = await Event.findOneAndUpdate(
                 {_id: req.params.eventID},
                 {$addToSet: {hide: id}},
                 {new: true}
-              )
+            )
         }
 
         res.status(200).json(new_event)
@@ -216,6 +217,48 @@ module.exports.emoLetters = async function(req, res) {
 
         const event = await Event.findOne({wait: req.user.id, status: 1})
 
+        res.status(200).json(event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.addPhoto = async function(req, res) {  
+    try {
+        const now = new Date()
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true}
+        )
+
+        const event = await Event.findOneAndUpdate(
+            {_id: req.rarams.eventID},
+            {$addToSet: { photolikes: { $each: req.files.location } }},
+            {new: true}
+        )
+            
+        res.status(200).json(event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.deletePhoto = async function(req, res) {  
+    try {
+        const now = new Date()
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true}
+        )
+
+        const event = await Event.findOneAndUpdate(
+            {_id: req.rarams.eventID},
+            {$pullAll: { photolikes: req.body.deletePhoto }},
+            {new: true}
+        )
+            
         res.status(200).json(event)
     } catch (e) {
         errorHandler(res, e)

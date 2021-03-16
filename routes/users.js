@@ -17,5 +17,6 @@ router.patch('/:userID', passport.authenticate('jwt', {session: false}), stop, u
 router.get('/', passport.authenticate('jwt', {session: false}), stop, controller.getAll)
 router.get('/:userID', passport.authenticate('jwt', {session: false}), stop, controller.getByUserID)
 router.delete('/:userID', passport.authenticate('jwt', {session: false}), stop, controller.remove)
+//router.post('/createmany', controller.createManyUsers)
 
 module.exports = router

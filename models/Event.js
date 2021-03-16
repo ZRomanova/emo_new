@@ -56,6 +56,12 @@ const eventSchema = new Schema({
   },
   mailingTime: {
     type: Date
+  },
+  closingTime: {
+    type: Date
+  },
+  photolikes: {
+    type: [String]
   }
 })
 

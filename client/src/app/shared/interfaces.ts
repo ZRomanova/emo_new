@@ -128,6 +128,7 @@ export interface Event {
   createTime?: Date
   institution?: string
   _id?: string
+  photolikes?: string[]
 }
 
 export interface GroupMessage {

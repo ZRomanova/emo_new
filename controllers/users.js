@@ -45,7 +45,8 @@ module.exports.create = async function(req, res) {
         answers: req.body.answers,
         change: req.body.change,
         defaultColor: req.body.defaultColor,
-        birthdays: req.body.birthdays
+        birthdays: req.body.birthdays,
+        events: req.body.events
       })
   
       try {
@@ -212,3 +213,41 @@ module.exports.remove = async function(req, res) {
     errorHandler(res, e)
   }
 }
+/*
+module.exports.createManyUsers = async function (req, res) {
+  try {
+    for (let i = 1; i < 21; i++) {
+      const salt = bcrypt.genSaltSync(10)
+      const password = 'гость'
+      const user = new User({
+        login: `гость160321${i}`,
+        password: bcrypt.hashSync(password, salt),
+        name: `Гость${i}`,
+        surname: `${i}`,
+        sex: i % 4 == 0 ? 1 : 2,
+        institution: '5fb77da2d49fe712e86e3e49',
+        levelStatus: 5,
+        photo: i % 4 != 0 ? '/images/girl.png' : '/images/boy.png',
+        online: true,
+        text: true,
+        read: true,
+        firstColor: 5,
+        secondColor: 1,
+        surnameView: true,
+        setting: true,
+        vote: true,
+        sentence: true,
+        answers: true,
+        change: true,
+        defaultColor: 'color',
+        birthdays: true,
+        events: true
+      })
+      await user.save()
+    }
+    res.status(201).json({message: "Пользователи созданы"})
+  } catch (e) {
+    errorHandler(res, e)
+  }
+}
+*/
