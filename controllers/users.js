@@ -234,7 +234,7 @@ module.exports.createManyUsers = async function (req, res) {
         firstColor: 5,
         secondColor: 1,
         surnameView: true,
-        setting: true,
+        setting: 2,
         vote: true,
         sentence: true,
         answers: true,

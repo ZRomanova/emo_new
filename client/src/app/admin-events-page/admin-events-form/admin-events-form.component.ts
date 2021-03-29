@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Event, User, Institution, BotButton } from '../../shared/interfaces';
 import { LoginService } from 'src/app/shared/services/login.service';
 import { EventsService } from 'src/app/shared/services/events.service';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PicturesService } from 'src/app/shared/services/pictures.service';
 import { UsersService } from 'src/app/shared/services/users.service';
@@ -16,7 +16,7 @@ import { BotService } from 'src/app/shared/services/bot.service';
   templateUrl: './admin-events-form.component.html',
   styleUrls: ['./admin-events-form.component.css']
 })
-export class AdminEventsFormComponent implements OnInit {
+export class AdminEventsFormComponent implements OnInit, OnDestroy {
 
   form: FormGroup
   id: string
@@ -24,7 +24,8 @@ export class AdminEventsFormComponent implements OnInit {
   imagePreview = ''
   event: Event
   session$: Observable<User>
-  users$: Observable<User[]>
+  users$: Subscription
+  users: User[]
   institutions$: Observable<Institution[]>
   buttons$: Observable<BotButton[]>
   queryI = ''
@@ -48,7 +49,9 @@ export class AdminEventsFormComponent implements OnInit {
     this.session$ = this.loginService.getUser()
 
     this.route.queryParams.subscribe((queryParam: any) => {
-      this.users$ = this.picturesService.users(queryParam.institution)
+      this.users$ = this.picturesService.users(queryParam.institution).subscribe(users => {
+        this.users = users
+      })
       this.queryI = queryParam.institution
     }) 
 
@@ -119,6 +122,19 @@ export class AdminEventsFormComponent implements OnInit {
     }
   }
 
+  checkAll() {
+    for (let user of this.users) {
+      this.wait.push(user._id)
+    }
+  }
+
+  checkNobody() {
+    for (let user of this.users) {
+      let index = this.wait.indexOf(user._id, 0)
+      if (index != -1) this.wait.splice(index, 1)
+    }
+  }
+
   onFileUpload(event: any) {
     const file = event.target.files[0]
     this.image = file
@@ -179,5 +195,9 @@ export class AdminEventsFormComponent implements OnInit {
       this.form.enable()
     },
     error => console.log(error))
+  }
+
+  ngOnDestroy() {
+    this.users$.unsubscribe()
   }
 }
