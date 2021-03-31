@@ -16,8 +16,9 @@ export class InstitutionsFormComponent implements OnInit {
 
   form: FormGroup
   whatDo = ''
-  iName = ''
   session$: Observable<User>
+  image: File
+  imagePreview = ''
 
   constructor(private route: ActivatedRoute,
               private institutionsService: InstitutionsService,
@@ -28,6 +29,7 @@ export class InstitutionsFormComponent implements OnInit {
     this.session$ = this.loginService.getUser()
 
     this.form = new FormGroup({
+      photo: new FormControl(null),
       name: new FormControl(null, Validators.required)
     })
 
@@ -48,10 +50,10 @@ export class InstitutionsFormComponent implements OnInit {
     .subscribe(
       (institution: Institution) => {
         if (institution) {
-          this.iName = institution.name
           this.form.patchValue({
             name: institution.name
           })
+          if (institution.img) this.imagePreview = institution.img
         }
       }
     )
@@ -59,27 +61,35 @@ export class InstitutionsFormComponent implements OnInit {
     this.form.enable()
   }
 
-  onSubmit() { 
-    if (this.iName != this.form.value.name) {
-      let obs$
-      this.form.disable()
-      if (this.whatDo == 'new') {
-        obs$ = this.institutionsService.create(this.form.value.name)
-      }
-      else {
-        obs$ = this.institutionsService.update(this.whatDo, this.form.value.name)
-      }
-      obs$.subscribe(
-        institution => {    
-          this.form.enable()
-          this.router.navigate([`/manage/institution`])
-        },
-        error => {
-          console.log(error.error.message)
-          this.form.enable()
-        }
-      )
+  onFileUpload(event: any) {
+    const file = event.target.files[0]
+    this.image = file
+    const reader = new FileReader()
+    reader.onload = () => {
+      this.imagePreview = reader.result.toString()
     }
+    reader.readAsDataURL(file)
+  }
+
+  onSubmit() { 
+    let obs$
+    this.form.disable()
+    if (this.whatDo == 'new') {
+      obs$ = this.institutionsService.create(this.form.value.name, this.image)
+    }
+    else {
+      obs$ = this.institutionsService.update(this.whatDo, this.form.value.name, this.image)
+    }
+    obs$.subscribe(
+      institution => {    
+        this.form.enable()
+        this.router.navigate([`/manage/institutions`])
+      },
+      error => {
+        console.log(error.error.message)
+        this.form.enable()
+      }
+    )  
   }
 
 }

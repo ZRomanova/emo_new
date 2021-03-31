@@ -22,7 +22,8 @@ module.exports.create = async function(req, res) {
     } else {
       // Нужно создать учреждение
       const institution = await new Institution({
-        name: req.body.name
+        img: req.file ? req.file.location : '/images/institution.png',
+        name: req.body.name        
       }).save()
       res.status(201).json(institution)
 
@@ -41,9 +42,13 @@ module.exports.update = async function(req, res) {
       {$set: {last_active_at: now}},
       {new: true}) 
 
+      const updated = req.body
+
+      if (req.file) updated.img = req.file.location
+
       const institution = await Institution.findOneAndUpdate(
         {_id: req.params.institutionID},
-        {$set: req.body},
+        {$set: updated},
         {new: true}
       )
       res.status(200).json(institution)

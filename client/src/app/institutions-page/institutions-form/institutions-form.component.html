@@ -7,7 +7,16 @@ class="institution dark-{{session.firstColor}}-border"
     <label for="submit_button" class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover">Сохранить</label>
 
     <a class="inst-edit inst-right middle-{{session.firstColor}}-bg-hover" routerLink="/manage/institutions">Назад</a>
-    <input type="text" class="inst-span" formControlName="name">           
+    <input type="text" class="inst-span" formControlName="name">  <br>
+
+    <p class="in_new_user dark-{{session.firstColor}}-color">Картинка:</p>
+    
+    <input type="file" formControlName="photo" (change)="onFileUpload($event)"><br>
+    <img 
+    class="now_img" 
+    [src]="imagePreview"
+    *ngIf="imagePreview"
+    > 
 </form>
 <ng-template #loader>
     <app-loader></app-loader>

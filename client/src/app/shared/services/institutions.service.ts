@@ -18,18 +18,18 @@ export class InstitutionsService {
       return this.http.get<Institution>(`/api/manage/institutions/${id}`)
     }
 
-    create(name: string): Observable<Institution> {
-      const fd = {name: name}
-      let json = JSON.stringify(fd)
-      const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
-      return this.http.post<Institution>(`/api/manage/institutions`, json, {headers: myHeaders})
+    create(name: string, img?: File): Observable<Institution> {
+      const fd = new FormData()
+      fd.append('name', name)
+      if (img) fd.append('image', img, img.name)
+      return this.http.post<Institution>(`/api/manage/institutions`, fd)
     }
 
-    update(id: string, name: string): Observable<Institution> {
-      const fd = {name: name}
-      let json = JSON.stringify(fd)
-      const myHeaders = new HttpHeaders().set('Content-Type', 'application/json')
-      return this.http.patch<Institution>(`/api/manage/institutions/${id}`, json, {headers: myHeaders})
+    update(id: string, name: string, img?: File): Observable<Institution> {
+      const fd = new FormData()
+      fd.append('name', name)
+      if (img) fd.append('image', img, img.name)
+      return this.http.patch<Institution>(`/api/manage/institutions/${id}`, fd)
     }
 
     delete(id: string, newID: string): Observable<MessageFromServer> {

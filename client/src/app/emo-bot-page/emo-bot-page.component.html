@@ -32,14 +32,6 @@
     <div class="header" appEasyLang>
         Кого вы хотите позвать?
     </div> 
-    
-    <select 
-        class="inheader green-cursor" 
-        *ngIf="institutions$ | async as institutions" 
-        (change)="newInstitution()"
-        [(ngModel)]="institution">
-            <option *ngFor="let institution of institutions" value="{{institution._id}}">{{institution.name}}</option>
-        </select>
 
     <span class="chat-menu">
 
@@ -57,18 +49,17 @@
         
     </span>
 
-    <div *ngIf="users; else loader">
-        <div class="pictaandtext" *ngFor="let user of users">
+    <div *ngIf="institutions; else loader">
+        <div class="pictaandtext" *ngFor="let institution of institutions">
             <img 
             class="pict_event dark-{{session.secondColor}}-border green-cursor" 
-            [src]="user.photo"
-            (click)="checkUser(user._id)">
+            [src]="institution.img"
+            (click)="checkUser(institution._id)">
             <div class="green-cursor" 
-            [ngClass]="{event_tick: myEventUsers.includes(user._id), event_cross: !myEventUsers.includes(user._id)}"
+            [ngClass]="{event_tick: myEventInstit.includes(institution._id), event_cross: !myEventInstit.includes(institution._id)}"
             (click)="checkUser(user._id)"> </div>
-            <div class="pictatext tc dark-{{session.secondColor}}-border green-cursor" (click)="checkUser(user._id)">
-                <span appEasyLang>{{user.name}}</span><br>
-                <span *ngIf="session.surnameView" appEasyLang>{{user.surname}}</span>
+            <div class="pictatext tc dark-{{session.secondColor}}-border green-cursor" (click)="checkUser(institution._id)">
+                <span appEasyLang>{{institution.name}}</span>
             </div>                                             	 
        </div>
     </div>

@@ -50,6 +50,7 @@ export interface Messages {
 
 export interface Institution {
   name: string
+  img?: string
   _id?: string
 }
 

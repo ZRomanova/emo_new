@@ -15,8 +15,15 @@ module.exports.create = async function(req, res) {
 
         const bot = await Bot.findOne({type: req.body.type}).lean()
 
-        let wait = req.body.wait
-        if (!req.body.wait.includes(req.user.id)) wait.push(req.user.id)
+        var wait = []
+        for (let instit of req.body.wait) {
+            const users = await User.find({institution: instit}, {_id: 1}).lean()
+            for (let user of users) {
+                console.log(wait) 
+                wait.push(user._id)
+            }
+        }
+        wait.push(req.user.id)
         
         const event = await new Event({
             autor: req.user.id,

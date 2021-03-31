@@ -18,12 +18,10 @@ export class EmoBotPageComponent implements OnInit, OnDestroy {
 
   stage: number = 0
   myEventType: number
-  myEventUsers: string[] = []
+  myEventInstit: string[] = []
   buttons$: Observable<BotButton[]>
-  users$: Subscription
-  users: User[]
-  institutions$: Observable<Institution[]>
-  institution: string
+  iSub$: Subscription
+  institutions: Institution[]
   description: string
 
   constructor(private botService: BotService, 
@@ -32,7 +30,6 @@ export class EmoBotPageComponent implements OnInit, OnDestroy {
               private eventsService: EventsService) { }
 
   ngOnInit(): void {
-    this.institution = this.session.institution
   }
 
   startEvent() {
@@ -43,37 +40,28 @@ export class EmoBotPageComponent implements OnInit, OnDestroy {
   makeEvent(type) {
     this.myEventType = type
     this.stage = 2
-    this.users$ = this.peopleService.fetchAll(this.session.institution).subscribe(users => {
-      this.users = users
-    })
-    this.institutions$ = this.peopleService.getInstitutions()
-  }
-
-  newInstitution() {
-    this.users$ = this.peopleService.fetchAll(this.institution).subscribe(users => {
-      this.users = users
-    })
+    this.iSub$ = this.peopleService.getInstitutions().subscribe(institutions => this.institutions = institutions)
   }
 
   checkUser(id) {
-    if (this.myEventUsers.includes(id))  {
-      let index = this.myEventUsers.indexOf(id, 0)
-      this.myEventUsers.splice(index, 1)
+    if (this.myEventInstit.includes(id))  {
+      let index = this.myEventInstit.indexOf(id, 0)
+      this.myEventInstit.splice(index, 1)
     }
     else {
-      this.myEventUsers.push(id)
+      this.myEventInstit.push(id)
     }
   }
 
   checkAll() {
-    this.myEventUsers = []
-    for (let user of this.users) {
-      this.myEventUsers.push(user._id)
+    this.myEventInstit = []
+    for (let instit of this.institutions) {
+      this.myEventInstit.push(instit._id)
     }
   }
 
   checkNobody() {
-    this.myEventUsers = []
+    this.myEventInstit = []
   }
 
   cross() {
@@ -85,11 +73,11 @@ export class EmoBotPageComponent implements OnInit, OnDestroy {
   }
 
   finish() {
-    this.eventsService.create(this.myEventUsers, this.myEventType, this.description)
+    this.eventsService.create(this.myEventInstit, this.myEventType, this.description)
     .subscribe(event => {
       this.stage = 0
       this.myEventType = null
-      this.myEventUsers = []
+      this.myEventInstit = []
       this.newEvent.emit(event)
     },
     error => console.log(error.error.message)
@@ -97,6 +85,6 @@ export class EmoBotPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.stage >= 2) this.users$.unsubscribe()
+    if (this.stage >= 2) this.iSub$.unsubscribe()
   }
 }
