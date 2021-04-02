@@ -134,8 +134,8 @@ module.exports.getForBot = async function (req, res) {
         const events = await Event
         .find({$or: [
             {autor: req.user.id}, 
-            {participants: req.user.id},
-            {wait: req.user.id}
+            {participants: req.user.id, status: 1},
+            {wait: req.user.id, status: 1}
         ]}).lean()
 
         for (let event of events) {
