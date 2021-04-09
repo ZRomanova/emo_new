@@ -44,7 +44,8 @@ export class EventsService {
     description?: string,
     address?: string,
     chatImage?: File,
-    cost?: number
+    cost?: number,
+    chatTitle?: string
     ): Observable<Event> {
       const fd = new FormData()
       if (moderator) fd.append('moderator', moderator)
@@ -55,6 +56,7 @@ export class EventsService {
       if (address) fd.append('address', address)
       if (chatImage) fd.append('image', chatImage, chatImage.name)
       if (cost) fd.append('cost', cost.toString())
+      if (chatTitle) fd.append('chatTitle', chatTitle)
       return this.http.patch<Event>(`/api/events/${id}`, fd)
   }
 

@@ -67,7 +67,8 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
       cost: new FormControl(null),
       chatImage: new FormControl(null),
       institution: new FormControl(null),
-      whomShow: new FormControl(0)
+      whomShow: new FormControl(0),
+      chatTitle: new FormControl(null)
     })
 
     this.form.disable()
@@ -91,7 +92,8 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
               type: event.type,
               description: event.description,
               address: event.address,
-              cost: event.cost
+              cost: event.cost,
+              chatTitle: event.chatTitle
             })
             this.imagePreview = event.chatImage
             this.wait = event.wait
@@ -189,7 +191,8 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
       this.form.value.description,
       this.form.value.address,
       this.image,
-      this.form.value.cost)
+      this.form.value.cost,
+      this.form.value.chatTitle)
     .subscribe(event => {
       this.event = event
       this.form.enable()

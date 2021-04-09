@@ -62,6 +62,9 @@ const eventSchema = new Schema({
   },
   photolikes: {
     type: [String]
+  },
+  chatTitle: {
+    type: String
   }
 })
 

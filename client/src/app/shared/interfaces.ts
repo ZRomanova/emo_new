@@ -130,6 +130,7 @@ export interface Event {
   institution?: string
   _id?: string
   photolikes?: string[]
+  chatTitle?: string
 }
 
 export interface GroupMessage {

@@ -46,6 +46,7 @@ import { GroupPageComponent } from './group-page/group-page.component';
 import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-start.component';
 import { PhotolikesPageComponent } from './photolikes-page/photolikes-page.component';
 import { EventInGroupFormComponent } from './group-page/event-in-group-form/event-in-group-form.component';
+import { MoneyTableComponent } from './group-page/money-table/money-table.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { EventInGroupFormComponent } from './group-page/event-in-group-form/even
     GroupPageComponent,
     PicturesStartComponent,
     PhotolikesPageComponent,
-    EventInGroupFormComponent
+    EventInGroupFormComponent,
+    MoneyTableComponent
   ],
   imports: [
     BrowserModule,
