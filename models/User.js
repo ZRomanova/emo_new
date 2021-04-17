@@ -105,7 +105,7 @@ const userSchema = new Schema({
     default: false
   },
   loginDates: {
-    type: [String]
+    type: [Date]
   }
     
   
