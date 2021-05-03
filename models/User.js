@@ -98,11 +98,11 @@ const userSchema = new Schema({
   },
   birthdays: {          // отображаются ли именинники
     type: Boolean,
-    default: false
+    default: true
   },
   events: {          // мероприятия
     type: Boolean,
-    default: false
+    default: true
   },
   loginDates: {
     type: [Date]

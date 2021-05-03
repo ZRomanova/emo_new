@@ -20,8 +20,8 @@ export class FriendsPageComponent implements OnInit, OnDestroy {
   users: Users
 
   constructor(private loginService: LoginService,
-              private peopleService: PeopleService,
-              private chatService: ChatService) { }
+    private peopleService: PeopleService,
+    private chatService: ChatService) { }
 
   ngOnInit(): void {
     this.reloading = true

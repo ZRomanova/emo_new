@@ -97,7 +97,7 @@ export class UsersFormComponent implements OnInit, OnDestroy {
         answers: new FormControl('false'),
         change: new FormControl('true'),
         defaultColor: new FormControl('grey'),
-        birthdays: new FormControl('false'),
+        birthdays: new FormControl('true'),
         first: new FormControl('5'),
         second: new FormControl('1'),
         events: new FormControl('true'),

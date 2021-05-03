@@ -30,7 +30,7 @@
             <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/people.png">
         </a>
 
-        <a routerLink="/people/photolikes" routerLinkActive="people-active" *ngIf="false">
+        <a routerLink="/people/photolikes" routerLinkActive="people-active" *ngIf="events">
             <img class="menuIMG dark-{{color2}}-border green-cursor" src="/images/photolike.png">
         </a>
         <a href="#" (click)="logout($event)">

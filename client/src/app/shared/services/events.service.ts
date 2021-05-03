@@ -36,6 +36,10 @@ export class EventsService {
     return this.http.get<Event[]>(`/api/events`)
   }
 
+  fetchForPhotolikes(): Observable<Event[]> {
+    return this.http.get<Event[]>(`/api/events/photolikes`)
+  }
+
   update(id: string,
     moderator?: string,
     status?: number,
@@ -45,7 +49,8 @@ export class EventsService {
     address?: string,
     chatImage?: File,
     cost?: number,
-    chatTitle?: string
+    chatTitle?: string,
+    photolikes?: File[]
     ): Observable<Event> {
       const fd = new FormData()
       if (moderator) fd.append('moderator', moderator)
@@ -57,6 +62,11 @@ export class EventsService {
       if (chatImage) fd.append('image', chatImage, chatImage.name)
       if (cost) fd.append('cost', cost.toString())
       if (chatTitle) fd.append('chatTitle', chatTitle)
+      if (photolikes) {
+        for (let i = 0; i < photolikes.length; i++) {
+          fd.append(`photolikes`, photolikes[i], photolikes[i].name)
+        }
+      }
       return this.http.patch<Event>(`/api/events/${id}`, fd)
   }
 
@@ -75,6 +85,14 @@ export class EventsService {
 
   emoLetters(): Observable<Event> {
     return this.http.get<Event>(`/api/events/emo`)
+  }
+
+  pushLike(id): Observable<Event> {
+    return this.http.get<Event>(`/api/events/pl/${id}`)
+  }
+
+  deleteLike(id): Observable<Event> {
+    return this.http.get<Event>(`/api/events/dl/${id}`)
   }
 }
 

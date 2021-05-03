@@ -32,7 +32,7 @@ export class EventInGroupFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      date: new FormControl(formatDate(null, 'yyyy-MM-ddThh:mm', 'en')),
+      date: new FormControl(null),
       type: new FormControl(this.group.type),
       description: new FormControl(this.group.description),
       address: new FormControl(this.group.address),
@@ -41,9 +41,7 @@ export class EventInGroupFormComponent implements OnInit {
       institution: new FormControl(this.session.institution)
     })
 
-    this.form.patchValue({
-      date: this.group.date
-    })
+    if (this.group.date) this.form.patchValue({date: formatDate(this.group.date, 'yyyy-MM-ddThh:mm', 'en')})
 
     this.imagePreview = this.group.chatImage
 

@@ -77,13 +77,21 @@ class="dark-{{session.firstColor}}-border"
         <br>
 
         <p class="dark-{{session.firstColor}}-color">Картинка чата (рекомендуется квадратное изображение):</p>
-        <input type="file"  formControlName="chatImage"  (change)="onFileUpload($event)"><br>
+        <input type="file" formControlName="chatImage"  (change)="onFileUpload($event)"><br>
         <img 
         class="now_img" 
         [src]="imagePreview"
         *ngIf="imagePreview"
-        > <br>
+        > <br> <br>
     
+        <p class="dark-{{session.firstColor}}-color">Фотолайки:</p>
+        <input type="file"  formControlName="photolikesImage"  (change)="onPhotolikesUpload($event)" multiple><br>
+        <div *ngIf="photolikesPreview.length > 0">
+            <img 
+            *ngFor="let photo of photolikesPreview"
+            class="phl_img" 
+            [src]="photo"> 
+        </div> <br> <br>
 
         <a 
         class="nav-admin form_picture_button middle-{{session.firstColor}}-bg-hover" 

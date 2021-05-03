@@ -87,7 +87,15 @@ module.exports.update = async function(req, res) {
         const updated = req.body
         if (req.body.status == 1) updated.mailingTime = now
         if (req.body.status == 2) updated.closingTime = now
-        if (req.file) updated.chatImage = req.file.location
+        if (req.files['image']) updated.chatImage = req.files['image'][0].location
+        if (req.files['photolikes']) {
+            let paths = req.files['photolikes'].map(file => file.location)
+            await Event.findOneAndUpdate(
+                {_id: req.params.eventID},
+                {$addToSet: {photolikes: { $each: paths}}},
+                {new: true}
+            )
+        }
         if (req.body.wait && req.body.wait != "") updated.wait = req.body.wait.split(',')
         else delete updated.wait
 
@@ -230,27 +238,6 @@ module.exports.emoLetters = async function(req, res) {
     }
 }
 
-module.exports.addPhoto = async function(req, res) {  
-    try {
-        const now = new Date()
-        await User.updateOne(
-            {_id: req.user.id}, 
-            {$set: {last_active_at: now}},
-            {new: true}
-        )
-
-        const event = await Event.findOneAndUpdate(
-            {_id: req.rarams.eventID},
-            {$addToSet: { photolikes: { $each: req.files.location } }},
-            {new: true}
-        )
-            
-        res.status(200).json(event)
-    } catch (e) {
-        errorHandler(res, e)
-    }
-}
-
 module.exports.deletePhoto = async function(req, res) {  
     try {
         const now = new Date()
@@ -267,6 +254,69 @@ module.exports.deletePhoto = async function(req, res) {
         )
             
         res.status(200).json(event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.pushLike = async function(req, res) {  
+    try {
+        const now = new Date()
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true}
+        )
+
+        const event = await Event.findOneAndUpdate(
+            {_id: req.params.eventID},
+            {$addToSet: {likes: req.user.id}},
+            {new: true}
+        )
+            
+        res.status(200).json(event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.deleteLike = async function(req, res) {  
+    try {
+        const now = new Date()
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true}
+        )
+
+        const event = await Event.findOneAndUpdate(
+            {_id: req.params.eventID},
+            {$pull: {likes: req.user.id}},
+            {new: true}
+        )
+            
+        res.status(200).json(event)
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+
+module.exports.getForPhotolikes = async function (req, res) {
+    try {
+        const now = new Date();
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true})
+
+        const events = await Event.find(
+            {$or: [{participants: req.user.id}, {wait: req.user.id}, {hide: req.user.id}], status: 2}
+            )
+            .sort({closingTime: -1})
+            .lean()
+
+        res.status(200).json(events)
+
     } catch (e) {
         errorHandler(res, e)
     }

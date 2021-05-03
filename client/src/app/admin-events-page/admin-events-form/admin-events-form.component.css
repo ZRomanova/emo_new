@@ -11,3 +11,10 @@
     background-color: green;
     color: white
 }
+
+.phl_img {
+    width: auto;
+    height: 200px;
+    display: inline-block;
+    margin: 5px;
+}

@@ -65,6 +65,10 @@ const eventSchema = new Schema({
   },
   chatTitle: {
     type: String
+  },
+  likes: {
+    ref: 'users',
+    type: [Schema.Types.ObjectId]
   }
 })
 

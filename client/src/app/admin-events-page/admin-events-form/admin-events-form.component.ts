@@ -21,6 +21,7 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
   form: FormGroup
   id: string
   image: File
+  photolikes: File[] = []
   imagePreview = ''
   event: Event
   session$: Observable<User>
@@ -32,6 +33,7 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
   whomShow = 0
   wait: string[]
   now: Date
+  photolikesPreview: string[] = []
 
 
 
@@ -60,7 +62,7 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
     this.buttons$ = this.botService.fetch()
 
     this.form = new FormGroup({
-      date: new FormControl(formatDate(null, 'yyyy-MM-ddThh:mm', 'en')),
+      date: new FormControl(null),
       type: new FormControl(null, [Validators.required]),
       description: new FormControl(null),
       address: new FormControl(null),
@@ -68,7 +70,8 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
       chatImage: new FormControl(null),
       institution: new FormControl(null),
       whomShow: new FormControl(0),
-      chatTitle: new FormControl(null)
+      chatTitle: new FormControl(null),
+      photolikesImage: new FormControl(null)
     })
 
     this.form.disable()
@@ -88,15 +91,16 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
           if (event) {
             this.event = event
             this.form.patchValue({
-              date: event.date,
               type: event.type,
               description: event.description,
               address: event.address,
               cost: event.cost,
               chatTitle: event.chatTitle
             })
+            if (event.date) this.form.patchValue({date: formatDate(event.date, 'yyyy-MM-ddThh:mm', 'en')})
             this.imagePreview = event.chatImage
             this.wait = event.wait
+            if (event.photolikes) this.photolikesPreview = event.photolikes
           }
           this.form.enable()
         },
@@ -135,6 +139,11 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
       let index = this.wait.indexOf(user._id, 0)
       if (index != -1) this.wait.splice(index, 1)
     }
+  }
+
+  onPhotolikesUpload(event: any) {
+    const files = event.target.files
+    this.photolikes = files
   }
 
   onFileUpload(event: any) {
@@ -192,9 +201,11 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
       this.form.value.address,
       this.image,
       this.form.value.cost,
-      this.form.value.chatTitle)
+      this.form.value.chatTitle,
+      this.photolikes)
     .subscribe(event => {
       this.event = event
+      this.photolikesPreview = event.photolikes
       this.form.enable()
     },
     error => console.log(error))

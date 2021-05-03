@@ -1,1 +1,44 @@
-<p>photolikes-page works!</p>
+<div *ngIf="!reloading; else reloader">
+    <div *ngFor="let event of events">
+        <div class="phlevent dark-{{session.firstColor}}-border">
+            <div *ngIf="!event.chatTitle">
+                <div *ngIf="buttons$ | async as buttons">
+                    <span *ngFor="let button of buttons">
+                        <span *ngIf="event.type == button.type" appEasyLang class="pNotAdmin">{{button.text}}</span>
+                    </span><br>
+                    <span *ngIf="event.date" class="pNotAdmin">{{event.date | date:"dd.MM.yyyy HH:mm"}}</span>
+                </div>
+            </div>
+            <div *ngIf="event.chatTitle">
+                <span appEasyLang  class="pNotAdmin">{{event.chatTitle}}</span><br>
+                <span *ngIf="event.date"  class="pNotAdmin">{{event.date | date:"dd.MM.yyyy HH:mm"}}</span>
+            </div>
+            <hr noshade color="black">
+            <div *ngIf="event.description" appEasyLang class="pNotAdmin">
+                {{event.description}}
+            </div>
+            <hr noshade color="black">
+            <img 
+            *ngFor="let photo of event.photolikes"
+            class="phl_img green-cursor" 
+            [src]="photo"
+            (click)="openZoom(photo)">
+
+            <br>
+
+            <img *ngIf="event.likes && event.likes.includes(session._id)" 
+            class="like green-cursor" src="/images/like.png" (click)="deleteLike(event._id)">
+            
+            <img *ngIf="(event.likes && !event.likes.includes(session._id) || !event.likes)" 
+            class="like green-cursor" src="/images/notlike.png" (click)="pushLike(event._id)">
+
+            <div class="pNotAdmin countlike">{{event.likes.length}}</div>
+            
+        </div>
+    </div>
+</div>
+<app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>
+
+<ng-template #reloader>
+    <app-loader></app-loader>
+</ng-template>
