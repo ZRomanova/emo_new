@@ -56,7 +56,7 @@ export class EventsService {
       if (moderator) fd.append('moderator', moderator)
       if (status) fd.append('status', status.toString())
       if (wait) fd.append('wait', wait.toString())
-      if (date) fd.append('date', date.toString())
+      if (date) fd.append('date', date.toString().replace('T',' ').replace('-','/'))
       if (description) fd.append('description', description)
       if (address) fd.append('address', address)
       if (chatImage) fd.append('image', chatImage, chatImage.name)
