@@ -41,7 +41,7 @@ export class EventInGroupFormComponent implements OnInit {
       institution: new FormControl(this.session.institution)
     })
 
-    if (this.group.date) this.form.patchValue({date: formatDate(this.group.date, 'yyyy-MM-ddThh:mm', 'en')})
+    if (this.group.date) this.form.patchValue({date: formatDate(this.group.date, 'yyyy-MM-ddTHH:mm', 'en')})
 
     this.imagePreview = this.group.chatImage
 
