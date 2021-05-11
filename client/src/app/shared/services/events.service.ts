@@ -44,7 +44,7 @@ export class EventsService {
     moderator?: string,
     status?: number,
     wait?: string[],
-    date?: Date,
+    date?: string,
     description?: string,
     address?: string,
     chatImage?: File,
