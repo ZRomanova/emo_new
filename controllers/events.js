@@ -310,7 +310,7 @@ module.exports.getForPhotolikes = async function (req, res) {
             {new: true})
 
         const events = await Event.find(
-            {$or: [{participants: req.user.id}, {wait: req.user.id}, {hide: req.user.id}], status: 2}
+            {status: 2}
             )
             .sort({closingTime: -1})
             .lean()

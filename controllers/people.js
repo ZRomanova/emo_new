@@ -41,7 +41,7 @@ module.exports.friends = async function(req, res) {
 
       function union_arr(arr1, arr2) {
         // объединяем массивы
-        arr3 = arr1.concat(arr2);
+        let arr3 = arr1.concat(arr2);
         // формируем новый массив без повторяющихся элементов
         var arr = [arr3[0]]; 
         for (var i = 1; i < arr3.length; i++) {
