@@ -1,3 +1,8 @@
 .center {
     margin-left: 30%;
 }
+
+.nav-admin {
+    width: 15vw;
+    display: inline-block;
+}

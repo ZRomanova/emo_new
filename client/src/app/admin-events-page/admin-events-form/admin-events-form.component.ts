@@ -34,6 +34,7 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
   wait: string[]
   now: Date
   photolikesPreview: string[] = []
+  queryS: string = 'view'
 
 
 
@@ -55,6 +56,7 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
         this.users = users
       })
       this.queryI = queryParam.institution
+      this.queryS = queryParam.status
     }) 
 
     this.institutions$ = this.usersService.getInstitutions()
@@ -110,7 +112,7 @@ export class AdminEventsFormComponent implements OnInit, OnDestroy {
 
   changeInstitution() {
     let id = this.form.value.institution
-    this.router.navigate([], {queryParams: { 'institution': id }})
+    this.router.navigate([], {queryParams: { 'institution': id, 'status': this.queryS}})
     this.queryI = id
   }
 
