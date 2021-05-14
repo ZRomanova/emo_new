@@ -78,7 +78,7 @@ export class AdminEventsPageComponent implements OnInit, OnDestroy {
 
   becomeModerator(id) {
     this.eventsService.update(id, this.session._id).subscribe(event => {
-      this.router.navigate([`/manage/events/${id}`], {queryParams: {institution: this.session.institution}})
+      this.router.navigate([`/manage/events/${id}`], {queryParams: {institution: this.session.institution, status: 'edit'}})
     },
     error => console.log(error))
   }
