@@ -77,7 +77,7 @@ export class EventInGroupFormComponent implements OnInit {
       null, 
       null, 
       null, 
-      (new Date(this.form.value.date)).toISOString(),
+      this.form.value.date ? (new Date(this.form.value.date)).toISOString() : null,
       this.form.value.description,
       this.form.value.address,
       this.image,

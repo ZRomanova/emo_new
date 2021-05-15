@@ -48,7 +48,7 @@
             </div>
             <div *ngFor="let user of users">    
                 <div *ngIf="group.participants.includes(user._id)" class="pNotAdmin" appEasyLang>
-                    {{user.name}} <span *ngIf="session.surname">{{user.surname}} </span>
+                    {{user.name}} <span *ngIf="session.surnameView">{{user.surname}} </span>
                 </div>
             </div>
         </div>
