@@ -1,0 +1,7 @@
+.likes_list {
+    position: relative;
+    width: 70%;
+    height: 77%;
+    margin: auto;
+    overflow-y: auto;
+}

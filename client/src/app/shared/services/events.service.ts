@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Event } from '../interfaces';
+import { Event, User } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +93,10 @@ export class EventsService {
 
   deleteLike(id): Observable<Event> {
     return this.http.get<Event>(`/api/events/dl/${id}`)
+  }
+
+  getLikes(id): Observable<User[]> {
+    return this.http.get<User[]>(`/api/events/gl/${id}`)
   }
 }
 

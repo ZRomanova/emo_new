@@ -32,12 +32,13 @@
             <img *ngIf="(event.likes && !event.likes.includes(session._id) || !event.likes)" 
             class="like green-cursor" src="/images/notlike.png" (click)="pushLike(event._id)">
 
-            <div class="pNotAdmin countlike">{{event.likes.length}}</div>
+            <div class="pNotAdmin countlike green-cursor" (click)="openLikes(event._id)">{{event.likes.length}}</div>
             
         </div>
     </div>
 </div>
 <app-picture-zoom *ngIf="zoom" [image]="image" (result)="closeZoom($event)"></app-picture-zoom>
+<app-likes *ngIf="openlikes" [likes]="likes" [session]="session" (result)="closeLikes($event)"></app-likes>
 
 <ng-template #reloader>
     <app-loader></app-loader>

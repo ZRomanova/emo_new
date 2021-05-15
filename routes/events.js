@@ -29,5 +29,6 @@ router.get('/photolikes', passport.authenticate('jwt', {session: false}), contro
 router.get('/emo', passport.authenticate('jwt', {session: false}), controller.emoLetters)
 router.get('/pl/:eventID', passport.authenticate('jwt', {session: false}), controller.pushLike)
 router.get('/dl/:eventID', passport.authenticate('jwt', {session: false}), controller.deleteLike)
+router.get('/gl/:eventID', passport.authenticate('jwt', {session: false}), controller.getLikes)
 
 module.exports = router

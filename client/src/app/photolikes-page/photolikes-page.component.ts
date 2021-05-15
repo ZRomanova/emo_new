@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { EventsService } from '../shared/services/events.service';
 import { User, Event, BotButton } from '../shared/interfaces';
 import { LoginService } from '../shared/services/login.service';
@@ -20,6 +20,8 @@ export class PhotolikesPageComponent implements OnInit {
   reloading = false
   zoom = false
   image = ''
+  openlikes = false
+  likes: User[]
 
   constructor(private loginService: LoginService,
     private eventsService: EventsService,
@@ -35,6 +37,17 @@ export class PhotolikesPageComponent implements OnInit {
       })
     })
     this.buttons$ = this.botService.fetch() 
+  }
+
+  openLikes(id) {
+    this.eventsService.getLikes(id).subscribe(users => {
+      this.likes = users
+      this.openlikes = true
+    }) 
+  }
+
+  closeLikes(result) {
+    if (result) this.openlikes = false
   }
 
   openZoom(src) {

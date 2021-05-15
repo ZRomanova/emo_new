@@ -321,3 +321,29 @@ module.exports.getForPhotolikes = async function (req, res) {
         errorHandler(res, e)
     }
 }
+
+module.exports.getLikes = async function (req, res) {
+    try {
+        const now = new Date();
+        await User.updateOne(
+            {_id: req.user.id}, 
+            {$set: {last_active_at: now}},
+            {new: true}
+        )
+        
+        const event = await Event.findOne({_id: req.params.eventID}, {likes: 1})
+        
+        let users = []
+        
+        for (let id of event.likes) {
+            const user = await User.findOne({_id: id}, {name: 1, surname: 1, photo: 1})
+            if (user) users.push(user)
+        }
+        
+        res.status(200).json(users)
+        
+    } catch (e) {
+        errorHandler(res, e)
+    }
+}
+

@@ -47,6 +47,7 @@ import { PicturesStartComponent } from './pictures-page/pictures-start/pictures-
 import { PhotolikesPageComponent } from './photolikes-page/photolikes-page.component';
 import { EventInGroupFormComponent } from './group-page/event-in-group-form/event-in-group-form.component';
 import { MoneyTableComponent } from './group-page/money-table/money-table.component';
+import { LikesComponent } from './shared/components/likes/likes.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +90,8 @@ import { MoneyTableComponent } from './group-page/money-table/money-table.compon
     PicturesStartComponent,
     PhotolikesPageComponent,
     EventInGroupFormComponent,
-    MoneyTableComponent
+    MoneyTableComponent,
+    LikesComponent
   ],
   imports: [
     BrowserModule,

@@ -73,7 +73,6 @@ export class EventInGroupFormComponent implements OnInit {
 
   update() {
     this.form.disable()
-    //console.log((new Date(this.form.value.date)).toISOString())
     this.eventsService.update(this.group._id, 
       null, 
       null, 
