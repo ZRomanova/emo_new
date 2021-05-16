@@ -99,6 +99,8 @@ module.exports.update = async function(req, res) {
         if (req.body.wait && req.body.wait != "") updated.wait = req.body.wait.split(',')
         else delete updated.wait
 
+        delete updated.photolikes
+
         const event = await Event.findOneAndUpdate(
             {_id: req.params.eventID},
             {$set: updated},
@@ -286,8 +288,7 @@ module.exports.deleteLike = async function(req, res) {
         await User.updateOne(
             {_id: req.user.id}, 
             {$set: {last_active_at: now}},
-            {new: true}
-        )
+            {new: true})
 
         const event = await Event.findOneAndUpdate(
             {_id: req.params.eventID},
