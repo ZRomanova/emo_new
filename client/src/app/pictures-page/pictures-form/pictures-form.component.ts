@@ -179,7 +179,7 @@ export class PicturesFormComponent implements OnInit, OnDestroy {
         .subscribe(
           response => {},
           error => {},
-          () => this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: '603df642e8189fa35e95273f'}})
+          () => this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: this.queryF}})
         )
     }
   }
@@ -273,7 +273,7 @@ export class PicturesFormComponent implements OnInit, OnDestroy {
       picture => {
         this.picture = picture      
         this.form.enable()
-        this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: '603df642e8189fa35e95273f'}})
+        this.router.navigate([`/manage/pictures/${this.folder}`], {queryParams: {answersFolder: this.queryF}})
       },
       error => {
         console.log(error.error.message)
