@@ -96,7 +96,12 @@ module.exports.update = async function(req, res) {
                 {new: true}
             )
         }
-        if (req.body.wait && req.body.wait != "") updated.wait = req.body.wait.split(',')
+        if (req.body.wait && req.body.wait != "") {
+            const array = req.body.wait.split(',')
+            const set = new Set(array)
+            const uniqeArray = [...set]
+            updated.wait = uniqeArray
+        }
         else delete updated.wait
 
         delete updated.photolikes
@@ -197,7 +202,7 @@ module.exports.changeUserStatus = async function (req, res) {
 
         await Event.findOneAndUpdate(
             {_id: req.params.eventID},
-            {$pull: {wait: id}},
+            {$pullAll: {wait: id}},
             {new: true}
         )
 
