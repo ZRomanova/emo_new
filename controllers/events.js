@@ -202,7 +202,7 @@ module.exports.changeUserStatus = async function (req, res) {
 
         await Event.findOneAndUpdate(
             {_id: req.params.eventID},
-            {$pullAll: {wait: id}},
+            {$pull: {wait: id}},
             {new: true}
         )
 
@@ -256,7 +256,7 @@ module.exports.deletePhoto = async function(req, res) {
 
         const event = await Event.findOneAndUpdate(
             {_id: req.rarams.eventID},
-            {$pullAll: { photolikes: req.body.deletePhoto }},
+            {$pull: { photolikes: req.body.deletePhoto }},
             {new: true}
         )
             
